@@ -1,0 +1,2618 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>✨ Website Đa Phương Tiện Premium</title>
+
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+
+<style>
+:root{
+  --primary:#6c63ff;
+  --secondary:#f64f59;
+  --accent:#43e97b;
+  --dark:#0a0a1a;
+  --dark2:#111128;
+  --dark3:#1a1a35;
+  --card:#16163a;
+  --text:#e8e8ff;
+  --text2:#9999cc;
+  --glow:rgba(108,99,255,0.4);
+  --glow2:rgba(246,79,89,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--dark);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+#cursor{
+  position:fixed;width:12px;height:12px;
+  background:var(--primary);border-radius:50%;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s,width 0.3s,height 0.3s,background 0.3s;
+  mix-blend-mode:difference;
+}
+#cursor-follower{
+  position:fixed;width:40px;height:40px;
+  border:2px solid rgba(108,99,255,0.5);
+  border-radius:50%;pointer-events:none;
+  z-index:99998;transform:translate(-50%,-50%);
+  transition:all 0.15s ease;
+}
+body:hover #cursor{width:16px;height:16px;}
+
+/* ===== PARTICLES CANVAS ===== */
+#particles-canvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--secondary));border-radius:3px;}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 40px;
+  background:rgba(10,10,26,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(108,99,255,0.2);
+  transition:all 0.3s;
+}
+.header-inner{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  height:70px;max-width:1400px;margin:0 auto;
+}
+.logo{
+  font-family:'Orbitron',monospace;
+  font-size:1.4em;font-weight:700;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:2px;
+}
+nav{display:flex;gap:5px;align-items:center;}
+nav a{
+  color:var(--text2);text-decoration:none;
+  padding:8px 14px;border-radius:8px;
+  font-size:0.82em;font-weight:500;
+  transition:all 0.3s;position:relative;
+  overflow:hidden;
+}
+nav a::before{
+  content:'';position:absolute;bottom:0;left:50%;
+  width:0;height:2px;
+  background:linear-gradient(var(--primary),var(--secondary));
+  transition:all 0.3s;transform:translateX(-50%);
+}
+nav a:hover,nav a.active{
+  color:#fff;
+  background:rgba(108,99,255,0.15);
+}
+nav a:hover::before,nav a.active::before{width:80%;}
+.nav-toggle{
+  display:none;background:none;border:none;
+  color:var(--text);font-size:1.5em;cursor:pointer;
+}
+
+/* ===== PAGE SYSTEM ===== */
+.page{display:none;min-height:100vh;padding-top:70px;position:relative;z-index:1;}
+.page.active{display:block;}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  justify-content:center;text-align:center;
+  padding:0 20px;position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(108,99,255,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(246,79,89,0.1) 0%,transparent 60%),
+             radial-gradient(ellipse at 60% 80%,rgba(67,233,123,0.08) 0%,transparent 50%);
+}
+.hero-content{position:relative;z-index:1;max-width:900px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(108,99,255,0.15);
+  border:1px solid rgba(108,99,255,0.3);
+  padding:6px 18px;border-radius:50px;
+  font-size:0.8em;color:var(--primary);
+  margin-bottom:30px;
+  animation:pulse-badge 2s infinite;
+}
+@keyframes pulse-badge{
+  0%,100%{box-shadow:0 0 0 0 rgba(108,99,255,0.3);}
+  50%{box-shadow:0 0 0 8px rgba(108,99,255,0);}
+}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.5em,7vw,5.5em);
+  font-weight:800;line-height:1.1;
+  margin-bottom:20px;
+}
+.hero h1 .gradient-text{
+  background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 50%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-size:200% 200%;
+  animation:gradient-shift 4s ease infinite;
+}
+@keyframes gradient-shift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.hero p{
+  font-size:clamp(1em,2vw,1.25em);
+  color:var(--text2);line-height:1.8;
+  margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;
+}
+.hero-btns{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{
+  padding:14px 35px;border-radius:50px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;font-weight:700;font-size:0.95em;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:all 0.3s;position:relative;overflow:hidden;
+  box-shadow:0 10px 30px rgba(108,99,255,0.4);
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--secondary),var(--primary));
+  opacity:0;transition:opacity 0.3s;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(108,99,255,0.5);}
+.btn-primary:hover::before{opacity:1;}
+.btn-primary span{position:relative;z-index:1;}
+.btn-outline{
+  padding:14px 35px;border-radius:50px;
+  border:2px solid rgba(108,99,255,0.5);
+  color:var(--primary);font-weight:600;font-size:0.95em;
+  text-decoration:none;cursor:pointer;background:transparent;
+  transition:all 0.3s;
+}
+.btn-outline:hover{
+  background:rgba(108,99,255,0.1);
+  border-color:var(--primary);
+  transform:translateY(-3px);
+}
+
+/* ===== FLOATING SHAPES ===== */
+.floating-shape{
+  position:absolute;border-radius:50%;
+  filter:blur(80px);opacity:0.15;
+  animation:float-shape 8s ease-in-out infinite;
+}
+@keyframes float-shape{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  33%{transform:translateY(-30px) rotate(120deg);}
+  66%{transform:translateY(15px) rotate(240deg);}
+}
+
+/* ===== STATS ===== */
+.stats-section{
+  padding:80px 40px;
+  background:linear-gradient(135deg,rgba(108,99,255,0.05),rgba(246,79,89,0.05));
+  border-top:1px solid rgba(108,99,255,0.1);
+  border-bottom:1px solid rgba(108,99,255,0.1);
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px;max-width:1000px;margin:0 auto;text-align:center;
+}
+.stat-item{padding:30px 20px;}
+.stat-number{
+  font-family:'Orbitron',monospace;
+  font-size:3em;font-weight:900;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.stat-label{color:var(--text2);font-size:0.9em;margin-top:8px;}
+
+/* ===== SECTION STYLE ===== */
+.section{padding:100px 40px;max-width:1400px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:70px;}
+.section-tag{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(246,79,89,0.2));
+  border:1px solid rgba(108,99,255,0.3);
+  padding:5px 18px;border-radius:50px;
+  font-size:0.75em;font-weight:700;
+  color:var(--primary);letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:15px;
+}
+.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2em,4vw,3em);
+  font-weight:800;margin-bottom:15px;
+}
+.section-subtitle{color:var(--text2);font-size:1.1em;max-width:600px;margin:0 auto;line-height:1.8;}
+
+/* ===== CARDS ===== */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
+.glass-card{
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:20px;padding:30px;
+  backdrop-filter:blur(10px);
+  transition:all 0.4s;position:relative;overflow:hidden;
+}
+.glass-card::before{
+  content:'';position:absolute;
+  top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(108,99,255,0.05) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.4s;
+}
+.glass-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(108,99,255,0.4);
+  box-shadow:0 30px 60px rgba(0,0,0,0.3),0 0 0 1px rgba(108,99,255,0.2);
+}
+.glass-card:hover::before{opacity:1;}
+.card-icon{
+  width:60px;height:60px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6em;margin-bottom:20px;
+  background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(246,79,89,0.2));
+  border:1px solid rgba(108,99,255,0.3);
+}
+.card-title{font-size:1.2em;font-weight:700;margin-bottom:10px;}
+.card-text{color:var(--text2);font-size:0.9em;line-height:1.8;}
+.card-tag{
+  display:inline-block;
+  background:rgba(108,99,255,0.15);
+  color:var(--primary);
+  padding:3px 12px;border-radius:50px;
+  font-size:0.75em;font-weight:600;margin-top:15px;
+}
+
+/* ===== CAROUSEL ===== */
+.carousel-wrap{position:relative;max-width:900px;margin:0 auto;}
+.carousel-3d{
+  position:relative;height:500px;
+  perspective:1200px;
+  display:flex;align-items:center;justify-content:center;
+}
+.carousel-3d-inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;
+  transition:transform 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+.carousel-3d-slide{
+  position:absolute;top:50%;left:50%;
+  width:500px;height:320px;
+  transform-origin:center;
+  transform:translate(-50%,-50%);
+  border-radius:20px;overflow:hidden;
+  transition:all 0.8s cubic-bezier(0.23,1,0.32,1);
+  cursor:pointer;
+}
+.slide-content{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:15px;
+  font-size:1.5em;font-weight:700;color:white;
+  text-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+.slide-0{background:linear-gradient(135deg,#667eea,#764ba2);}
+.slide-1{background:linear-gradient(135deg,#f093fb,#f5576c);}
+.slide-2{background:linear-gradient(135deg,#4facfe,#00f2fe);}
+.slide-3{background:linear-gradient(135deg,#43e97b,#38f9d7);}
+.slide-4{background:linear-gradient(135deg,#fa709a,#fee140);}
+.slide-5{background:linear-gradient(135deg,#a18cd1,#fbc2eb);}
+.slide-6{background:linear-gradient(135deg,#ffecd2,#fcb69f);color:#333;}
+.carousel-nav{
+  display:flex;justify-content:center;
+  align-items:center;gap:20px;margin-top:30px;
+}
+.carousel-nav button{
+  width:48px;height:48px;border-radius:50%;
+  border:2px solid rgba(108,99,255,0.4);
+  background:rgba(108,99,255,0.1);
+  color:var(--primary);font-size:1.2em;
+  cursor:pointer;transition:all 0.3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.carousel-nav button:hover{
+  background:var(--primary);color:white;
+  transform:scale(1.1);
+  box-shadow:0 0 20px var(--glow);
+}
+.carousel-dots{display:flex;gap:8px;}
+.c-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(108,99,255,0.3);
+  cursor:pointer;transition:all 0.3s;
+}
+.c-dot.active{
+  background:var(--primary);
+  width:24px;border-radius:4px;
+  box-shadow:0 0 10px var(--primary);
+}
+
+/* ===== VIDEO ===== */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:25px;}
+.video-card{
+  background:var(--card);border:1px solid rgba(108,99,255,0.15);
+  border-radius:20px;overflow:hidden;transition:all 0.4s;
+}
+.video-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(108,99,255,0.4);
+  box-shadow:0 20px 50px rgba(0,0,0,0.4);
+}
+.video-frame{position:relative;padding-bottom:56.25%;height:0;}
+.video-frame iframe{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;border:none;
+}
+.video-info{padding:20px;}
+.video-title{font-weight:700;margin-bottom:8px;font-size:1.05em;}
+.video-meta{color:var(--text2);font-size:0.85em;display:flex;gap:15px;}
+
+/* ===== MAP ===== */
+.map-wrapper{
+  border-radius:20px;overflow:hidden;
+  border:1px solid rgba(108,99,255,0.2);
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  position:relative;
+}
+.map-wrapper::before{
+  content:'';position:absolute;inset:0;
+  box-shadow:inset 0 0 60px rgba(108,99,255,0.1);
+  z-index:1;pointer-events:none;border-radius:20px;
+}
+.map-wrapper iframe{display:block;border:none;}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:800px;margin:0 auto;}
+.faq-item{
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:16px;margin-bottom:12px;
+  overflow:hidden;transition:all 0.3s;
+  backdrop-filter:blur(10px);
+}
+.faq-item:hover{border-color:rgba(108,99,255,0.3);}
+.faq-q{
+  padding:22px 25px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:1em;gap:15px;
+}
+.faq-q:hover{color:var(--primary);}
+.faq-icon{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(108,99,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);transition:all 0.4s;flex-shrink:0;font-size:0.9em;
+}
+.faq-item.open .faq-icon{
+  transform:rotate(180deg);
+  background:var(--primary);color:white;
+  box-shadow:0 0 15px var(--glow);
+}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.5s cubic-bezier(0.23,1,0.32,1),padding 0.3s;
+  color:var(--text2);line-height:1.9;font-size:0.95em;
+  padding:0 25px;
+}
+.faq-item.open .faq-a{max-height:400px;padding:0 25px 22px;}
+
+/* ===== BLOG ===== */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;}
+.blog-card{
+  background:var(--card);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:20px;overflow:hidden;
+  transition:all 0.4s;cursor:pointer;
+}
+.blog-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(108,99,255,0.4);
+  box-shadow:0 30px 60px rgba(0,0,0,0.4);
+}
+.blog-thumb{
+  height:200px;display:flex;align-items:center;
+  justify-content:center;font-size:3.5em;
+  position:relative;overflow:hidden;
+}
+.blog-thumb::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,var(--card));
+}
+.blog-body{padding:25px;}
+.blog-tag{
+  display:inline-block;
+  background:rgba(108,99,255,0.15);
+  color:var(--primary);border-radius:50px;
+  padding:3px 12px;font-size:0.75em;
+  font-weight:700;margin-bottom:12px;
+}
+.blog-title{font-size:1.15em;font-weight:700;margin-bottom:10px;line-height:1.5;}
+.blog-excerpt{color:var(--text2);font-size:0.88em;line-height:1.8;margin-bottom:15px;}
+.blog-meta{
+  display:flex;align-items:center;gap:15px;
+  color:var(--text2);font-size:0.8em;
+  border-top:1px solid rgba(108,99,255,0.1);
+  padding-top:15px;
+}
+
+/* ===== FORM ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:50px;align-items:start;}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+.contact-info{display:flex;flex-direction:column;gap:25px;}
+.contact-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:25px;border-radius:16px;
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  transition:all 0.3s;
+}
+.contact-item:hover{border-color:rgba(108,99,255,0.3);transform:translateX(5px);}
+.contact-icon{
+  width:50px;height:50px;border-radius:14px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3em;flex-shrink:0;
+  box-shadow:0 10px 25px var(--glow);
+}
+.contact-details h4{font-weight:700;margin-bottom:5px;}
+.contact-details p{color:var(--text2);font-size:0.9em;}
+.contact-form-box{
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:24px;padding:40px;
+  backdrop-filter:blur(10px);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+.form-group{margin-bottom:20px;}
+.form-group label{
+  display:block;font-weight:600;
+  margin-bottom:8px;font-size:0.9em;color:var(--text2);
+}
+.form-control{
+  width:100%;padding:14px 18px;
+  background:rgba(10,10,26,0.8);
+  border:1px solid rgba(108,99,255,0.2);
+  border-radius:12px;color:var(--text);
+  font-size:0.95em;font-family:'Inter',sans-serif;
+  transition:all 0.3s;outline:none;
+}
+.form-control:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(108,99,255,0.15),0 0 20px rgba(108,99,255,0.1);
+  background:rgba(108,99,255,0.05);
+}
+.form-control::placeholder{color:rgba(153,153,204,0.5);}
+textarea.form-control{height:140px;resize:vertical;}
+
+/* ===== TOOLS / GAMES ===== */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}
+.tool-card{
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:20px;padding:30px;
+  text-align:center;transition:all 0.4s;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.tool-card::after{
+  content:'';position:absolute;
+  top:-100%;left:-100%;
+  width:300%;height:300%;
+  background:conic-gradient(from 0deg,transparent,rgba(108,99,255,0.05),transparent);
+  animation:rotate-glow 6s linear infinite;
+  opacity:0;transition:opacity 0.3s;
+}
+.tool-card:hover::after{opacity:1;}
+@keyframes rotate-glow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.tool-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(108,99,255,0.4);
+  box-shadow:0 25px 50px rgba(0,0,0,0.3);
+}
+.tool-icon-big{font-size:3em;margin-bottom:15px;display:block;}
+.tool-name{font-size:1.1em;font-weight:700;margin-bottom:8px;}
+.tool-desc{color:var(--text2);font-size:0.85em;line-height:1.7;}
+
+/* ===== TIMELINE ===== */
+.timeline{position:relative;max-width:800px;margin:0 auto;padding:20px 0;}
+.timeline::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;
+  width:2px;background:linear-gradient(var(--primary),var(--secondary));
+  transform:translateX(-50%);opacity:0.4;
+}
+@media(max-width:600px){.timeline::before{left:20px;}}
+.tl-item{
+  display:flex;justify-content:flex-end;
+  padding:0 calc(50% + 30px) 40px 0;
+  position:relative;
+}
+.tl-item:nth-child(even){
+  justify-content:flex-start;
+  padding:0 0 40px calc(50% + 30px);
+}
+@media(max-width:600px){
+  .tl-item,.tl-item:nth-child(even){
+    justify-content:flex-start;
+    padding:0 0 30px 50px;
+  }
+}
+.tl-dot{
+  position:absolute;left:50%;top:20px;
+  width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  transform:translateX(-50%);
+  box-shadow:0 0 0 4px rgba(108,99,255,0.2),0 0 20px var(--glow);
+  z-index:1;
+}
+@media(max-width:600px){.tl-dot{left:20px;}}
+.tl-content{
+  background:rgba(22,22,58,0.7);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:16px;padding:22px;
+  max-width:320px;
+  transition:all 0.3s;
+}
+.tl-content:hover{
+  border-color:rgba(108,99,255,0.3);
+  transform:scale(1.02);
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+.tl-date{color:var(--primary);font-size:0.8em;font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.tl-title{font-weight:700;margin-bottom:8px;}
+.tl-text{color:var(--text2);font-size:0.88em;line-height:1.7;}
+
+/* ===== SKILLS/PROGRESS ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;}
+.skill-item{margin-bottom:25px;}
+.skill-header{display:flex;justify-content:space-between;margin-bottom:10px;}
+.skill-name{font-weight:600;font-size:0.95em;}
+.skill-pct{color:var(--primary);font-weight:700;font-family:'Orbitron',monospace;}
+.skill-bar{
+  height:8px;background:rgba(108,99,255,0.1);
+  border-radius:4px;overflow:hidden;
+  border:1px solid rgba(108,99,255,0.1);
+}
+.skill-fill{
+  height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  width:0;transition:width 1.5s cubic-bezier(0.23,1,0.32,1);
+  box-shadow:0 0 10px var(--glow);
+  position:relative;overflow:hidden;
+}
+.skill-fill::after{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
+  animation:shimmer 2s infinite;
+}
+@keyframes shimmer{to{left:100%;}}
+
+/* ===== TEAM ===== */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:25px;}
+.team-card{
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:24px;padding:35px 25px;
+  text-align:center;transition:all 0.4s;
+  position:relative;overflow:hidden;
+}
+.team-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s;
+}
+.team-card:hover::before{transform:scaleX(1);}
+.team-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(108,99,255,0.3);
+  box-shadow:0 25px 60px rgba(0,0,0,0.3);
+}
+.team-avatar{
+  width:90px;height:90px;border-radius:50%;
+  margin:0 auto 20px;font-size:2.5em;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(108,99,255,0.3),rgba(246,79,89,0.3));
+  border:3px solid rgba(108,99,255,0.3);
+  transition:all 0.4s;
+}
+.team-card:hover .team-avatar{
+  border-color:var(--primary);
+  box-shadow:0 0 25px var(--glow);
+  transform:scale(1.05);
+}
+.team-name{font-size:1.05em;font-weight:700;margin-bottom:5px;}
+.team-role{color:var(--primary);font-size:0.85em;font-weight:600;margin-bottom:12px;}
+.team-bio{color:var(--text2);font-size:0.82em;line-height:1.7;}
+.team-socials{display:flex;justify-content:center;gap:10px;margin-top:15px;}
+.team-socials a{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(108,99,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);font-size:0.85em;
+  text-decoration:none;transition:all 0.3s;
+}
+.team-socials a:hover{background:var(--primary);color:white;box-shadow:0 0 15px var(--glow);}
+
+/* ===== GALLERY / LIGHTBOX ===== */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
+}
+.gallery-item{
+  border-radius:16px;overflow:hidden;
+  aspect-ratio:1;cursor:pointer;position:relative;
+  transition:all 0.4s;
+}
+.gallery-item:hover{transform:scale(1.05);z-index:2;box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+.gallery-img{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5em;
+}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:rgba(108,99,255,0.7);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 0.3s;
+  font-size:2em;color:white;
+}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.95);
+  display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(20px);
+}
+.lightbox.open{display:flex;}
+.lightbox-content{
+  max-width:800px;width:90%;
+  background:var(--card);border-radius:24px;
+  overflow:hidden;position:relative;
+  animation:lightbox-in 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+@keyframes lightbox-in{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lightbox-close{
+  position:absolute;top:15px;right:15px;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(246,79,89,0.2);border:1px solid rgba(246,79,89,0.3);
+  color:var(--secondary);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2em;transition:all 0.3s;z-index:1;
+}
+.lightbox-close:hover{background:var(--secondary);color:white;}
+.lightbox-inner{
+  height:400px;display:flex;align-items:center;
+  justify-content:center;font-size:5em;
+}
+.lightbox-info{padding:25px;}
+.lightbox-title{font-size:1.2em;font-weight:700;margin-bottom:8px;}
+.lightbox-desc{color:var(--text2);font-size:0.9em;line-height:1.8;}
+
+/* ===== DOCS ===== */
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.doc-card{
+  background:rgba(22,22,58,0.6);
+  border:1px solid rgba(108,99,255,0.15);
+  border-radius:16px;padding:25px;
+  display:flex;gap:20px;align-items:flex-start;
+  transition:all 0.3s;cursor:pointer;
+}
+.doc-card:hover{
+  border-color:rgba(108,99,255,0.4);
+  transform:translateX(5px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+.doc-type-icon{
+  width:50px;height:50px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4em;flex-shrink:0;
+}
+.doc-info h4{font-weight:700;margin-bottom:5px;}
+.doc-info p{color:var(--text2);font-size:0.82em;line-height:1.6;}
+.doc-meta{display:flex;gap:10px;margin-top:8px;}
+.doc-badge{
+  background:rgba(108,99,255,0.15);
+  color:var(--primary);padding:2px 10px;
+  border-radius:50px;font-size:0.72em;font-weight:600;
+}
+
+/* ===== MUSIC/PLAYER ===== */
+.player-card{
+  background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(246,79,89,0.1));
+  border:1px solid rgba(108,99,255,0.3);
+  border-radius:24px;padding:35px;
+  max-width:500px;margin:0 auto;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(108,99,255,0.2);
+}
+.player-cover{
+  width:180px;height:180px;border-radius:50%;
+  margin:0 auto 25px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:4em;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  box-shadow:0 20px 50px var(--glow);
+  transition:transform 0.1s;
+}
+.player-cover.spinning{animation:spin 4s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.player-title{font-size:1.3em;font-weight:700;margin-bottom:5px;}
+.player-artist{color:var(--text2);font-size:0.9em;margin-bottom:25px;}
+.player-progress{
+  width:100%;height:6px;background:rgba(108,99,255,0.2);
+  border-radius:3px;margin:0 auto 10px;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.player-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  border-radius:3px;transition:width 0.1s;
+}
+.player-time{display:flex;justify-content:space-between;color:var(--text2);font-size:0.8em;margin-bottom:20px;}
+.player-controls{display:flex;justify-content:center;align-items:center;gap:20px;}
+.ctrl-btn{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(108,99,255,0.3);
+  background:rgba(108,99,255,0.1);
+  color:var(--text);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1em;transition:all 0.3s;
+}
+.ctrl-btn:hover{background:rgba(108,99,255,0.2);transform:scale(1.1);}
+.ctrl-btn.main{
+  width:58px;height:58px;font-size:1.3em;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  border:none;color:white;
+  box-shadow:0 10px 25px var(--glow);
+}
+.ctrl-btn.main:hover{transform:scale(1.15);}
+
+/* ===== NOTIFICATIONS ===== */
+.notif-stack{
+  position:fixed;bottom:30px;right:30px;
+  z-index:9998;display:flex;
+  flex-direction:column-reverse;gap:10px;
+}
+.notif{
+  background:rgba(22,22,58,0.95);
+  border:1px solid rgba(108,99,255,0.3);
+  border-radius:14px;padding:16px 22px;
+  min-width:280px;max-width:360px;
+  display:flex;align-items:center;gap:12px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+  animation:notif-in 0.4s cubic-bezier(0.23,1,0.32,1);
+  cursor:pointer;
+}
+.notif:hover{transform:scale(1.02);}
+@keyframes notif-in{from{transform:translateX(100px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.notif-icon{font-size:1.4em;flex-shrink:0;}
+.notif-text{flex:1;}
+.notif-title{font-weight:700;font-size:0.9em;margin-bottom:3px;}
+.notif-msg{color:var(--text2);font-size:0.82em;}
+.notif.success{border-color:rgba(67,233,123,0.4);}
+.notif.error{border-color:rgba(246,79,89,0.4);}
+.notif.warning{border-color:rgba(254,209,64,0.4);}
+
+/* ===== FOOTER ===== */
+footer{
+  background:rgba(5,5,15,0.95);
+  border-top:1px solid rgba(108,99,255,0.15);
+  padding:70px 40px 30px;
+  position:relative;z-index:1;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px;max-width:1200px;margin:0 auto 50px;
+}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+.footer-brand .logo{font-size:1.6em;display:block;margin-bottom:15px;}
+.footer-brand p{color:var(--text2);font-size:0.88em;line-height:1.8;margin-bottom:20px;}
+.footer-social{display:flex;gap:10px;}
+.footer-social a{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(108,99,255,0.15);
+  border:1px solid rgba(108,99,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);text-decoration:none;
+  transition:all 0.3s;
+}
+.footer-social a:hover{background:var(--primary);color:white;border-color:var(--primary);box-shadow:0 0 15px var(--glow);}
+.footer-col h4{font-weight:700;margin-bottom:20px;font-size:0.95em;}
+.footer-col a{
+  display:block;color:var(--text2);
+  text-decoration:none;font-size:0.88em;
+  margin-bottom:10px;transition:all 0.3s;
+  padding-left:0;
+}
+.footer-col a:hover{color:var(--primary);padding-left:5px;}
+.footer-bottom{
+  text-align:center;
+  border-top:1px solid rgba(108,99,255,0.1);
+  padding-top:30px;color:var(--text2);
+  font-size:0.85em;max-width:1200px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:15px;
+}
+
+/* ===== LOADING SCREEN ===== */
+#loading-screen{
+  position:fixed;inset:0;z-index:99999;
+  background:var(--dark);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:20px;transition:opacity 0.6s,visibility 0.6s;
+}
+#loading-screen.hidden{opacity:0;visibility:hidden;}
+.loader-logo{
+  font-family:'Orbitron',monospace;
+  font-size:2em;font-weight:900;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.loader-bar-wrap{width:200px;height:3px;background:rgba(108,99,255,0.2);border-radius:2px;}
+.loader-bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));width:0;border-radius:2px;transition:width 0.1s;}
+.loader-text{color:var(--text2);font-size:0.8em;}
+
+/* ===== THREE.JS CANVAS ===== */
+#three-canvas{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;opacity:0.3;
+}
+
+/* ===== MOBILE NAV ===== */
+@media(max-width:900px){
+  nav{
+    display:none;position:fixed;
+    top:70px;left:0;right:0;bottom:0;
+    background:rgba(10,10,26,0.98);
+    backdrop-filter:blur(20px);
+    flex-direction:column;align-items:center;
+    justify-content:center;gap:8px;
+    z-index:999;
+  }
+  nav.open{display:flex;}
+  nav a{font-size:1.1em;padding:12px 30px;width:100%;max-width:300px;text-align:center;}
+  .nav-toggle{display:block;}
+}
+
+/* ===== BACK TO TOP ===== */
+#back-top{
+  position:fixed;bottom:100px;right:30px;
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1em;z-index:500;
+  opacity:0;visibility:hidden;
+  transition:all 0.3s;
+  box-shadow:0 10px 25px var(--glow);
+}
+#back-top.show{opacity:1;visibility:visible;}
+#back-top:hover{transform:translateY(-3px);}
+
+/* ===== GLITCH TEXT ===== */
+.glitch{position:relative;}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background:inherit;
+}
+.glitch::before{
+  animation:glitch-1 2s infinite;
+  clip-path:polygon(0 0,100% 0,100% 45%,0 45%);
+  transform:translateX(-2px);
+  color:var(--secondary);
+}
+.glitch::after{
+  animation:glitch-2 2s infinite;
+  clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);
+  transform:translateX(2px);
+  color:var(--primary);
+}
+@keyframes glitch-1{0%,95%,100%{transform:translateX(-2px);}97%{transform:translateX(2px);}}
+@keyframes glitch-2{0%,95%,100%{transform:translateX(2px);}97%{transform:translateX(-2px);}}
+
+/* ===== TYPING CURSOR ===== */
+.typed-cursor{
+  display:inline-block;width:3px;
+  background:var(--primary);
+  animation:blink 0.8s step-end infinite;
+  vertical-align:middle;margin-left:3px;
+}
+@keyframes blink{50%{opacity:0;}}
+
+/* ===== TABLE ===== */
+.fancy-table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;}
+.fancy-table th{
+  background:linear-gradient(135deg,rgba(108,99,255,0.3),rgba(246,79,89,0.2));
+  padding:16px 20px;text-align:left;font-size:0.88em;
+  letter-spacing:1px;text-transform:uppercase;color:var(--primary);
+}
+.fancy-table td{
+  padding:16px 20px;border-bottom:1px solid rgba(108,99,255,0.08);
+  font-size:0.9em;color:var(--text2);transition:all 0.2s;
+}
+.fancy-table tr:hover td{background:rgba(108,99,255,0.05);color:var(--text);}
+.fancy-table tr:last-child td{border-bottom:none;}
+
+/* ===== MINI GAME ===== */
+#game-canvas{
+  border:2px solid rgba(108,99,255,0.3);
+  border-radius:12px;cursor:crosshair;
+  display:block;max-width:100%;
+  box-shadow:0 0 30px rgba(108,99,255,0.2);
+}
+
+/* ===== WEATHER WIDGET ===== */
+.weather-card{
+  background:linear-gradient(135deg,rgba(79,172,254,0.15),rgba(0,242,254,0.1));
+  border:1px solid rgba(79,172,254,0.3);
+  border-radius:24px;padding:35px;max-width:400px;
+}
+.weather-main{display:flex;align-items:center;gap:25px;margin-bottom:25px;}
+.weather-icon{font-size:5em;}
+.weather-temp{font-family:'Orbitron',monospace;font-size:3.5em;font-weight:900;color:var(--accent);}
+.weather-desc{color:var(--text2);font-size:1.1em;margin-top:5px;}
+.weather-details{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+.weather-detail{
+  background:rgba(79,172,254,0.08);border-radius:12px;
+  padding:15px;text-align:center;
+}
+.weather-detail-label{color:var(--text2);font-size:0.8em;margin-bottom:5px;}
+.weather-detail-value{font-weight:700;color:var(--accent);font-size:1.1em;}
+
+/* ===== CALCULATOR ===== */
+.calc-wrap{max-width:320px;margin:0 auto;}
+.calc-display{
+  background:rgba(10,10,26,0.8);border:1px solid rgba(108,99,255,0.3);
+  border-radius:16px;padding:20px 20px 10px;margin-bottom:15px;text-align:right;
+}
+.calc-expr{color:var(--text2);font-size:0.85em;min-height:20px;margin-bottom:5px;}
+.calc-val{font-family:'Orbitron',monospace;font-size:2.2em;font-weight:700;word-break:break-all;}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.calc-btn{
+  padding:18px;border-radius:12px;border:none;
+  font-size:1em;font-weight:600;cursor:pointer;
+  transition:all 0.2s;font-family:'Inter',sans-serif;
+}
+.calc-btn:hover{transform:scale(1.05);}
+.calc-btn:active{transform:scale(0.95);}
+.calc-num{background:rgba(22,22,58,0.8);color:var(--text);border:1px solid rgba(108,99,255,0.1);}
+.calc-num:hover{background:rgba(108,99,255,0.15);border-color:rgba(108,99,255,0.3);}
+.calc-op{background:rgba(108,99,255,0.2);color:var(--primary);border:1px solid rgba(108,99,255,0.2);}
+.calc-op:hover{background:rgba(108,99,255,0.35);}
+.calc-eq{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;border:none;box-shadow:0 5px 15px var(--glow);}
+.calc-clear{background:rgba(246,79,89,0.2);color:var(--secondary);border:1px solid rgba(246,79,89,0.2);}
+.calc-clear:hover{background:rgba(246,79,89,0.3);}
+
+/* ===== QUIZ ===== */
+.quiz-card{
+  background:rgba(22,22,58,0.7);border:1px solid rgba(108,99,255,0.2);
+  border-radius:24px;padding:40px;max-width:600px;margin:0 auto;
+}
+.quiz-progress{
+  height:6px;background:rgba(108,99,255,0.1);
+  border-radius:3px;margin-bottom:30px;overflow:hidden;
+}
+.quiz-prog-bar{
+  height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));
+  border-radius:3px;transition:width 0.5s;
+}
+.quiz-question{font-size:1.2em;font-weight:700;margin-bottom:25px;line-height:1.6;}
+.quiz-options{display:flex;flex-direction:column;gap:12px;}
+.quiz-option{
+  padding:16px 22px;border-radius:12px;cursor:pointer;
+  background:rgba(108,99,255,0.08);
+  border:2px solid rgba(108,99,255,0.15);
+  transition:all 0.3s;text-align:left;
+  color:var(--text);font-size:0.95em;
+}
+.quiz-option:hover{background:rgba(108,99,255,0.2);border-color:rgba(108,99,255,0.4);}
+.quiz-option.correct{background:rgba(67,233,123,0.2);border-color:var(--accent);color:var(--accent);}
+.quiz-option.wrong{background:rgba(246,79,89,0.2);border-color:var(--secondary);color:var(--secondary);}
+
+/* ===== GLOWING LINES ===== */
+.glow-line{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--primary),transparent);
+  opacity:0.3;margin:0;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="loader-logo">✦ NEXUS</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-text" id="loaderText">Khởi động hệ thống...</div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-follower"></div>
+
+<!-- PARTICLES -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- BACK TO TOP -->
+<button id="back-top" title="Lên đầu trang"><i class="fas fa-chevron-up"></i></button>
+
+<!-- NOTIFICATIONS -->
+<div class="notif-stack" id="notifStack"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+    <div class="lightbox-inner" id="lightboxImg"></div>
+    <div class="lightbox-info">
+      <div class="lightbox-title" id="lightboxTitle"></div>
+      <div class="lightbox-desc" id="lightboxDesc"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <div class="header-inner">
+    <div class="logo">✦ NEXUS</div>
+    <button class="nav-toggle" id="navToggle" onclick="toggleNav()">
+      <i class="fas fa-bars" id="navIcon"></i>
+    </button>
+    <nav id="mainNav">
+      <a href="#" class="active" onclick="showPage('home',this)">🏠 Trang Chủ</a>
+      <a href="#" onclick="showPage('about',this)">👥 Giới Thiệu</a>
+      <a href="#" onclick="showPage('gallery',this)">🖼️ Gallery</a>
+      <a href="#" onclick="showPage('video',this)">🎬 Video</a>
+      <a href="#" onclick="showPage('docs',this)">📄 Tài Liệu</a>
+      <a href="#" onclick="showPage('map',this)">🗺️ Bản Đồ</a>
+      <a href="#" onclick="showPage('tools',this)">⚙️ Tiện Ích</a>
+      <a href="#" onclick="showPage('faq',this)">❓ FAQ</a>
+      <a href="#" onclick="showPage('blog',this)">✍️ Blog</a>
+      <a href="#" onclick="showPage('team',this)">🌟 Đội Nhóm</a>
+      <a href="#" onclick="showPage('timeline',this)">📅 Timeline</a>
+      <a href="#" onclick="showPage('games',this)">🎮 Games</a>
+      <a href="#" onclick="showPage('contact',this)">📬 Liên Hệ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ██████████ PAGE 1: HOME ██████████ -->
+<div id="page-home" class="page active">
+  <div class="hero" style="position:relative;">
+    <canvas id="three-canvas"></canvas>
+    <div class="floating-shape" style="width:400px;height:400px;background:var(--primary);top:-100px;right:-100px;animation-delay:0s;"></div>
+    <div class="floating-shape" style="width:300px;height:300px;background:var(--secondary);bottom:-80px;left:-80px;animation-delay:3s;"></div>
+    <div class="floating-shape" style="width:200px;height:200px;background:var(--accent);top:50%;left:10%;animation-delay:6s;"></div>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-circle" style="font-size:0.5em;color:var(--accent);"></i> Website Đa Phương Tiện Premium</div>
+      <h1>
+        Trải nghiệm<br/>
+        <span class="gradient-text" id="heroTitle">Tương Lai Số</span>
+      </h1>
+      <p>Khám phá website với <strong>13 trang</strong> đầy đủ tính năng: Gallery 3D, Video, Maps, FAQ, Blog, Games và nhiều hơn nữa với hiệu ứng cực đẹp.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('gallery',null)"><span>🚀 Khám Phá Ngay</span></button>
+        <button class="btn-outline" onclick="showPage('about',null)">📖 Tìm Hiểu Thêm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="glow-line"></div>
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item" data-aos="fade-up">
+        <span class="stat-number" data-count="13">0</span>
+        <div class="stat-label">Trang Web</div>
+      </div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+        <span class="stat-number" data-count="50">0</span>
+        <div class="stat-label">Hiệu Ứng JS</div>
+      </div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+        <span class="stat-number" data-count="1200">0</span>
+        <div class="stat-label">Dòng Code</div>
+      </div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+        <span class="stat-number" data-count="100">0</span>
+        <div class="stat-label">% Responsive</div>
+      </div>
+    </div>
+  </div>
+  <div class="glow-line"></div>
+
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">✨ Tính Năng</div>
+      <h2 class="section-title">Những Gì Website Cung Cấp</h2>
+      <p class="section-subtitle">Tích hợp đầy đủ công nghệ hiện đại nhất năm 2026</p>
+    </div>
+    <div class="cards-grid">
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="card-icon">🎨</div>
+        <div class="card-title">UI/UX Premium</div>
+        <div class="card-text">Thiết kế Glassmorphism kết hợp Dark Theme cực đẹp với hiệu ứng gradient động.</div>
+        <span class="card-tag">Design</span>
+      </div>
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Hiệu Ứng GSAP</div>
+        <div class="card-text">Animations mượt mà với GreenSock, particles system và 3D transforms.</div>
+        <span class="card-tag">Animation</span>
+      </div>
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="card-icon">📱</div>
+        <div class="card-title">Fully Responsive</div>
+        <div class="card-text">Hiển thị hoàn hảo trên mọi thiết bị từ điện thoại đến màn hình 4K.</div>
+        <span class="card-tag">Responsive</span>
+      </div>
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">Mini Games</div>
+        <div class="card-text">Các trò chơi nhỏ như Snake, Quiz và Canvas Drawing được tích hợp sẵn.</div>
+        <span class="card-tag">Interactive</span>
+      </div>
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="card-icon">🔊</div>
+        <div class="card-title">Music Player</div>
+        <div class="card-text">Trình phát nhạc tích hợp với giao diện đẹp và hiệu ứng âm nhạc.</div>
+        <span class="card-tag">Media</span>
+      </div>
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Multi Embeds</div>
+        <div class="card-text">Nhúng YouTube, Google Maps, Google Forms, Google Docs trực tiếp.</div>
+        <span class="card-tag">Embed</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 2: ABOUT ██████████ -->
+<div id="page-about" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">💡 Về Chúng Tôi</div>
+      <h2 class="section-title">Câu Chuyện Của Chúng Tôi</h2>
+      <p class="section-subtitle">Một nhóm đam mê công nghệ, luôn khám phá và sáng tạo</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1000px;margin:0 auto 80px;" data-aos="fade-up">
+      <div>
+        <div class="section-tag" style="margin-bottom:20px;">Sứ Mệnh</div>
+        <h3 style="font-size:1.8em;font-weight:800;margin-bottom:20px;line-height:1.3;">Xây dựng trải nghiệm web <span style="color:var(--primary);">đáng nhớ</span></h3>
+        <p style="color:var(--text2);line-height:1.9;margin-bottom:20px;">Chúng tôi tin rằng mỗi website nên là một tác phẩm nghệ thuật - không chỉ đẹp về hình thức mà còn hoạt động hoàn hảo về mặt kỹ thuật.</p>
+        <p style="color:var(--text2);line-height:1.9;">Từ thiết kế UI/UX hiện đại đến tích hợp công nghệ AI, chúng tôi luôn đi đầu trong việc áp dụng những xu hướng mới nhất.</p>
+        <div style="display:flex;gap:30px;margin-top:30px;">
+          <div><div style="font-family:'Orbitron',monospace;font-size:2em;font-weight:900;color:var(--primary);">5+</div><div style="color:var(--text2);font-size:0.85em;">Năm kinh nghiệm</div></div>
+          <div><div style="font-family:'Orbitron',monospace;font-size:2em;font-weight:900;color:var(--secondary);">200+</div><div style="color:var(--text2);font-size:0.85em;">Dự án hoàn thành</div></div>
+          <div><div style="font-family:'Orbitron',monospace;font-size:2em;font-weight:900;color:var(--accent);">50+</div><div style="color:var(--text2);font-size:0.85em;">Khách hàng</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+        <div class="glass-card" style="text-align:center;padding:25px 20px;">
+          <div style="font-size:2.5em;margin-bottom:12px;">🎯</div>
+          <div style="font-weight:700;margin-bottom:8px;">Mục tiêu rõ ràng</div>
+          <div style="color:var(--text2);font-size:0.85em;">Luôn hướng đến chất lượng cao nhất</div>
+        </div>
+        <div class="glass-card" style="text-align:center;padding:25px 20px;margin-top:20px;">
+          <div style="font-size:2.5em;margin-bottom:12px;">💎</div>
+          <div style="font-weight:700;margin-bottom:8px;">Chất lượng cao</div>
+          <div style="color:var(--text2);font-size:0.85em;">Code sạch, hiệu năng tốt</div>
+        </div>
+        <div class="glass-card" style="text-align:center;padding:25px 20px;margin-top:-20px;">
+          <div style="font-size:2.5em;margin-bottom:12px;">🚀</div>
+          <div style="font-weight:700;margin-bottom:8px;">Đổi mới liên tục</div>
+          <div style="color:var(--text2);font-size:0.85em;">Luôn cập nhật công nghệ mới</div>
+        </div>
+        <div class="glass-card" style="text-align:center;padding:25px 20px;">
+          <div style="font-size:2.5em;margin-bottom:12px;">🤝</div>
+          <div style="font-weight:700;margin-bottom:8px;">Hợp tác tốt</div>
+          <div style="color:var(--text2);font-size:0.85em;">Làm việc nhóm hiệu quả</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📊 Kỹ Năng</div>
+      <h2 class="section-title">Công Nghệ Chúng Tôi Dùng</h2>
+    </div>
+    <div class="skills-grid" data-aos="fade-up" id="skillsSection">
+      <div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">HTML/CSS</span><span class="skill-pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">JavaScript</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">GSAP Animations</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-fill" data-width="82"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Google Sites</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-width="90"></div></div></div>
+      </div>
+      <div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">UI/UX Design</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-width="85"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Google Workspace</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-fill" data-width="92"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Responsive Design</span><span class="skill-pct">96%</span></div><div class="skill-bar"><div class="skill-fill" data-width="96"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Canvas / WebGL</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-width="70"></div></div></div>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:80px;" data-aos="fade-up">
+      <div class="section-tag">🔗 Mạng Xã Hội</div>
+      <h2 class="section-title">Kết Nối Với Chúng Tôi</h2>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:15px;justify-content:center;" data-aos="fade-up">
+      <a href="https://facebook.com" target="_blank" style="display:flex;align-items:center;gap:12px;padding:15px 25px;background:rgba(24,119,242,0.15);border:1px solid rgba(24,119,242,0.3);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.3s;font-weight:600;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 15px 30px rgba(24,119,242,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''"><i class="fab fa-facebook" style="font-size:1.4em;color:#1877f2;"></i>Facebook</a>
+      <a href="https://youtube.com" target="_blank" style="display:flex;align-items:center;gap:12px;padding:15px 25px;background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.3s;font-weight:600;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><i class="fab fa-youtube" style="font-size:1.4em;color:#ff0000;"></i>YouTube</a>
+      <a href="https://instagram.com" target="_blank" style="display:flex;align-items:center;gap:12px;padding:15px 25px;background:rgba(225,48,108,0.1);border:1px solid rgba(225,48,108,0.3);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.3s;font-weight:600;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><i class="fab fa-instagram" style="font-size:1.4em;color:#e1306c;"></i>Instagram</a>
+      <a href="https://github.com" target="_blank" style="display:flex;align-items:center;gap:12px;padding:15px 25px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.3s;font-weight:600;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><i class="fab fa-github" style="font-size:1.4em;"></i>GitHub</a>
+      <a href="https://zalo.me" target="_blank" style="display:flex;align-items:center;gap:12px;padding:15px 25px;background:rgba(0,120,255,0.1);border:1px solid rgba(0,120,255,0.3);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.3s;font-weight:600;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><i class="fas fa-comment-dots" style="font-size:1.4em;color:#0078ff;"></i>Zalo</a>
+      <a href="mailto:email@example.com" style="display:flex;align-items:center;gap:12px;padding:15px 25px;background:rgba(234,67,53,0.1);border:1px solid rgba(234,67,53,0.3);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.3s;font-weight:600;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><i class="fas fa-envelope" style="font-size:1.4em;color:#ea4335;"></i>Email</a>
+    </div>
+  </div>
+</div>
+
+<!-- ███���██████ PAGE 3: GALLERY ██████████ -->
+<div id="page-gallery" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📸 Image Carousel</div>
+      <h2 class="section-title">Thư Viện Hình Ảnh</h2>
+      <p class="section-subtitle">Gallery 3D với hiệu ứng chuyển động mượt mà</p>
+    </div>
+    <div class="carousel-wrap" data-aos="fade-up">
+      <div class="carousel-3d" id="carousel3d">
+        <div class="carousel-3d-inner" id="c3dInner">
+          <div class="carousel-3d-slide slide-0" id="slide-0" onclick="openLightbox(0,'🌸 Thiên Nhiên','Khung cảnh thiên nhiên tươi đẹp với sắc hoa rực rỡ.')"><div class="slide-content">🌸<br/>Thiên Nhiên</div></div>
+          <div class="carousel-3d-slide slide-1" id="slide-1" onclick="openLightbox(1,'🏙️ Thành Phố','Góc nhìn toàn cảnh thành phố hiện đại về đêm.')"><div class="slide-content">🏙️<br/>Thành Phố</div></div>
+          <div class="carousel-3d-slide slide-2" id="slide-2" onclick="openLightbox(2,'🌊 Biển Cả','Đại dương bao la với sóng nước trong xanh.')"><div class="slide-content">🌊<br/>Biển Cả</div></div>
+          <div class="carousel-3d-slide slide-3" id="slide-3" onclick="openLightbox(3,'🏔️ Núi Rừng','Dãy núi hùng vĩ bao phủ bởi rừng xanh bất tận.')"><div class="slide-content">🏔️<br/>Núi Rừng</div></div>
+          <div class="carousel-3d-slide slide-4" id="slide-4" onclick="openLightbox(4,'🌅 Bình Minh','Khoảnh khắc bình minh rực rỡ trên mặt biển.')"><div class="slide-content">🌅<br/>Bình Minh</div></div>
+          <div class="carousel-3d-slide slide-5" id="slide-5" onclick="openLightbox(5,'🎆 Pháo Hoa','Màn pháo hoa rực rỡ đêm giao thừa.')"><div class="slide-content">🎆<br/>Pháo Hoa</div></div>
+          <div class="carousel-3d-slide slide-6" id="slide-6" onclick="openLightbox(6,'🌻 Cánh Đồng','Cánh đồng hoa hướng dương bạt ngàn.')"><div class="slide-content">🌻<br/>Cánh Đồng</div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+        <div class="carousel-dots" id="cDots"></div>
+        <button onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div style="margin-top:70px;">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-tag">🖼️ Lightbox Gallery</div>
+        <h2 class="section-title">Bộ Sưu Tập Ảnh</h2>
+        <p class="section-subtitle">Nhấp vào ảnh để xem chi tiết với hiệu ứng Lightbox</p>
+      </div>
+      <div class="gallery-grid" data-aos="fade-up">
+        <div class="gallery-item" onclick="openLightbox(0,'🌸 Thiên Nhiên','Khung cảnh thiên nhiên tươi đẹp.')"><div class="gallery-img" style="background:linear-gradient(135deg,#667eea,#764ba2);">🌸</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(1,'🏙️ Thành Phố','Góc nhìn thành phố về đêm.')"><div class="gallery-img" style="background:linear-gradient(135deg,#f093fb,#f5576c);">🏙️</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(2,'🌊 Biển Cả','Đại dương trong xanh.')"><div class="gallery-img" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">🌊</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(3,'🏔️ Núi Rừng','Dãy núi hùng vĩ.')"><div class="gallery-img" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">🏔️</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(4,'🌅 Bình Minh','Bình minh rực rỡ.')"><div class="gallery-img" style="background:linear-gradient(135deg,#fa709a,#fee140);">🌅</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(5,'🎆 Pháo Hoa','Pháo hoa rực rỡ.')"><div class="gallery-img" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);">🎆</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(6,'🌻 Cánh Đồng','Cánh đồng bát ngát.')"><div class="gallery-img" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">🌻</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(0,'🦋 Bướm Bay','Cánh bướm rập rờn.')"><div class="gallery-img" style="background:linear-gradient(135deg,#84fab0,#8fd3f4);">🦋</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(1,'🌙 Đêm Khuya','Bầu trời đêm đầy sao.')"><div class="gallery-img" style="background:linear-gradient(135deg,#30cfd0,#330867);">🌙</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 4: VIDEO ██████████ -->
+<div id="page-video" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">🎬 YouTube Embed</div>
+      <h2 class="section-title">Trang Video</h2>
+      <p class="section-subtitle">Video được nhúng trực tiếp từ YouTube</p>
+    </div>
+    <div class="video-grid" data-aos="fade-up">
+      <div class="video-card">
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-info">
+          <div class="video-title">🎵 Video Nổi Bật #1</div>
+          <div class="video-meta"><span><i class="fas fa-eye"></i> 1.2M lượt xem</span><span><i class="fas fa-thumbs-up"></i> 50K</span><span><i class="fas fa-clock"></i> 3:32</span></div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/9bZkp7q19f0" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-info">
+          <div class="video-title">🎶 Video Nổi Bật #2</div>
+          <div class="video-meta"><span><i class="fas fa-eye"></i> 4.6B lượt xem</span><span><i class="fas fa-thumbs-up"></i> 24M</span><span><i class="fas fa-clock"></i> 4:13</span></div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/JGwWNGJdvx8" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-info">
+          <div class="video-title">🎤 Video Nổi Bật #3</div>
+          <div class="video-meta"><span><i class="fas fa-eye"></i> 7.1B lượt xem</span><span><i class="fas fa-thumbs-up"></i> 32M</span><span><i class="fas fa-clock"></i> 3:59</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:60px;" data-aos="fade-up">
+      <div class="section-header">
+        <div class="section-tag">🎧 Music Player</div>
+        <h2 class="section-title">Trình Phát Nhạc</h2>
+      </div>
+      <div class="player-card">
+        <div class="player-cover" id="playerCover">🎵</div>
+        <div class="player-title" id="playerTitle">Chưa có bài nhạc</div>
+        <div class="player-artist" id="playerArtist">-- Chọn bài để phát --</div>
+        <div class="player-progress" id="playerProgress" onclick="seekMusic(event)">
+          <div class="player-bar" id="playerBar"></div>
+        </div>
+        <div class="player-time"><span id="currentTime">0:00</span><span id="totalTime">0:00</span></div>
+        <div class="player-controls">
+          <button class="ctrl-btn" onclick="prevTrack()" title="Trước"><i class="fas fa-step-backward"></i></button>
+          <button class="ctrl-btn main" id="playBtn" onclick="togglePlay()"><i class="fas fa-play"></i></button>
+          <button class="ctrl-btn" onclick="nextTrack()" title="Tiếp theo"><i class="fas fa-step-forward"></i></button>
+          <button class="ctrl-btn" onclick="shuffleTrack()" title="Ngẫu nhiên"><i class="fas fa-random"></i></button>
+        </div>
+        <div style="margin-top:20px;">
+          <div style="color:var(--text2);font-size:0.8em;margin-bottom:10px;text-align:left;">📋 Danh sách nhạc:</div>
+          <div id="trackList" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 5: DOCS ██████████ -->
+<div id="page-docs" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📄 Google Docs Embed</div>
+      <h2 class="section-title">Tài Liệu Học Tập</h2>
+      <p class="section-subtitle">Tài liệu nhúng từ Google Docs và Google Drive</p>
+    </div>
+    <div style="max-width:900px;margin:0 auto;" data-aos="fade-up">
+      <div class="map-wrapper" style="margin-bottom:40px;">
+        <iframe src="https://docs.google.com/document/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms/pub?embedded=true" style="width:100%;height:600px;" title="Google Docs"></iframe>
+      </div>
+    </div>
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📁 Kho Tài Liệu</div>
+      <h2 class="section-title">Danh Sách Tài Liệu</h2>
+    </div>
+    <div class="docs-grid" data-aos="fade-up">
+      <div class="doc-card"><div class="doc-type-icon" style="background:rgba(234,67,53,0.2);">📕</div><div class="doc-info"><h4>Giáo trình Tin học 11</h4><p>Tài liệu chuẩn chương trình BGD 2025-2026</p><div class="doc-meta"><span class="doc-badge">PDF</span><span class="doc-badge">15.2 MB</span></div></div></div>
+      <div class="doc-card"><div class="doc-type-icon" style="background:rgba(52,168,83,0.2);">📗</div><div class="doc-info"><h4>Bài tập Excel nâng cao</h4><p>250 bài tập từ cơ bản đến nâng cao</p><div class="doc-meta"><span class="doc-badge">Google Sheets</span></div></div></div>
+      <div class="doc-card"><div class="doc-type-icon" style="background:rgba(66,133,244,0.2);">📘</div><div class="doc-info"><h4>Đề cương ôn thi HKI</h4><p>Tổng hợp kiến thức 6 môn học kỳ I</p><div class="doc-meta"><span class="doc-badge">Google Docs</span><span class="doc-badge">Hot</span></div></div></div>
+      <div class="doc-card"><div class="doc-type-icon" style="background:rgba(251,188,5,0.2);">📙</div><div class="doc-info"><h4>Slide Google Sites</h4><p>Hướng dẫn xây dựng website bằng Google Sites</p><div class="doc-meta"><span class="doc-badge">Slides</span><span class="doc-badge">New</span></div></div></div>
+      <div class="doc-card"><div class="doc-type-icon" style="background:rgba(108,99,255,0.2);">📓</div><div class="doc-info"><h4>Tài liệu HTML/CSS/JS</h4><p>Lộ trình học frontend development 2026</p><div class="doc-meta"><span class="doc-badge">PDF</span><span class="doc-badge">8.7 MB</span></div></div></div>
+      <div class="doc-card"><div class="doc-type-icon" style="background:rgba(246,79,89,0.2);">📒</div><div class="doc-info"><h4>Bảng điểm học kỳ</h4><p>Theo dõi điểm số theo từng môn và từng kỳ</p><div class="doc-meta"><span class="doc-badge">Google Sheets</span></div></div></div>
+    </div>
+    <div style="margin-top:50px;" data-aos="fade-up">
+      <table class="fancy-table">
+        <thead><tr><th>Tên tài liệu</th><th>Loại</th><th>Cập nhật</th><th>Kích thước</th><th>Tải về</th></tr></thead>
+        <tbody>
+          <tr><td>📄 Giáo trình Tin học 11</td><td><span class="doc-badge">PDF</span></td><td>01/01/2026</td><td>15.2 MB</td><td><a href="#" style="color:var(--primary);text-decoration:none;" onclick="showNotif('success','Đang tải...','File sẽ tải xuống trong giây lát')">⬇️ Tải về</a></td></tr>
+          <tr><td>📊 Bài tập Excel</td><td><span class="doc-badge">Sheets</span></td><td>15/01/2026</td><td>2.1 MB</td><td><a href="#" style="color:var(--primary);text-decoration:none;" onclick="showNotif('success','Đang tải...','File sẽ tải xuống trong giây lát')">⬇️ Tải về</a></td></tr>
+          <tr><td>📝 Đề cương ôn thi</td><td><span class="doc-badge">Docs</span></td><td>20/01/2026</td><td>1.5 MB</td><td><a href="#" style="color:var(--primary);text-decoration:none;" onclick="showNotif('success','Đang tải...','File sẽ tải xuống trong giây lát')">⬇️ Tải về</a></td></tr>
+          <tr><td>🎨 Slide Google Sites</td><td><span class="doc-badge">Slides</span></td><td>25/01/2026</td><td>8.3 MB</td><td><a href="#" style="color:var(--primary);text-decoration:none;" onclick="showNotif('success','Đang tải...','File sẽ tải xuống trong giây lát')">⬇️ Tải về</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 6: MAP ██████████ -->
+<div id="page-map" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">🗺️ Google Maps</div>
+      <h2 class="section-title">Bản Đồ Địa Điểm</h2>
+      <p class="section-subtitle">Bản đồ tương tác được nhúng từ Google Maps</p>
+    </div>
+    <div class="map-wrapper" data-aos="fade-up" style="margin-bottom:50px;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4475395091154!2d106.70205731480692!3d10.77767726231735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4b3330bcc7%3A0x4db964d76bf6e18e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBLaG9hIGjhu41jIFThu7Egbmhpw6puIFRQLkhDTQ!5e0!3m2!1svi!2svn!4v1640000000000!5m2!1svi!2svn" style="width:100%;height:500px;" allowfullscreen loading="lazy" title="Google Maps"></iframe>
+    </div>
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📍 Địa Điểm</div>
+      <h2 class="section-title">Các Địa Điểm Nổi Bật</h2>
+    </div>
+    <div class="cards-grid" data-aos="fade-up">
+      <div class="glass-card"><div class="card-icon">🏫</div><div class="card-title">Trường Học</div><div class="card-text">123 Đường ABC, Phường XYZ, Quận 1, TP.HCM<br/><br/><i class="fas fa-phone"></i> 028-XXXX-XXXX</div><a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a></div>
+      <div class="glass-card"><div class="card-icon">📚</div><div class="card-title">Thư Viện</div><div class="card-text">456 Đường DEF, Phường UVW, Quận 3, TP.HCM<br/><br/><i class="fas fa-clock"></i> 7:00 - 17:00 các ngày</div><a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a></div>
+      <div class="glass-card"><div class="card-icon">🏟️</div><div class="card-title">Sân Vận Động</div><div class="card-text">789 Đường GHI, Phường RST, Quận 5, TP.HCM<br/><br/><i class="fas fa-users"></i> Sức chứa 50,000 người</div><a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 7: TOOLS ████████��█ -->
+<div id="page-tools" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">⚙️ HTML/JS Embed</div>
+      <h2 class="section-title">Góc Tiện Ích</h2>
+      <p class="section-subtitle">Các công cụ được tích hợp bằng HTML/CSS/JavaScript</p>
+    </div>
+    <div class="tools-grid" data-aos="fade-up">
+      <div class="tool-card" onclick="switchTool('clock')"><span class="tool-icon-big">🕐</span><div class="tool-name">Đồng Hồ Số</div><div class="tool-desc">Đồng hồ digital real-time với hiệu ứng đẹp</div></div>
+      <div class="tool-card" onclick="switchTool('calculator')"><span class="tool-icon-big">🔢</span><div class="tool-name">Máy Tính</div><div class="tool-desc">Máy tính khoa học với giao diện hiện đại</div></div>
+      <div class="tool-card" onclick="switchTool('weather')"><span class="tool-icon-big">🌤️</span><div class="tool-name">Thời Tiết</div><div class="tool-desc">Widget thời tiết đẹp mắt</div></div>
+      <div class="tool-card" onclick="switchTool('draw')"><span class="tool-icon-big">🎨</span><div class="tool-name">Vẽ Tranh</div><div class="tool-desc">Canvas vẽ tương tác với nhiều màu và bút</div></div>
+      <div class="tool-card" onclick="switchTool('qr')"><span class="tool-icon-big">📱</span><div class="tool-name">QR Generator</div><div class="tool-desc">Tạo mã QR từ văn bản hoặc URL</div></div>
+      <div class="tool-card" onclick="switchTool('colorpicker')"><span class="tool-icon-big">🎨</span><div class="tool-name">Color Picker</div><div class="tool-desc">Chọn màu và lấy mã HEX/RGB</div></div>
+    </div>
+    <div id="toolContent" style="margin-top:40px;"></div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 8: FAQ ██████████ -->
+<div id="page-faq" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">❓ Collapsible Groups</div>
+      <h2 class="section-title">Câu Hỏi Thường Gặp</h2>
+      <p class="section-subtitle">Nhấp vào câu hỏi để xem câu trả lời chi tiết</p>
+    </div>
+    <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:40px;" data-aos="fade-up">
+      <button onclick="filterFAQ('all',this)" class="btn-primary" style="padding:10px 22px;font-size:0.85em;"><span>Tất cả</span></button>
+      <button onclick="filterFAQ('tech',this)" class="btn-outline" style="padding:10px 22px;font-size:0.85em;">Kỹ thuật</button>
+      <button onclick="filterFAQ('design',this)" class="btn-outline" style="padding:10px 22px;font-size:0.85em;">Thiết kế</button>
+      <button onclick="filterFAQ('google',this)" class="btn-outline" style="padding:10px 22px;font-size:0.85em;">Google Sites</button>
+    </div>
+    <div class="faq-list" id="faqList" data-aos="fade-up">
+      <div class="faq-item" data-cat="google"><div class="faq-q" onclick="toggleFAQ(this)"><span>🌐 Google Sites là gì và tại sao nên dùng?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Google Sites là nền tảng tạo website miễn phí của Google, không cần biết lập trình. Ưu điểm: hoàn toàn miễn phí, tích hợp toàn bộ Google Workspace (Docs, Sheets, Forms, Maps, YouTube), responsive tự động, dễ cộng tác nhiều người. Lý tưởng cho học sinh, giáo viên và doanh nghiệp nhỏ.</div></div>
+      <div class="faq-item" data-cat="tech"><div class="faq-q" onclick="toggleFAQ(this)"><span>🖼️ Cách thêm Image Carousel vào Google Sites?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Bước 1: Vào chế độ chỉnh sửa. Bước 2: Nhấn nút "+" → Chọn "Image Carousel". Bước 3: Upload ảnh từ máy tính hoặc Google Drive. Bước 4: Kéo thả để sắp xếp thứ tự. Bước 5: Tùy chỉnh caption và kích thước. Bước 6: Lưu và Preview.</div></div>
+      <div class="faq-item" data-cat="tech"><div class="faq-q" onclick="toggleFAQ(this)"><span>🎬 Làm sao nhúng video YouTube vào trang web?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Cách 1 (Google Sites): Insert → YouTube → Dán link → Select. Cách 2 (HTML): Vào video YouTube → Chia sẻ → Nhúng → Sao chép iframe → Dán vào trang. Video sẽ phát trực tiếp với đầy đủ controls.</div></div>
+      <div class="faq-item" data-cat="tech"><div class="faq-q" onclick="toggleFAQ(this)"><span>🗺️ Cách nhúng Google Maps vào website?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Google Maps: Tìm địa điểm → Chia sẻ → Tab "Nhúng bản đồ" → Kích thước tùy ý → Sao chép HTML. Trong Google Sites: Insert → Embed → Dán mã. Trong HTML: Dán thẻ iframe vào nơi muốn hiển thị.</div></div>
+      <div class="faq-item" data-cat="google"><div class="faq-q" onclick="toggleFAQ(this)"><span>📝 Google Forms thu thập dữ liệu như thế nào?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Tạo form tại forms.google.com → Thiết kế câu hỏi → Nhấn "Gửi" → Tab nhúng → Sao chép iframe. Dữ liệu tự động lưu vào Google Sheets liên kết. Bạn có thể xem biểu đồ thống kê ngay trong Forms.</div></div>
+      <div class="faq-item" data-cat="design"><div class="faq-q" onclick="toggleFAQ(this)"><span>🎨 Glassmorphism là gì?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Glassmorphism là xu hướng thiết kế sử dụng hiệu ứng kính mờ (frosted glass). Đặc trưng: background trong suốt với blur, viền mỏng nhẹ, bóng đổ tinh tế. CSS: `background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);`</div></div>
+      <div class="faq-item" data-cat="tech"><div class="faq-q" onclick="toggleFAQ(this)"><span>⚡ GSAP là gì và dùng để làm gì?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">GSAP (GreenSock Animation Platform) là thư viện JavaScript tạo animation mượt nhất hiện nay. Dùng để: tạo timeline animations, scroll-triggered effects, morphing SVG, parallax. Hỗ trợ 60fps và tương thích mọi trình duyệt. Import CDN: `https://cdn.jsdelivr.net/npm/gsap`</div></div>
+      <div class="faq-item" data-cat="design"><div class="faq-q" onclick="toggleFAQ(this)"><span>📱 Website Responsive là gì?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Website responsive tự động điều chỉnh bố cục phù hợp với mọi kích thước màn hình (điện thoại, máy tính bảng, desktop). Kỹ thuật: CSS media queries, flexbox, CSS grid, viewport units (vw, vh). Google Sites tự động responsive mà không cần code thêm.</div></div>
+      <div class="faq-item" data-cat="google"><div class="faq-q" onclick="toggleFAQ(this)"><span>🔒 Bảo mật và quyền riêng tư trong Google Sites?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">Google Sites có 3 mức quyền: Công khai (Anyone), Có link (Anyone with link), Riêng tư (Specific people). Tất cả traffic được mã hóa HTTPS. Có thể giới hạn chỉ người trong tổ chức Google Workspace xem. Phù hợp cho cả trường học lẫn doanh nghiệp.</div></div>
+      <div class="faq-item" data-cat="tech"><div class="faq-q" onclick="toggleFAQ(this)"><span>🎯 AOS Library là gì?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="faq-a">AOS (Animate On Scroll) là thư viện CSS/JS tạo hiệu ứng xuất hiện khi cuộn trang. Cách dùng: Thêm `data-aos="fade-up"` vào element, khởi tạo `AOS.init()`. Hỗ trợ hơn 20 hiệu ứng: fade, flip, zoom, slide... Rất nhẹ (chỉ 6KB gzip).</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 9: BLOG ██████████ -->
+<div id="page-blog" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">✍️ Blog Posts</div>
+      <h2 class="section-title">Bài Viết Mới Nhất</h2>
+      <p class="section-subtitle">Chia sẻ kiến thức, kinh nghiệm và câu chuyện</p>
+    </div>
+    <div class="blog-grid" data-aos="fade-up">
+      <div class="blog-card" onclick="openBlogPost(0)"><div class="blog-thumb" style="background:linear-gradient(135deg,#667eea,#764ba2);">🚀</div><div class="blog-body"><div class="blog-tag">Công Nghệ</div><div class="blog-title">Hướng dẫn toàn diện xây dựng website với Google Sites 2026</div><div class="blog-excerpt">Tìm hiểu từng bước cách tạo website chuyên nghiệp hoàn toàn miễn phí với Google Sites...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Admin</span><span><i class="fas fa-calendar"></i> 25/02/2026</span><span><i class="fas fa-eye"></i> 2.4K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(1)"><div class="blog-thumb" style="background:linear-gradient(135deg,#f093fb,#f5576c);">🎨</div><div class="blog-body"><div class="blog-tag">Design</div><div class="blog-title">Top 10 xu hướng UI/UX Design năm 2026 không thể bỏ qua</div><div class="blog-excerpt">Glassmorphism, Neomorphism, Dark Mode, AI-generated design... Những xu hướng đang làm mưa làm gió...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Designer</span><span><i class="fas fa-calendar"></i> 20/02/2026</span><span><i class="fas fa-eye"></i> 1.8K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(2)"><div class="blog-thumb" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">💻</div><div class="blog-body"><div class="blog-tag">Lập Trình</div><div class="blog-title">JavaScript ES2026: Những tính năng mới nhất bạn cần biết</div><div class="blog-excerpt">Temporal API, Pattern Matching, Import Assertions và nhiều tính năng tuyệt vời khác trong ES2026...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Dev</span><span><i class="fas fa-calendar"></i> 15/02/2026</span><span><i class="fas fa-eye"></i> 3.1K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(3)"><div class="blog-thumb" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">🤖</div><div class="blog-body"><div class="blog-tag">AI</div><div class="blog-title">AI trong giáo dục: Cơ hội và thách thức năm 2026</div><div class="blog-excerpt">ChatGPT, Gemini, Claude đang thay đổi cách chúng ta học tập như thế nào?...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Teacher</span><span><i class="fas fa-calendar"></i> 10/02/2026</span><span><i class="fas fa-eye"></i> 5.7K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(4)"><div class="blog-thumb" style="background:linear-gradient(135deg,#fa709a,#fee140);">📚</div><div class="blog-body"><div class="blog-tag">Học Tập</div><div class="blog-title">Phương pháp học hiệu quả với công nghệ số</div><div class="blog-excerpt">Spaced repetition, active recall, Pomodoro technique kết hợp với app học tập hiện đại...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Student</span><span><i class="fas fa-calendar"></i> 05/02/2026</span><span><i class="fas fa-eye"></i> 2.2K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(5)"><div class="blog-thumb" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);">🌐</div><div class="blog-body"><div class="blog-tag">Web</div><div class="blog-title">Web 3.0 và tương lai của Internet</div><div class="blog-excerpt">Blockchain, NFT, Metaverse - Internet thế hệ tiếp theo sẽ thay đổi cuộc sống chúng ta ra sao?...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Blogger</span><span><i class="fas fa-calendar"></i> 01/02/2026</span><span><i class="fas fa-eye"></i> 4.3K</span></div></div></div>
+    </div>
+    <div id="blogPostModal" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,0.9);overflow-y:auto;backdrop-filter:blur(20px);">
+      <div style="max-width:800px;margin:80px auto;padding:20px;">
+        <button onclick="document.getElementById('blogPostModal').style.display='none'" style="background:rgba(246,79,89,0.2);border:1px solid rgba(246,79,89,0.3);color:var(--secondary);padding:10px 20px;border-radius:10px;cursor:pointer;margin-bottom:20px;font-size:0.9em;"><i class="fas fa-arrow-left"></i> Quay lại Blog</button>
+        <div id="blogPostContent" style="background:rgba(22,22,58,0.8);border:1px solid rgba(108,99,255,0.2);border-radius:24px;padding:40px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 10: TEAM ██████████ -->
+<div id="page-team" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">🌟 Đội Nhóm</div>
+      <h2 class="section-title">Thành Viên Nhóm</h2>
+      <p class="section-subtitle">Những con người tài năng đứng sau dự án</p>
+    </div>
+    <div class="team-grid" data-aos="fade-up">
+      <div class="team-card">
+        <div class="team-avatar">👨‍💻</div>
+        <div class="team-name">Nguyễn Văn An</div>
+        <div class="team-role">Trưởng Nhóm / Frontend Dev</div>
+        <div class="team-bio">Chuyên gia HTML/CSS/JS với 3 năm kinh nghiệm xây dựng giao diện web đẹp và hiệu quả.</div>
+        <div class="team-socials">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍🎨</div>
+        <div class="team-name">Trần Thị Bích</div>
+        <div class="team-role">UI/UX Designer</div>
+        <div class="team-bio">Đam mê thiết kế sáng tạo, chuyên tạo ra các giao diện đẹp mắt và trải nghiệm người dùng tốt.</div>
+        <div class="team-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-behance"></i></a>
+          <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨‍📝</div>
+        <div class="team-name">Lê Hoàng Cường</div>
+        <div class="team-role">Content Creator</div>
+        <div class="team-bio">Viết nội dung chất lượng, tạo ra các bài blog hữu ích và hấp dẫn cho độc giả.</div>
+        <div class="team-socials">
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+          <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍💼</div>
+        <div class="team-name">Phạm Minh Duyên</div>
+        <div class="team-role">Project Manager</div>
+        <div class="team-bio">Quản lý dự án hiệu quả, đảm bảo mọi công việc đúng tiến độ và chất lượng cao.</div>
+        <div class="team-socials">
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨‍🔬</div>
+        <div class="team-name">Võ Thanh Đức</div>
+        <div class="team-role">Backend / API</div>
+        <div class="team-bio">Xử lý dữ liệu và tích hợp API, đảm bảo website hoạt động ổn định và bảo mật.</div>
+        <div class="team-socials">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-stack-overflow"></i></a>
+          <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍🎓</div>
+        <div class="team-name">Huỳnh Ngọc Em</div>
+        <div class="team-role">QA / Tester</div>
+        <div class="team-bio">Kiểm tra chất lượng sản phẩm, phát hiện và báo cáo lỗi để team sửa chữa kịp thời.</div>
+        <div class="team-socials">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 11: TIMELINE ██████████ -->
+<div id="page-timeline" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📅 Lịch Sử</div>
+      <h2 class="section-title">Hành Trình Phát Triển</h2>
+      <p class="section-subtitle">Từng bước tiến quan trọng trong hành trình của chúng tôi</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item" data-aos="fade-right">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 1 / 2024</div>
+          <div class="tl-title">🚀 Khởi đầu dự án</div>
+          <div class="tl-text">Ý tưởng về website đa phương tiện được hình thành. Nhóm 6 người được thành lập với mục tiêu xây dựng nền tảng học tập số.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-left">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 3 / 2024</div>
+          <div class="tl-title">🎨 Hoàn thành thiết kế</div>
+          <div class="tl-text">Toàn bộ mockup UI/UX được phê duyệt. Hệ thống màu sắc và typography thống nhất, dark theme premium.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-right">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 6 / 2024</div>
+          <div class="tl-title">💻 Ra mắt phiên bản Beta</div>
+          <div class="tl-text">Phiên bản Beta với 5 trang cơ bản được phát hành. Thu hút hơn 200 người dùng thử nghiệm đầu tiên.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-left">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 9 / 2024</div>
+          <div class="tl-title">📊 Tích hợp Google Workspace</div>
+          <div class="tl-text">Hoàn thiện tích hợp Google Maps, Forms, Docs, YouTube. Tính năng embed đa phương tiện đầy đủ.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-right">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 12 / 2024</div>
+          <div class="tl-title">🏆 Giải nhất cuộc thi</div>
+          <div class="tl-text">Đạt giải nhất cuộc thi "Website học sinh sáng tạo" cấp tỉnh. Được biểu dương tại lễ tổng kết năm học.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-left">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 6 / 2025</div>
+          <div class="tl-title">⚡ Nâng cấp toàn diện</div>
+          <div class="tl-text">Tích hợp GSAP, AOS, Particles.js. Thêm Dark Mode, Custom Cursor, Loading Screen và nhiều hiệu ứng mới.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-right">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">THÁNG 2 / 2026</div>
+          <div class="tl-title">✨ Phiên bản 3.0 Premium</div>
+          <div class="tl-text">Ra mắt phiên bản 3.0 với 13 trang, Mini Games, Music Player, Quiz và hàng chục hiệu ứng JS độc đáo.</div>
+        </div>
+      </div>
+      <div class="tl-item" data-aos="fade-left">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">TƯƠNG LAI</div>
+          <div class="tl-title">🌟 Mục tiêu tiếp theo</div>
+          <div class="tl-text">Tích hợp AI chatbot, PWA (Progressive Web App), AR/VR experiences và đạt 10,000 người dùng.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 12: GAMES ██████████ -->
+<div id="page-games" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">🎮 Interactive</div>
+      <h2 class="section-title">Mini Games & Quiz</h2>
+      <p class="section-subtitle">Giải trí và học tập qua các trò chơi tương tác</p>
+    </div>
+    <div class="tools-grid" style="margin-bottom:40px;" data-aos="fade-up">
+      <div class="tool-card" onclick="switchGame('snake')"><span class="tool-icon-big">🐍</span><div class="tool-name">Snake Game</div><div class="tool-desc">Trò chơi rắn săn mồi huyền thoại</div></div>
+      <div class="tool-card" onclick="switchGame('quiz')"><span class="tool-icon-big">🧠</span><div class="tool-name">Quiz Challenge</div><div class="tool-desc">Trắc nghiệm kiến thức công nghệ</div></div>
+      <div class="tool-card" onclick="switchGame('memory')"><span class="tool-icon-big">🃏</span><div class="tool-name">Memory Cards</div><div class="tool-desc">Lật thẻ tìm cặp giống nhau</div></div>
+    </div>
+    <div id="gameContent" data-aos="fade-up"></div>
+  </div>
+</div>
+
+<!-- ██████████ PAGE 13: CONTACT ██████████ -->
+<div id="page-contact" class="page">
+  <div class="section">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag">📬 Google Forms</div>
+      <h2 class="section-title">Liên Hệ & Khảo Sát</h2>
+      <p class="section-subtitle">Gửi tin nhắn hoặc điền vào biểu mẫu khảo sát</p>
+    </div>
+    <div class="contact-grid" data-aos="fade-up">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-details"><h4>Địa chỉ</h4><p>123 Đường ABC, Phường XYZ<br/>Quận 1, TP. Hồ Chí Minh</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-details"><h4>Điện thoại</h4><p>Hotline: 028-XXXX-XXXX<br/>Di động: 0901-XXX-XXX</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div class="contact-details"><h4>Email</h4><p>contact@nexus.edu.vn<br/>support@nexus.edu.vn</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-details"><h4>Giờ làm việc</h4><p>Thứ 2 – Thứ 6: 7:00 – 17:00<br/>Thứ 7: 7:00 – 11:30</p></div>
+        </div>
+        <!-- GOOGLE FORM EMBED -->
+        <div style="background:rgba(22,22,58,0.6);border:1px solid rgba(108,99,255,0.2);border-radius:16px;overflow:hidden;">
+          <div style="padding:15px 20px;background:rgba(108,99,255,0.1);font-weight:700;font-size:0.9em;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-wpforms" style="color:var(--primary);"></i> Google Form Embed
+          </div>
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe_EXAMPLE/viewform?embedded=true"
+                  style="width:100%;height:400px;border:none;"
+                  title="Google Form">Đang tải…</iframe>
+        </div>
+      </div>
+      <div class="contact-form-box">
+        <h3 style="font-size:1.4em;font-weight:800;margin-bottom:25px;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+          Gửi Tin Nhắn
+        </h3>
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>👤 Họ tên <span style="color:var(--secondary);">*</span></label>
+              <input type="text" class="form-control" placeholder="Nguyễn Văn A" required/>
+            </div>
+            <div class="form-group">
+              <label>📧 Email <span style="color:var(--secondary);">*</span></label>
+              <input type="email" class="form-control" placeholder="email@gmail.com" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>📱 Số điện thoại</label>
+              <input type="tel" class="form-control" placeholder="0901-XXX-XXX"/>
+            </div>
+            <div class="form-group">
+              <label>🏫 Lớp / Đơn vị</label>
+              <select class="form-control">
+                <option value="">-- Chọn --</option>
+                <option>Lớp 10</option><option>Lớp 11</option><option>Lớp 12</option>
+                <option>Giáo viên</option><option>Khác</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>⭐ Đánh giá website</label>
+            <div id="starRating" style="display:flex;gap:8px;font-size:1.8em;cursor:pointer;margin-top:5px;">
+              <span class="star" data-v="1" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseout="resetRating()">☆</span>
+              <span class="star" data-v="2" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetRating()">☆</span>
+              <span class="star" data-v="3" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetRating()">☆</span>
+              <span class="star" data-v="4" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseout="resetRating()">☆</span>
+              <span class="star" data-v="5" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseout="resetRating()">☆</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>💬 Nội dung / Góp ý <span style="color:var(--secondary);">*</span></label>
+            <textarea class="form-control" placeholder="Nội dung tin nhắn của bạn..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" required style="width:18px;height:18px;accent-color:var(--primary);"/>
+              <span style="font-size:0.9em;color:var(--text2);">Tôi đồng ý với <a href="#" style="color:var(--primary);">điều khoản sử dụng</a></span>
+            </label>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+            <span><i class="fas fa-paper-plane"></i> Gửi Tin Nhắn</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">✦ NEXUS</span>
+      <p>Nền tảng học tập và chia sẻ kiến thức số với công nghệ hiện đại nhất 2026. Được xây dựng với đam mê và sáng tạo.</p>
+      <div class="footer-social">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://t.me" target="_blank"><i class="fab fa-telegram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>🔗 Trang Web</h4>
+      <a href="#" onclick="showPage('home',null)">Trang Chủ</a>
+      <a href="#" onclick="showPage('about',null)">Giới Thiệu</a>
+      <a href="#" onclick="showPage('gallery',null)">Gallery</a>
+      <a href="#" onclick="showPage('video',null)">Video</a>
+      <a href="#" onclick="showPage('docs',null)">Tài Liệu</a>
+    </div>
+    <div class="footer-col">
+      <h4>⚙️ Công Cụ</h4>
+      <a href="#" onclick="showPage('map',null)">Bản Đồ</a>
+      <a href="#" onclick="showPage('tools',null)">Tiện Ích</a>
+      <a href="#" onclick="showPage('faq',null)">FAQ</a>
+      <a href="#" onclick="showPage('blog',null)">Blog</a>
+      <a href="#" onclick="showPage('games',null)">Games</a>
+    </div>
+    <div class="footer-col">
+      <h4>📬 Liên Hệ</h4>
+      <a href="#" onclick="showPage('team',null)">Đội Nhóm</a>
+      <a href="#" onclick="showPage('timeline',null)">Timeline</a>
+      <a href="#" onclick="showPage('contact',null)">Liên Hệ</a>
+      <a href="mailto:contact@nexus.edu.vn">Email Trực Tiếp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 <strong style="color:var(--primary);">✦ NEXUS</strong>. All rights reserved.</span>
+    <span>Made with <span style="color:var(--secondary);">❤️</span> using GSAP + AOS + Vanilla JS</span>
+  </div>
+</footer>
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+// ═══════════════════════════════════════════
+//  LOADING SCREEN
+// ═══════════════════════════════════════════
+const loaderBar = document.getElementById('loaderBar');
+const loaderText = document.getElementById('loaderText');
+const msgs = ['Khởi động hệ thống...','Tải hiệu ứng...','Chuẩn bị nội dung...','Hoàn tất!'];
+let prog = 0;
+const loaderInterval = setInterval(() => {
+  prog += Math.random() * 25 + 10;
+  if (prog >= 100) { prog = 100; clearInterval(loaderInterval); }
+  loaderBar.style.width = prog + '%';
+  loaderText.textContent = msgs[Math.min(Math.floor(prog / 26), 3)];
+  if (prog === 100) {
+    setTimeout(() => {
+      document.getElementById('loading-screen').classList.add('hidden');
+      AOS.init({ duration:800, once:true, offset:80 });
+      initParticles();
+      initCursor();
+      initCarousel();
+      initCounters();
+      initThreeJS();
+      initMusicPlayer();
+      initTyping();
+      showNotif('success','Chào mừng! 👋','Website đã tải xong. Khám phá ngay!');
+    }, 400);
+  }
+}, 120);
+
+// ═══════════════════════════════════════════
+//  CURSOR
+// ═══════════════════════════════════════════
+function initCursor() {
+  const c = document.getElementById('cursor');
+  const f = document.getElementById('cursor-follower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; c.style.left=mx+'px'; c.style.top=my+'px'; });
+  (function animF(){
+    fx += (mx-fx)*0.12; fy += (my-fy)*0.12;
+    f.style.left=fx+'px'; f.style.top=fy+'px';
+    requestAnimationFrame(animF);
+  })();
+  document.querySelectorAll('a,button,.tool-card,.glass-card,.blog-card,.faq-q,.team-card,.gallery-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ c.style.width='24px'; c.style.height='24px'; f.style.width='60px'; f.style.height='60px'; f.style.borderColor='rgba(108,99,255,0.8)'; });
+    el.addEventListener('mouseleave',()=>{ c.style.width='12px'; c.style.height='12px'; f.style.width='40px'; f.style.height='40px'; f.style.borderColor='rgba(108,99,255,0.5)'; });
+  });
+}
+
+// ═══════════════════════════════════════════
+//  PARTICLES
+// ═══════════════════════════════════════════
+function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  window.addEventListener('resize', () => { canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+  const particles = Array.from({length:80},()=>({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5,
+    r: Math.random()*2+0.5,
+    alpha: Math.random()*0.5+0.1,
+    color: ['#6c63ff','#f64f59','#43e97b','#4facfe'][Math.floor(Math.random()*4)]
+  }));
+  let mouseX=0,mouseY=0;
+  document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
+  (function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+      const dx=mouseX-p.x, dy=mouseY-p.y, dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){ p.vx+=dx*0.00005; p.vy+=dy*0.00005; }
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color; ctx.globalAlpha=p.alpha; ctx.fill();
+      particles.slice(i+1).forEach(p2=>{
+        const d=Math.sqrt((p.x-p2.x)**2+(p.y-p2.y)**2);
+        if(d<100){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.strokeStyle=p.color; ctx.globalAlpha=0.03*(1-d/100); ctx.lineWidth=0.5; ctx.stroke(); }
+      });
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(draw);
+  })();
+}
+
+// ═══════════════════════════════════════════
+//  THREE.JS HERO BG
+// ═══════════════════════════════════════════
+function initThreeJS() {
+  const canvas = document.getElementById('three-canvas');
+  if (!canvas) return;
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  const dots = Array.from({length:30},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-0.5)*0.8, vy:(Math.random()-0.5)*0.8,
+    size:Math.random()*4+2,
+    hue:Math.floor(Math.random()*60)+240
+  }));
+  (function anim(){
+    if(!document.getElementById('page-home').classList.contains('active')){ requestAnimationFrame(anim); return; }
+    ctx.clearRect(0,0,W,H);
+    dots.forEach(d=>{
+      d.x+=d.vx; d.y+=d.vy;
+      if(d.x<0||d.x>W) d.vx*=-1;
+      if(d.y<0||d.y>H) d.vy*=-1;
+      const grad=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.size*3);
+      grad.addColorStop(0,`hsla(${d.hue},100%,70%,0.8)`);
+      grad.addColorStop(1,`hsla(${d.hue},100%,70%,0)`);
+      ctx.beginPath(); ctx.arc(d.x,d.y,d.size,0,Math.PI*2);
+      ctx.fillStyle=grad; ctx.fill();
+    });
+    requestAnimationFrame(anim);
+  })();
+}
+
+// ═══════════════════════════════════════════
+//  TYPING EFFECT
+// ═══════════════════════════════════════════
+function initTyping() {
+  const el = document.getElementById('heroTitle');
+  if(!el) return;
+  const words = ['Tương Lai Số','Học Tập Thông Minh','Sáng Tạo Không Giới Hạn','Công Nghệ 2026'];
+  let wi=0, ci=0, deleting=false;
+  el.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typed-cursor';
+  cursor.style.height='1.1em';
+  el.parentElement.appendChild(cursor);
+  function type(){
+    const w=words[wi];
+    if(deleting){ el.textContent=w.slice(0,--ci); if(ci===0){deleting=false;wi=(wi+1)%words.length;setTimeout(type,400);return;} }
+    else{ el.textContent=w.slice(0,++ci); if(ci===w.length){setTimeout(()=>{deleting=true;type();},2000);return;} }
+    setTimeout(type,deleting?50:100);
+  }
+  setTimeout(type,1500);
+}
+
+// ═══════════════════════════════════════════
+//  COUNTERS
+// ═══════════════════════════════════════════
+function initCounters() {
+  const counters = document.querySelectorAll('[data-count]');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el=e.target, target=+el.dataset.count;
+      let cur=0;
+      const step=target/60;
+      const t=setInterval(()=>{
+        cur=Math.min(cur+step,target);
+        el.textContent=Math.floor(cur)+(target===100?'%':target>=1000?'+':'');
+        if(cur>=target) clearInterval(t);
+      },25);
+      obs.unobserve(el);
+    });
+  },{threshold:0.5});
+  counters.forEach(c=>obs.observe(c));
+}
+
+// ═══════════════════════════════════════════
+//  SKILL BARS
+// ═══════════════════════════════════════════
+const skillObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.querySelectorAll('.skill-fill').forEach(bar=>{
+      setTimeout(()=>{ bar.style.width=bar.dataset.width+'%'; },200);
+    });
+    skillObs.unobserve(e.target);
+  });
+},{threshold:0.3});
+const skillSec = document.getElementById('skillsSection');
+if(skillSec) skillObs.observe(skillSec);
+
+// ═══════════════════════════════════════════
+//  PAGE NAVIGATION
+// ═══════════════════════════════════════════
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  const page = document.getElementById('page-'+id);
+  if(page){ page.classList.remove('active'); void page.offsetWidth; page.classList.add('active'); }
+  if(el) el.classList.add('active');
+  else {
+    document.querySelectorAll('nav a').forEach(a=>{
+      if(a.getAttribute('onclick')&&a.getAttribute('onclick').includes("'"+id+"'")) a.classList.add('active');
+    });
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  closeNav();
+  // Re-trigger AOS
+  setTimeout(()=>AOS.refresh(),100);
+  // Trigger skill bars if about page
+  if(id==='about'&&skillSec){ skillSec.querySelectorAll('.skill-fill').forEach(b=>{ b.style.width='0'; setTimeout(()=>b.style.width=b.dataset.width+'%',300); }); }
+  // Start game if games page
+  if(id==='games'&&document.getElementById('gameContent').innerHTML==='') switchGame('quiz');
+  // Start tools if tools page
+  if(id==='tools'&&document.getElementById('toolContent').innerHTML==='') switchTool('clock');
+}
+
+// ═══════════════════════════════════════════
+//  MOBILE NAV
+// ═══════════════════════════════════════════
+function toggleNav(){
+  const nav=document.getElementById('mainNav');
+  const icon=document.getElementById('navIcon');
+  nav.classList.toggle('open');
+  icon.className = nav.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+}
+function closeNav(){
+  document.getElementById('mainNav').classList.remove('open');
+  document.getElementById('navIcon').className='fas fa-bars';
+}
+
+// ═══════════════════════════════════════════
+//  SCROLL EFFECTS
+// ═══════════════════════════════════════════
+window.addEventListener('scroll',()=>{
+  const hdr=document.getElementById('mainHeader');
+  const btn=document.getElementById('back-top');
+  if(window.scrollY>50){ hdr.style.boxShadow='0 4px 30px rgba(108,99,255,0.15)'; }
+  else { hdr.style.boxShadow='none'; }
+  if(window.scrollY>400){ btn.classList.add('show'); }
+  else { btn.classList.remove('show'); }
+});
+document.getElementById('back-top').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// ═══════════════════════════════════════════
+//  CAROUSEL 3D
+// ═══════════════════════════════════════════
+let cSlide=0, cTotal=7, cAutoTimer;
+function initCarousel(){
+  const dotsEl=document.getElementById('cDots');
+  if(!dotsEl) return;
+  dotsEl.innerHTML='';
+  for(let i=0;i<cTotal;i++){
+    const d=document.createElement('div');
+    d.className='c-dot'+(i===0?' active':'');
+    d.onclick=()=>goCarousel(i);
+    dotsEl.appendChild(d);
+  }
+  updateCarousel();
+  cAutoTimer=setInterval(()=>nextSlide(),4000);
+}
+function updateCarousel(){
+  for(let i=0;i<cTotal;i++){
+    const s=document.getElementById('slide-'+i);
+    if(!s) continue;
+    const diff=(i-cSlide+cTotal)%cTotal;
+    const angle=diff<=cTotal/2?diff:diff-cTotal;
+    if(diff===0){ s.style.cssText='transform:translate(-50%,-50%) scale(1) translateZ(0);opacity:1;z-index:10;'; }
+    else if(Math.abs(angle)===1){ const dir=angle>0?1:-1; s.style.cssText=`transform:translate(calc(-50% + ${dir*320}px),-50%) scale(0.75) translateZ(-100px);opacity:0.5;z-index:5;`; }
+    else { s.style.cssText='transform:translate(-50%,-50%) scale(0.5) translateZ(-300px);opacity:0;z-index:1;'; }
+  }
+  document.querySelectorAll('.c-dot').forEach((d,i)=>d.classList.toggle('active',i===cSlide));
+}
+function nextSlide(){ cSlide=(cSlide+1)%cTotal; updateCarousel(); resetCarouselTimer(); }
+function prevSlide(){ cSlide=(cSlide-1+cTotal)%cTotal; updateCarousel(); resetCarouselTimer(); }
+function goCarousel(i){ cSlide=i; updateCarousel(); resetCarouselTimer(); }
+function resetCarouselTimer(){ clearInterval(cAutoTimer); cAutoTimer=setInterval(()=>nextSlide(),4000); }
+
+// ═══════════════════════════════════════════
+//  LIGHTBOX
+// ═══════════════════════════════════════════
+const emojis=['🌸','🏙️','🌊','🏔️','🌅','🎆','🌻','🦋','🌙'];
+const grads=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#a18cd1,#fbc2eb)','linear-gradient(135deg,#ffecd2,#fcb69f)','linear-gradient(135deg,#84fab0,#8fd3f4)','linear-gradient(135deg,#30cfd0,#330867)'];
+function openLightbox(idx,title,desc){
+  document.getElementById('lightboxImg').style.background=grads[idx%grads.length];
+  document.getElementById('lightboxImg').innerHTML=`<span style="font-size:5em">${emojis[idx%emojis.length]}</span>`;
+  document.getElementById('lightboxTitle').textContent=title;
+  document.getElementById('lightboxDesc').textContent=desc;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('lightbox').addEventListener('click',function(e){ if(e.target===this) closeLightbox(); });
+
+// ═══════════════════════════════════════════
+//  FAQ
+// ═══════════════════════════════════════════
+function toggleFAQ(btn){
+  const item=btn.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+function filterFAQ(cat,btn){
+  document.querySelectorAll('#faqList .faq-item').forEach(item=>{
+    item.style.display=(cat==='all'||item.dataset.cat===cat)?'block':'none';
+  });
+  document.querySelectorAll('.page-content .btn-primary,.page-content .btn-outline').forEach(b=>{
+    b.className=b===btn?'btn-primary':'btn-outline';
+    b.style.cssText=b===btn?'padding:10px 22px;font-size:0.85em;':'padding:10px 22px;font-size:0.85em;';
+  });
+}
+
+// ═══════════════════════════════════════════
+//  BLOG POST MODAL
+// ═══════════════════════════════════════════
+const blogPosts=[
+  {title:'Hướng dẫn toàn diện xây dựng website với Google Sites 2026',emoji:'🚀',cat:'Công Nghệ',grad:'linear-gradient(135deg,#667eea,#764ba2)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Hướng dẫn toàn diện xây dựng website với Google Sites 2026</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;display:flex;gap:20px;flex-wrap:wrap;"><span>📅 25/02/2026</span><span>✍️ Admin</span><span>👁️ 2,400 lượt xem</span></div><p style="line-height:1.9;margin-bottom:20px;">Google Sites là công cụ tuyệt vời để tạo website miễn phí mà không cần lập trình. Bài viết này hướng dẫn bạn từng bước để xây dựng một website hoàn chỉnh với đầy đủ tính năng đa phương tiện.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">1. Bắt đầu với Google Sites</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Truy cập sites.google.com → Đăng nhập → Nhấn nút "+" để tạo site mới → Chọn theme phù hợp.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">2. Tích hợp đa phương tiện</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Nhúng YouTube, Google Maps, Google Forms, Google Docs trực tiếp qua menu Insert. Tất cả đều hoàn toàn miễn phí và dễ sử dụng.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">3. Tùy chỉnh và xuất bản</h2><p style="line-height:1.9;color:var(--text2);">Sau khi hoàn thiện nội dung, nhấn "Publish" → Tùy chỉnh URL → Cài đặt quyền xem → Chia sẻ với mọi người.</p>`},
+  {title:'Top 10 xu hướng UI/UX Design năm 2026',emoji:'🎨',cat:'Design',grad:'linear-gradient(135deg,#f093fb,#f5576c)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#f093fb,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Top 10 xu hướng UI/UX Design năm 2026</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 20/02/2026 | ✍️ Designer | 👁️ 1,800 lượt xem</div><p style="line-height:1.9;margin-bottom:20px;">Thế giới thiết kế đang thay đổi nhanh chóng. Dưới đây là 10 xu hướng không thể bỏ qua năm 2026.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">1. Glassmorphism & Frosted Glass</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Hiệu ứng kính mờ với backdrop-filter:blur() tạo độ sâu và hiện đại cho giao diện.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">2. AI-Generated Design</h2><p style="line-height:1.9;color:var(--text2);">Midjourney, DALL-E, Stable Diffusion đang cách mạng hóa quy trình thiết kế sáng tạo.</p>`},
+  {title:'JavaScript ES2026: Những tính năng mới nhất',emoji:'💻',cat:'Lập Trình',grad:'linear-gradient(135deg,#4facfe,#00f2fe)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">JavaScript ES2026: Những tính năng mới nhất</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 15/02/2026 | ✍️ Dev | 👁️ 3,100 lượt xem</div><p style="line-height:1.9;margin-bottom:20px;">ES2026 mang đến nhiều cải tiến quan trọng giúp code JavaScript ngắn gọn và mạnh mẽ hơn.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Temporal API</h2><p style="line-height:1.9;color:var(--text2);">Thay thế Date object cũ kỹ với API xử lý ngày giờ mạnh mẽ, chính xác và dễ sử dụng hơn nhiều.</p>`},
+  {title:'AI trong giáo dục: Cơ hội và thách thức',emoji:'🤖',cat:'AI',grad:'linear-gradient(135deg,#43e97b,#38f9d7)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#43e97b,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI trong giáo dục: Cơ hội và thách thức năm 2026</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 10/02/2026 | ✍️ Teacher | 👁️ 5,700 lượt xem</div><p style="line-height:1.9;margin-bottom:20px;">AI đang thay đổi cách chúng ta dạy và học. ChatGPT, Gemini Ultra, Claude 4 đều có khả năng giải bài tập, viết essay, giải thích khái niệm khó.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Cơ hội</h2><p style="line-height:1.9;color:var(--text2);">Cá nhân hóa lộ trình học, phản hồi tức thì, tiết kiệm thời gian soạn bài và chấm bài.</p>`},
+  {title:'Phương pháp học hiệu quả với công nghệ số',emoji:'📚',cat:'Học Tập',grad:'linear-gradient(135deg,#fa709a,#fee140)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#fa709a,#fee140);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Phương pháp học hiệu quả với công nghệ số</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 05/02/2026 | ✍️ Student | 👁️ 2,200 lượt xem</div><p style="line-height:1.9;">Kết hợp Pomodoro (25 phút tập trung + 5 phút nghỉ), Spaced Repetition qua Anki, và Mind Mapping qua MindMeister để tối ưu hóa việc học.</p>`},
+  {title:'Web 3.0 và tương lai của Internet',emoji:'🌐',cat:'Web',grad:'linear-gradient(135deg,#a18cd1,#fbc2eb)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#a18cd1,#fbc2eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Web 3.0 và tương lai của Internet</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 01/02/2026 | ✍️ Blogger | 👁️ 4,300 lượt xem</div><p style="line-height:1.9;">Web 3.0 không chỉ là Blockchain hay NFT — đó là Internet phi tập trung, nơi người dùng thực sự sở hữu dữ liệu của mình.</p>`}
+];
+function openBlogPost(i){
+  const p=blogPosts[i];
+  document.getElementById('blogPostContent').innerHTML=`<div style="height:200px;display:flex;align-items:center;justify-content:center;font-size:5em;background:${p.grad};">${p.emoji}</div><div style="padding:40px;">${p.content}</div>`;
+  document.getElementById('blogPostModal').style.display='block';
+  window.scrollTo({top:0});
+}
+
+// ═══════════════════════════════════════════
+//  TOOLS
+// ═══════════════════════════════════════════
+let clockInterval;
+function switchTool(tool){
+  clearInterval(clockInterval);
+  const tc=document.getElementById('toolContent');
+  tc.style.opacity='0';
+  setTimeout(()=>{
+    if(tool==='clock') renderClock(tc);
+    else if(tool==='calculator') renderCalc(tc);
+    else if(tool==='weather') renderWeather(tc);
+    else if(tool==='draw') renderDraw(tc);
+    else if(tool==='qr') renderQR(tc);
+    else if(tool==='colorpicker') renderColorPicker(tc);
+    tc.style.transition='opacity 0.4s';
+    tc.style.opacity='1';
+  },200);
+}
+
+function renderClock(tc){
+  tc.innerHTML=`<div style="max-width:500px;margin:0 auto;text-align:center;background:rgba(22,22,58,0.7);border:1px solid rgba(108,99,255,0.2);border-radius:24px;padding:50px;box-shadow:0 20px 60px rgba(108,99,255,0.2);">
+    <div id="clockFace" style="font-family:'Orbitron',monospace;font-size:clamp(2em,8vw,4em);font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;margin-bottom:10px;">00:00:00</div>
+    <div id="clockDate" style="color:var(--text2);font-size:1em;margin-bottom:30px;"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;">
+      <div style="background:rgba(108,99,255,0.1);border-radius:12px;padding:15px;"><div style="font-family:'Orbitron',monospace;font-size:1.5em;font-weight:700;color:var(--primary);" id="clockH">00</div><div style="color:var(--text2);font-size:0.8em;margin-top:5px;">GIỜ</div></div>
+      <div style="background:rgba(246,79,89,0.1);border-radius:12px;padding:15px;"><div style="font-family:'Orbitron',monospace;font-size:1.5em;font-weight:700;color:var(--secondary);" id="clockM">00</div><div style="color:var(--text2);font-size:0.8em;margin-top:5px;">PHÚT</div></div>
+      <div style="background:rgba(67,233,123,0.1);border-radius:12px;padding:15px;"><div style="font-family:'Orbitron',monospace;font-size:1.5em;font-weight:700;color:var(--accent);" id="clockS">00</div><div style="color:var(--text2);font-size:0.8em;margin-top:5px;">GIÂY</div></div>
+    </div>
+  </div>`;
+  const days=['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+  function updateClock(){
+    const n=new Date();
+    const h=String(n.getHours()).padStart(2,'0'), m=String(n.getMinutes()).padStart(2,'0'), s=String(n.getSeconds()).padStart(2,'0');
+    document.getElementById('clockFace').textContent=`${h}:${m}:${s}`;
+    document.getElementById('clockH').textContent=h;
+    document.getElementById('clockM').textContent=m;
+    document.getElementById('clockS').textContent=s;
+    document.getElementById('clockDate').textContent=`${days[n.getDay()]}, ${n.toLocaleDateString('vi-VN',{year:'numeric',month:'long',day:'numeric'})}`;
+  }
+  updateClock();
+  clockInterval=setInterval(updateClock,1000);
+}
+
+function renderCalc(tc){
+  tc.innerHTML=`<div class="calc-wrap">
+    <div class="calc-display"><div class="calc-expr" id="calcExpr"></div><div class="calc-val" id="calcVal">0</div></div>
+    <div class="calc-grid">
+      <button class="calc-btn calc-clear" onclick="cBtn('C')" style="grid-column:span 2">C</button>
+      <button class="calc-btn calc-op" onclick="cBtn('%')">%</button>
+      <button class="calc-btn calc-op" onclick="cBtn('/')">÷</button>
+      <button class="calc-btn calc-num" onclick="cBtn('7')">7</button>
+      <button class="calc-btn calc-num" onclick="cBtn('8')">8</button>
+      <button class="calc-btn calc-num" onclick="cBtn('9')">9</button>
+      <button class="calc-btn calc-op" onclick="cBtn('*')">×</button>
+      <button class="calc-btn calc-num" onclick="cBtn('4')">4</button>
+      <button class="calc-btn calc-num" onclick="cBtn('5')">5</button>
+      <button class="calc-btn calc-num" onclick="cBtn('6')">6</button>
+      <button class="calc-btn calc-op" onclick="cBtn('-')">−</button>
+      <button class="calc-btn calc-num" onclick="cBtn('1')">1</button>
+      <button class="calc-btn calc-num" onclick="cBtn('2')">2</button>
+      <button class="calc-btn calc-num" onclick="cBtn('3')">3</button>
+      <button class="calc-btn calc-op" onclick="cBtn('+')">+</button>
+      <button class="calc-btn calc-num" onclick="cBtn('0')" style="grid-column:span 2">0</button>
+      <button class="calc-btn calc-num" onclick="cBtn('.')">.</button>
+      <button class="calc-btn calc-eq" onclick="cBtn('=')">=</button>
+    </div>
+  </div>`;
+}
+let calcCur='',calcExpr='';
+function cBtn(v){
+  const disp=document.getElementById('calcVal'), expr=document.getElementById('calcExpr');
+  if(!disp) return;
+  if(v==='C'){calcCur='';calcExpr='';disp.textContent='0';expr.textContent='';return;}
+  if(v==='='){
+    try{
+      const r=Function('"use strict";return ('+calcExpr+calcCur+')')();
+      expr.textContent=calcExpr+calcCur+'=';
+      calcCur=String(parseFloat(r.toFixed(10)));
+      calcExpr='';
+      disp.textContent=calcCur;
+    }catch{disp.textContent='Lỗi';calcCur='';calcExpr='';}
+    return;
+  }
+  if(['+','-','*','/','^','%'].includes(v)){
+    calcExpr+=calcCur+v; calcCur='';
+    expr.textContent=calcExpr; disp.textContent='0';
+  } else {
+    if(v==='.'&&calcCur.includes('.')) return;
+    calcCur+=v;
+    disp.textContent=calcCur;
+  }
+}
+
+function renderWeather(tc){
+  tc.innerHTML=`<div style="display:flex;justify-content:center;"><div class="weather-card">
+    <div class="weather-main"><div class="weather-icon">☀️</div><div><div class="weather-temp">32°C</div><div class="weather-desc">Trời nắng đẹp</div></div></div>
+    <div style="margin-bottom:20px;color:var(--text2);display:flex;align-items:center;gap:8px;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> TP. Hồ Chí Minh, Việt Nam</div>
+    <div class="weather-details">
+      <div class="weather-detail"><div class="weather-detail-label">💧 Độ ẩm</div><div class="weather-detail-value">75%</div></div>
+      <div class="weather-detail"><div class="weather-detail-label">🌬️ Gió</div><div class="weather-detail-value">15 km/h</div></div>
+      <div class="weather-detail"><div class="weather-detail-label">🌡️ Cảm giác</div><div class="weather-detail-value">35°C</div></div>
+      <div class="weather-detail"><div class="weather-detail-label">☁️ Mây</div><div class="weather-detail-value">10%</div></div>
+    </div>
+    <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(108,99,255,0.1);">
+      <div style="color:var(--text2);font-size:0.85em;margin-bottom:12px;">Dự báo 5 ngày tới:</div>
+      <div style="display:flex;gap:10px;justify-content:space-between;">
+        ${['T2','T3','T4','T5','T6'].map((d,i)=>`<div style="text-align:center;background:rgba(79,172,254,0.08);border-radius:10px;padding:10px 8px;flex:1"><div style="font-size:0.8em;color:var(--text2);margin-bottom:5px;">${d}</div><div style="font-size:1.2em;">${['☀️','⛅','🌧️','☀️','⛅'][i]}</div><div style="font-size:0.85em;font-weight:700;color:var(--accent);margin-top:5px;">${[32,30,27,33,31][i]}°</div></div>`).join('')}
+      </div>
+    </div>
+    <div style="margin-top:15px;color:var(--text2);font-size:0.75em;text-align:center;">⚠️ Dữ liệu mẫu — kết nối OpenWeatherMap API để xem thực tế</div>
+  </div></div>`;
+}
+
+function renderDraw(tc){
+  tc.innerHTML=`<div style="background:rgba(22,22,58,0.7);border:1px solid rgba(108,99,255,0.2);border-radius:20px;padding:25px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:15px;">
+      <input type="color" id="brushColor" value="#6c63ff" style="width:44px;height:44px;border:none;cursor:pointer;border-radius:10px;background:none;">
+      <div style="display:flex;align-items:center;gap:8px;"><label style="color:var(--text2);font-size:0.85em;">Size:</label><input type="range" id="brushSize" min="2" max="40" value="6" style="width:100px;accent-color:var(--primary);"></div>
+      <button onclick="clearDrawCanvas()" style="padding:10px 18px;background:rgba(246,79,89,0.2);border:1px solid rgba(246,79,89,0.3);color:var(--secondary);border-radius:10px;cursor:pointer;font-size:0.85em;">🗑️ Xóa</button>
+      <button onclick="downloadCanvas()" style="padding:10px 18px;background:rgba(108,99,255,0.2);border:1px solid rgba(108,99,255,0.3);color:var(--primary);border-radius:10px;cursor:pointer;font-size:0.85em;">💾 Lưu</button>
+      <div style="display:flex;gap:6px;">${['🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪'].map((e,i)=>{const cols=['#ff4444','#ff8c00','#ffd700','#44ff44','#4444ff','#9944ff','#111111','#ffffff'];return `<div onclick="document.getElementById('brushColor').value='${cols[i]}'" style="width:28px;height:28px;background:${cols[i]};border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.2);" title="${e}"></div>`}).join('')}</div>
+    </div>
+    <canvas id="drawCanvas" width="800" height="400" style="border:2px dashed rgba(108,99,255,0.3);border-radius:12px;cursor:crosshair;max-width:100%;background:#0a0a1a;display:block;"></canvas>
+  </div>`;
+  const canvas=document.getElementById('drawCanvas'), ctx=canvas.getContext('2d');
+  let drawing=false, lx=0,ly=0;
+  canvas.addEventListener('mousedown',e=>{drawing=true;[lx,ly]=[e.offsetX,e.offsetY];});
+  canvas.addEventListener('mousemove',e=>{
+    if(!drawing) return;
+    ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(e.offsetX,e.offsetY);
+    ctx.strokeStyle=document.getElementById('brushColor').value;
+    ctx.lineWidth=document.getElementById('brushSize').value;
+    ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke();
+    [lx,ly]=[e.offsetX,e.offsetY];
+  });
+  ['mouseup','mouseleave'].forEach(ev=>canvas.addEventListener(ev,()=>drawing=false));
+  // Touch support
+  canvas.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0],r=canvas.getBoundingClientRect();drawing=true;lx=t.clientX-r.left;ly=t.clientY-r.top;});
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches[0],r=canvas.getBoundingClientRect(),ox=t.clientX-r.left,oy=t.clientY-r.top;if(!drawing)return;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(ox,oy);ctx.strokeStyle=document.getElementById('brushColor').value;ctx.lineWidth=document.getElementById('brushSize').value;ctx.lineCap='round';ctx.stroke();lx=ox;ly=oy;});
+}
+function clearDrawCanvas(){ const c=document.getElementById('drawCanvas'); if(c) c.getContext('2d').clearRect(0,0,c.width,c.height); }
+function downloadCanvas(){
+  const c=document.getElementById('drawCanvas'); if(!c) return;
+  const a=document.createElement('a'); a.href=c.toDataURL(); a.download='nexus-drawing.png'; a.click();
+  showNotif('success','Đã lưu!','Ảnh đã được tải xuống');
+}
+
+function renderQR(tc){
+  tc.innerHTML=`<div style="max-width:500px;margin:0 auto;background:rgba(22,22,58,0.7);border:1px solid rgba(108,99,255,0.2);border-radius:20px;padding:35px;text-align:center;">
+    <h3 style="margin-bottom:20px;color:var(--primary);">📱 QR Code Generator</h3>
+    <input id="qrInput" type="text" class="form-control" placeholder="Nhập URL hoặc văn bản..." value="https://nexus.edu.vn" style="margin-bottom:15px;text-align:center;">
+    <button onclick="genQR()" class="btn-primary" style="margin-bottom:25px;"><span>⚡ Tạo QR Code</span></button>
+    <div id="qrOutput" style="display:flex;justify-content:center;min-height:200px;align-items:center;"></div>
+    <div style="color:var(--text2);font-size:0.8em;margin-top:15px;">QR code được tạo bằng QR Server API</div>
+  </div>`;
+  genQR();
+}
+function genQR(){
+  const v=encodeURIComponent(document.getElementById('qrInput').value||'https://nexus.edu.vn');
+  const out=document.getElementById('qrOutput');
+  out.innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${v}&bgcolor=0a0a1a&color=6c63ff" style="border-radius:12px;border:2px solid rgba(108,99,255,0.3);" alt="QR Code">`;
+}
+
+function renderColorPicker(tc){
+  tc.innerHTML=`<div style="max-width:500px;margin:0 auto;background:rgba(22,22,58,0.7);border:1px solid rgba(108,99,255,0.2);border-radius:20px;padding:35px;">
+    <h3 style="margin-bottom:20px;color:var(--primary);text-align:center;">🎨 Color Picker</h3>
+    <div style="text-align:center;margin-bottom:25px;">
+      <input type="color" id="colorPick" value="#6c63ff" oninput="updateColor()" style="width:120px;height:120px;border:none;cursor:pointer;border-radius:50%;background:none;">
+    </div>
+    <div id="colorPreview" style="height:80px;border-radius:16px;background:#6c63ff;margin-bottom:20px;box-shadow:0 10px 30px rgba(108,99,255,0.4);transition:all 0.3s;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;">
+      <div style="background:rgba(108,99,255,0.1);border-radius:10px;padding:15px;text-align:center;"><div style="color:var(--text2);font-size:0.8em;margin-bottom:5px;">HEX</div><div id="hexVal" style="font-family:'Orbitron',monospace;font-weight:700;font-size:0.9em;">#6c63ff</div></div>
+      <div style="background:rgba(108,99,255,0.1);border-radius:10px;padding:15px;text-align:center;"><div style="color:var(--text2);font-size:0.8em;margin-bottom:5px;">RGB</div><div id="rgbVal" style="font-family:'Orbitron',monospace;font-weight:700;font-size:0.75em;">108,99,255</div></div>
+      <div style="background:rgba(108,99,255,0.1);border-radius:10px;padding:15px;text-align:center;"><div style="color:var(--text2);font-size:0.8em;margin-bottom:5px;">HSL</div><div id="hslVal" style="font-family:'Orbitron',monospace;font-weight:700;font-size:0.75em;">243,100%,70%</div></div>
+    </div>
+    <button onclick="copyColor()" class="btn-primary" style="width:100%;margin-top:20px;"><span>📋 Sao chép HEX</span></button>
+  </div>`;
+}
+function updateColor(){
+  const h=document.getElementById('colorPick').value;
+  document.getElementById('colorPreview').style.background=h;
+  document.getElementById('colorPreview').style.boxShadow=`0 10px 30px ${h}66`;
+  document.getElementById('hexVal').textContent=h.toUpperCase();
+  const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);
+  document.getElementById('rgbVal').textContent=`${r},${g},${b}`;
+  const rf=r/255,gf=g/255,bf=b/255,max=Math.max(rf,gf,bf),min=Math.min(rf,gf,bf);
+  let hue=0,sat=0,light=(max+min)/2;
+  if(max!==min){const d=max-min;sat=light>0.5?d/(2-max-min):d/(max+min);switch(max){case rf:hue=((gf-bf)/d+(gf<bf?6:0))/6;break;case gf:hue=((bf-rf)/d+2)/6;break;case bf:hue=((rf-gf)/d+4)/6;break;}}
+  document.getElementById('hslVal').textContent=`${Math.round(hue*360)},${Math.round(sat*100)}%,${Math.round(light*100)}%`;
+}
+function copyColor(){
+  navigator.clipboard.writeText(document.getElementById('hexVal').textContent);
+  showNotif('success','Đã sao chép!',document.getElementById('hexVal').textContent);
+}
+
+// ═══════════════════════════════════════════
+//  MUSIC PLAYER
+// ═══════════════════════════════════════════
+const tracks=[
+  {name:'Lo-Fi Study Beat',artist:'ChillHop Records',emoji:'🎵',dur:180},
+  {name:'Midnight Jazz',artist:'Smooth Vibes',emoji:'🎷',dur:240},
+  {name:'Acoustic Morning',artist:'Nature Sounds',emoji:'🎸',dur:210},
+  {name:'Electronic Dreams',artist:'Synthwave',emoji:'🎹',dur:195},
+];
+let curTrack=0, playing=false, progTimer, elapsed=0;
+function initMusicPlayer(){
+  const tl=document.getElementById('trackList');
+  if(!tl) return;
+  tl.innerHTML=tracks.map((t,i)=>`<div onclick="playTrack(${i})" style="display:flex;align-items:center;gap:12px;padding:10px 15px;border-radius:10px;cursor:pointer;transition:all 0.2s;background:rgba(108,99,255,0.05);border:1px solid rgba(108,99,255,0.1);" class="tl-item-${i}" onmouseover="this.style.background='rgba(108,99,255,0.15)'" onmouseout="this.style.background='rgba(108,99,255,0.05)'"><span style="font-size:1.5em;">${t.emoji}</span><div style="flex:1"><div style="font-weight:600;font-size:0.9em;">${t.name}</div><div style="color:var(--text2);font-size:0.78em;">${t.artist}</div></div><span style="color:var(--text2);font-size:0.78em;">${Math.floor(t.dur/60)}:${String(t.dur%60).padStart(2,'0')}</span></div>`).join('');
+  playTrack(0);
+}
+function playTrack(i){
+  curTrack=i; elapsed=0; const t=tracks[i];
+  document.getElementById('playerTitle').textContent=t.name;
+  document.getElementById('playerArtist').textContent=t.artist;
+  document.getElementById('playerCover').textContent=t.emoji;
+  document.getElementById('totalTime').textContent=`${Math.floor(t.dur/60)}:${String(t.dur%60).padStart(2,'0')}`;
+  document.querySelectorAll('[class^="tl-item-"]').forEach((el,j)=>{ el.style.borderColor=j===i?'rgba(108,99,255,0.5)':'rgba(108,99,255,0.1)'; el.style.background=j===i?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'; });
+  if(playing) startProgress();
+}
+function togglePlay(){
+  playing=!playing;
+  document.getElementById('playBtn').innerHTML=playing?'<i class="fas fa-pause"></i>':'<i class="fas fa-play"></i>';
+  document.getElementById('playerCover').classList.toggle('spinning',playing);
+  if(playing) startProgress(); else clearInterval(progTimer);
+}
+function startProgress(){
+  clearInterval(progTimer);
+  progTimer=setInterval(()=>{
+    elapsed++;
+    const dur=tracks[curTrack].dur;
+    const pct=Math.min((elapsed/dur)*100,100);
+    document.getElementById('playerBar').style.width=pct+'%';
+    document.getElementById('currentTime').textContent=`${Math.floor(elapsed/60)}:${String(elapsed%60).padStart(2,'0')}`;
+    if(elapsed>=dur) nextTrack();
+  },1000);
+}
+function nextTrack(){ playTrack((curTrack+1)%tracks.length); }
+function prevTrack(){ playTrack((curTrack-1+tracks.length)%tracks.length); }
+function shuffleTrack(){ playTrack(Math.floor(Math.random()*tracks.length)); showNotif('success','🔀 Ngẫu nhiên','Đã chuyển bài ngẫu nhiên'); }
+function seekMusic(e){
+  const rect=document.getElementById('playerProgress').getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  elapsed=Math.floor(pct*tracks[curTrack].dur);
+}
+
+// ═══════════════════════════════════════════
+//  GAMES
+// ═══════════════════════════════════════════
+function switchGame(game){
+  const gc=document.getElementById('gameContent');
+  gc.style.opacity='0';
+  setTimeout(()=>{
+    if(game==='snake') renderSnake(gc);
+    else if(game==='quiz') renderQuiz(gc);
+    else if(game==='memory') renderMemory(gc);
+    gc.style.transition='opacity 0.4s';
+    gc.style.opacity='1';
+  },200);
+}
+
+// SNAKE GAME
+let snakeGame={running:false,loop:null};
+function renderSnake(gc){
+  gc.innerHTML=`<div style="text-align:center;">
+    <div style="margin-bottom:15px;display:flex;justify-content:center;align-items:center;gap:20px;">
+      <div style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:10px;padding:10px 20px;font-family:'Orbitron',monospace;font-size:1.2em;font-weight:700;color:var(--primary);">Điểm: <span id="snakeScore">0</span></div>
+      <button onclick="startSnake()" class="btn-primary" style="padding:10px 22px;"><span>▶️ Bắt đầu</span></button>
+      <div style="color:var(--text2);font-size:0.85em;">Dùng phím ← → ↑ ↓ để điều khiển</div>
+    </div>
+    <canvas id="snakeCanvas" width="400" height="400" style="max-width:100%;"></canvas>
+    <div style="margin-top:15px;display:grid;grid-template-columns:repeat(3,60px);gap:5px;justify-content:center;">
+      <div></div><button onclick="snakeDir('up')" style="padding:12px;background:rgba(108,99,255,0.2);border:1px solid rgba(108,99,255,0.3);color:var(--primary);border-radius:8px;cursor:pointer;font-size:1.1em;">↑</button><div></div>
+      <button onclick="snakeDir('left')" style="padding:12px;background:rgba(108,99,255,0.2);border:1px solid rgba(108,99,255,0.3);color:var(--primary);border-radius:8px;cursor:pointer;font-size:1.1em;">←</button>
+      <button onclick="snakeDir('down')" style="padding:12px;background:rgba(108,99,255,0.2);border:1px solid rgba(108,99,255,0.3);color:var(--primary);border-radius:8px;cursor:pointer;font-size:1.1em;">↓</button>
+      <button onclick="snakeDir('right')" style="padding:12px;background:rgba(108,99,255,0.2);border:1px solid rgba(108,99,255,0.3);color:var(--primary);border-radius:8px;cursor:pointer;font-size:1.1em;">→</button>
+    </div>
+  </div>`;
+  drawSnakeIdle();
+}
+let snake={body:[{x:10,y:10}],dir:'right',food:{x:15,y:15},score:0,growing:false};
+function drawSnakeIdle(){
+  const c=document.getElementById('snakeCanvas'); if(!c) return;
+  const ctx=c.getContext('2d'),sz=20,cols=20,rows=20;
+  ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle='rgba(108,99,255,0.1)';
+  for(let i=0;i<cols;i++) for(let j=0;j<rows;j++) if((i+j)%2===0) ctx.fillRect(i*sz,j*sz,sz,sz);
+  ctx.fillStyle='rgba(108,99,255,0.5)'; ctx.font='bold 16px Orbitron'; ctx.textAlign='center'; ctx.fillText('Nhấn Bắt Đầu',200,200);
+}
+function startSnake(){
+  clearInterval(snakeGame.loop);
+  snake={body:[{x:10,y:10},{x:9,y:10},{x:8,y:10}],dir:'right',food:randFood(),score:0,growing:false};
+  document.getElementById('snakeScore').textContent='0';
+  snakeGame.running=true;
+  snakeGame.loop=setInterval(tickSnake,120);
+  document.addEventListener('keydown',snakeKey);
+}
+function randFood(){ return {x:Math.floor(Math.random()*20),y:Math.floor(Math.random()*20)}; }
+function snakeDir(d){const opp={up:'down',down:'up',left:'right',right:'left'};if(d!==opp[snake.dir])snake.dir=d;}
+function snakeKey(e){ const m={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}; if(m[e.key]){e.preventDefault();snakeDir(m[e.key]);} }
+function tickSnake(){
+  if(!document.getElementById('snakeCanvas')||!snakeGame.running){clearInterval(snakeGame.loop);return;}
+  const h={...snake.body[0]};
+  if(snake.dir==='right') h.x++; else if(snake.dir==='left') h.x--; else if(snake.dir==='up') h.y--; else h.y++;
+  if(h.x<0||h.x>=20||h.y<0||h.y>=20||snake.body.some(s=>s.x===h.x&&s.y===h.y)){
+    clearInterval(snakeGame.loop); snakeGame.running=false;
+    showNotif('warning','Game Over 🐍',`Điểm của bạn: ${snake.score}`);
+    return;
+  }
+  snake.body.unshift(h);
+  if(h.x===snake.food.x&&h.y===snake.food.y){ snake.score+=10; snake.food=randFood(); document.getElementById('snakeScore').textContent=snake.score; }
+  else snake.body.pop();
+  const c=document.getElementById('snakeCanvas'),ctx=c.getContext('2d'),sz=20;
+  ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle='rgba(108,99,255,0.05)'; for(let i=0;i<20;i++) for(let j=0;j<20;j++) if((i+j)%2===0) ctx.fillRect(i*sz,j*sz,sz,sz);
+  snake.body.forEach((s,i)=>{ const g=ctx.createRadialGradient(s.x*sz+sz/2,s.y*sz+sz/2,0,s.x*sz+sz/2,s.y*sz+sz/2,sz/2); g.addColorStop(0,i===0?'#ff6b6b':'#6c63ff'); g.addColorStop(1,i===0?'#f64f59':'#4a42e0'); ctx.fillStyle=g; ctx.beginPath(); ctx.roundRect(s.x*sz+1,s.y*sz+1,sz-2,sz-2,4); ctx.fill(); });
+  ctx.fillStyle='#43e97b'; ctx.beginPath(); ctx.arc(snake.food.x*sz+sz/2,snake.food.y*sz+sz/2,sz/2-2,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(67,233,123,0.3)'; ctx.beginPath(); ctx.arc(snake.food.x*sz+sz/2,snake.food.y*sz+sz/2,sz/2+3,0,Math.PI*2); ctx.fill();
+}
+
+// QUIZ
+const quizQ=[
+  {q:'GSAP là viết tắt của?',opts:['GreenSock Animation Platform','General Style Animation Plugin','Google Script API Platform','Graphics Styled Animation Pack'],ans:0},
+  {q:'Phím tắt mở DevTools trong Chrome?',opts:['F10','Ctrl+D','F12','Ctrl+F12'],ans:2},
+  {q:'CSS Flexbox dùng thuộc tính nào để căn giữa ngang?',opts:['align-items','justify-items','justify-content','flex-center'],ans:2},
+  {q:'AOS là gì?',opts:['A Object System','Animate On Scroll','Array Of Strings','Advanced Output Style'],ans:1},
+  {q:'Google Sites thuộc bộ công cụ nào?',opts:['Microsoft 365','Adobe Suite','Google Workspace','Apple iWork'],ans:2},
+  {q:'Đơn vị CSS nào phụ thuộc vào viewport width?',opts:['em','rem','vw','px'],ans:2},
+  {q:'Particles.js dùng để làm gì?',opts:['Tạo biểu đồ','Tạo hiệu ứng hạt','Xử lý form','Quản lý database'],ans:1},
+];
+let qIdx=0,qScore=0,qAnswered=false;
+function renderQuiz(gc){
+  qIdx=0; qScore=0;
+  gc.innerHTML=`<div class="quiz-card">
+    <div class="quiz-progress"><div class="quiz-prog-bar" id="quizBar" style="width:${(1/quizQ.length)*100}%"></div></div>
+    <div style="color:var(--text2);font-size:0.85em;margin-bottom:15px;display:flex;justify-content:space-between;"><span>Câu <span id="qNum">1</span>/${quizQ.length}</span><span>🏆 Điểm: <span id="qScoreDisplay">0</span></span></div>
+    <div class="quiz-question" id="quizQ"></div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div id="quizResult" style="display:none;text-align:center;padding:30px;"></div>
+  </div>`;
+  renderQuestion();
+}
+function renderQuestion(){
+  qAnswered=false;
+  const q=quizQ[qIdx];
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('qNum').textContent=qIdx+1;
+  document.getElementById('quizBar').style.width=`${((qIdx+1)/quizQ.length)*100}%`;
+  document.getElementById('quizOpts').innerHTML=q.opts.map((o,i)=>`<button class="quiz-option" onclick="answerQ(${i})">${o}</button>`).join('');
+  document.getElementById('quizResult').style.display='none';
+}
+function answerQ(i){
+  if(qAnswered) return; qAnswered=true;
+  const q=quizQ[qIdx]; const opts=document.querySelectorAll('.quiz-option');
+  opts.forEach((o,j)=>{ if(j===q.ans) o.classList.add('correct'); else if(j===i&&i!==q.ans) o.classList.add('wrong'); });
+  if(i===q.ans){ qScore++; document.getElementById('qScoreDisplay').textContent=qScore; showNotif('success','Đúng rồi! ✅','Câu trả lời chính xác!'); }
+  else showNotif('error','Sai rồi! ❌',`Đáp án đúng: ${q.opts[q.ans]}`);
+  setTimeout(()=>{
+    qIdx++;
+    if(qIdx<quizQ.length) renderQuestion();
+    else {
+      const res=document.getElementById('quizResult'),stars=qScore>=6?'⭐⭐⭐':qScore>=4?'⭐⭐':'⭐';
+      document.getElementById('quizOpts').innerHTML='';
+      document.getElementById('quizQ').textContent='';
+      res.style.display='block';
+      res.innerHTML=`<div style="font-size:3em;margin-bottom:15px;">${qScore===quizQ.length?'🏆':qScore>=5?'🎉':'📚'}</div><div style="font-size:1.5em;font-weight:800;margin-bottom:10px;">${stars}</div><div style="font-size:1.1em;color:var(--text2);margin-bottom:20px;">Bạn đạt <strong style="color:var(--primary)">${qScore}/${quizQ.length}</strong> câu đúng</div><button onclick="renderQuiz(document.getElementById('gameContent'))" class="btn-primary"><span>🔄 Chơi lại</span></button>`;
+    }
+  },1500);
+}
+
+// MEMORY GAME
+const mEmojis=['🌸','🏙️','🌊','🏔️','🌅','🎆','🌻','🦋'];
+let mCards=[...mEmojis,...mEmojis].sort(()=>Math.random()-0.5).map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));
+let mFlipped=[],mMoves=0,mCanFlip=true;
+function renderMemory(gc){
+  mCards=[...mEmojis,...mEmojis].sort(()=>Math.random()-0.5).map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));
+  mFlipped=[]; mMoves=0; mCanFlip=true;
+  gc.innerHTML=`<div style="text-align:center;">
+    <div style="margin-bottom:20px;display:flex;justify-content:center;gap:20px;align-items:center;">
+      <div style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:10px;padding:10px 20px;font-family:'Orbitron',monospace;font-weight:700;color:var(--primary);">Lượt: <span id="memMoves">0</span></div>
+      <button onclick="renderMemory(document.getElementById('gameContent'))" class="btn-outline" style="padding:10px 20px;font-size:0.85em;">🔄 Bắt đầu lại</button>
+    </div>
+    <div id="memGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:380px;margin:0 auto;"></div>
+  </div>`;
+  renderMemGrid();
+}
+function renderMemGrid(){
+  const g=document.getElementById('memGrid'); if(!g) return;
+  g.innerHTML=mCards.map(c=>`<div onclick="flipCard(${c.id})" style="aspect-ratio:1;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.8em;transition:all 0.4s;background:${c.flipped||c.matched?'rgba(108,99,255,0.2)':'rgba(22,22,58,0.8)'};border:2px solid ${c.matched?'rgba(67,233,123,0.5)':c.flipped?'rgba(108,99,255,0.5)':'rgba(108,99,255,0.2)'};transform:${c.flipped||c.matched?'rotateY(0)':'rotateY(180deg)'};box-shadow:${c.matched?'0 0 15px rgba(67,233,123,0.3)':'none'};">${c.flipped||c.matched?c.emoji:'🔲'}</div>`).join('');
+}
+function flipCard(id){
+  if(!mCanFlip) return; const c=mCards.find(x=>x.id===id); if(!c||c.flipped||c.matched) return;
+  c.flipped=true; mFlipped.push(c); renderMemGrid();
+  if(mFlipped.length===2){
+    mMoves++; document.getElementById('memMoves').textContent=mMoves; mCanFlip=false;
+    if(mFlipped[0].emoji===mFlipped[1].emoji){ mFlipped.forEach(x=>x.matched=true); mFlipped=[]; mCanFlip=true; renderMemGrid(); if(mCards.every(x=>x.matched)){setTimeout(()=>showNotif('success','🎉 Thắng!',`Hoàn thành trong ${mMoves} lượt!`),300);} }
+    else { setTimeout(()=>{ mFlipped.forEach(x=>x.flipped=false); mFlipped=[]; mCanFlip=true; renderMemGrid(); },1000); }
+  }
+}
+
+// ═══════════════════════════════════════════
+//  STAR RATING
+// ═══════════════════════════════════════════
+let currentRating=0;
+function setRating(v){ currentRating=v; updateStars(v,true); }
+function hoverRating(v){ updateStars(v,false); }
+function resetRating(){ updateStars(currentRating,true); }
+function updateStars(v,save){
+  document.querySelectorAll('.star').forEach(s=>{ s.textContent=+s.dataset.v<=v?'⭐':'☆'; });
+}
+
+// ═══════════════════════════════════════════
+//  FORM SUBMIT
+// ═══════════════════════════════════════════
+function handleFormSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('[type=submit]');
+  btn.innerHTML='<span><i class="fas fa-spinner fa-spin"></i> Đang gửi...</span>';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='<span><i class="fas fa-check"></i> Đã gửi!</span>';
+    btn.style.background='linear-gradient(135deg,#43e97b,#38f9d7)';
+    showNotif('success','Gửi thành công! 🎉','Chúng tôi sẽ phản hồi trong 24 giờ');
+    setTimeout(()=>{ e.target.reset(); btn.innerHTML='<span><i class="fas fa-paper-plane"></i> Gửi Tin Nhắn</span>'; btn.style.background=''; btn.disabled=false; setRating(0); },3000);
+  },2000);
+}
+
+// ═══════════════════════════════════════════
+//  NOTIFICATIONS
+// ═══════════════════════════════════════════
+function showNotif(type,title,msg){
+  const stack=document.getElementById('notifStack');
+  const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
+  const notif=document.createElement('div');
+  notif.className=`notif ${type}`;
+  notif.innerHTML=`<div class="notif-icon">${icons[type]||'ℹ️'}</div><div class="notif-text"><div class="notif-title">${title}</div><div class="notif-msg">${msg}</div></div>`;
+  notif.onclick=()=>notif.remove();
+  stack.appendChild(notif);
+  setTimeout(()=>{ notif.style.transition='all 0.4s'; notif.style.opacity='0'; notif.style.transform='translateX(100px)'; setTimeout(()=>notif.remove(),400); },4000);
+}
+
+// ═══════════════════════════════════════════
+//  KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeLightbox(); document.getElementById('blogPostModal').style.display='none'; closeNav(); }
+});
+
+// ═══════════════════════════════════════════
+//  HEADER SCROLL GLOW
+// ═══════════════════════════════════════════
+window.addEventListener('scroll',()=>{
+  const pct=Math.min(window.scrollY/300,1);
+  document.getElementById('mainHeader').style.background=`rgba(10,10,26,${0.85+pct*0.14})`;
+});
+
+</script>
+</body>
+</html>
