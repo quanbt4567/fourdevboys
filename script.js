@@ -533,28 +533,53 @@ function copyColor(){
 }
 
 // ═══════════════════════════════════════════
-//  MUSIC PLAYER (SoundCloud Widget API)
+//  MUSIC PLAYER (Local Audio from musics/)
 // ═══════════════════════════════════════════
 const tracks=[
-  {name:'Stream Đến Bao Giờ',artist:'Độ Mixi ft. HuyR',emoji:'🎤',scUrl:'https://soundcloud.com/onlylanh/stream-den-bao-gio-do-mixi-ft-huyr'},
-  {name:'Độ Tộc 2',artist:'Masew x Phúc Du x Pháo x Độ Mixi',emoji:'🔥',scUrl:'https://soundcloud.com/metubmusic/do-toc-2-from-mixi-with-love-masew-x-phuc-du-x-phao-x-do-mixi'},
-  {name:'Tìm Em Trong Mơ (Remix)',artist:'Độ Mixi AI Cover x Chi Dân',emoji:'🎵',scUrl:'https://soundcloud.com/nguy-n-th-i-347521652/tim-em-trong-mo-do-mixi-ai-cover-x-chi-dan-hung-thai-rmx'},
-  {name:'Nà Na Na Na Anh Độ Mixi',artist:'Khôi Lê',emoji:'🎶',scUrl:'https://soundcloud.com/khoi-le-630313108/na-na-na-na-anh-mixi'},
+  {name:'Bến Yên Lãng',artist:'Sena và các đại thi hào',emoji:'🏞️',file:'musics/Bến Yên Lãng  Yen Lang Bund ( Bến Thượng Hải Parody ) - Sena và các đại thi hào - Sena và các đại thi hào.mp3'},
+  {name:'Giao Hưởng Thank Độ',artist:'KillnTea',emoji:'🎻',file:'musics/GIAO HƯỞNG THANK ĐỘ - WOLFGANG KILLNTEA  NHẠC CỔ ĐIỂN HAY NHẤT MÀ BẠN NÊN NGHE MỘT LẦN TRONG ĐỜI - KillnTea.mp3'},
+  {name:'Thank Độ (Cover)',artist:'KillnTea',emoji:'🎸',file:'musics/THANK DO (Cảm ơn anh Độ Mixi Cover) - Frank Killntea  NHẠC CHẾ ĐỘ CŨ THU THANH TRƯỚC 1975 - KillnTea.mp3'},
+  {name:'Vua Yên Lãng',artist:'Hàng Mặc Thử',emoji:'👑',file:'musics/Vua Yên Lãng  - Cùng Vua Nhà Lý Và Quan Nịnh Thần Bật Nhạc Dọn Nhà Đón Tết 2026   Hàng Mặc Thử.mp3'},
+  {name:'Ấn Độ Mixi (Nà Ná Na Na)',artist:'Vũ Văn Hiếu',emoji:'🎶',file:'musics/Ấn Độ Mixi (Nà Ná Na Na Anh Độ Mixi) - Vũ Văn Hiếu.mp3'},
 ];
 let curTrack=0;
-let scWidget=null;
+let bgAudio=null;
+let isPlaying=false;
+let hasUserInteracted=false;
 
 function initMusicPlayer(){
-  const tl=document.getElementById('trackList');
-  if(!tl) return;
-  // Initialize SoundCloud Widget
-  const iframe=document.getElementById('scPlayer');
-  if(iframe && typeof SC!=='undefined'){
-    scWidget=SC.Widget(iframe);
-    scWidget.bind(SC.Widget.Events.FINISH,function(){
-      nextTrack();
-    });
-  }
+  bgAudio=document.getElementById('bgAudio');
+  if(!bgAudio) return;
+  bgAudio.volume=0.5;
+
+  // Auto-play random track on first user interaction
+  const startOnInteraction=()=>{
+    if(!hasUserInteracted){
+      hasUserInteracted=true;
+      shuffleTrack(true); // silent=true, no notification
+      document.removeEventListener('click',startOnInteraction);
+      document.removeEventListener('keydown',startOnInteraction);
+      document.removeEventListener('touchstart',startOnInteraction);
+      document.removeEventListener('scroll',startOnInteraction);
+    }
+  };
+  document.addEventListener('click',startOnInteraction);
+  document.addEventListener('keydown',startOnInteraction);
+  document.addEventListener('touchstart',startOnInteraction);
+  document.addEventListener('scroll',startOnInteraction);
+
+  // Audio events
+  bgAudio.addEventListener('timeupdate',updateProgress);
+  bgAudio.addEventListener('ended',()=>nextTrack());
+  bgAudio.addEventListener('play',()=>{
+    isPlaying=true;
+    updatePlayButtons();
+  });
+  bgAudio.addEventListener('pause',()=>{
+    isPlaying=false;
+    updatePlayButtons();
+  });
+
   renderTrackList();
 }
 
@@ -563,51 +588,106 @@ function renderTrackList(){
   if(!tl) return;
   tl.innerHTML=tracks.map((t,i)=>{
     const isActive=i===curTrack;
-    return `<div onclick="playTrack(${i})" style="display:flex;align-items:center;gap:12px;padding:10px 15px;border-radius:10px;cursor:pointer;transition:all 0.2s;background:${isActive?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'};border:1px solid ${isActive?'rgba(108,99,255,0.5)':'rgba(108,99,255,0.1)'};" onmouseover="this.style.background='rgba(108,99,255,0.15)'" onmouseout="this.style.background='${isActive?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'}'"><span style="font-size:1.5em;">${t.emoji}</span><div style="flex:1"><div style="font-weight:600;font-size:0.9em;">${t.name}</div><div style="color:var(--text2);font-size:0.78em;">${t.artist}</div></div>${isActive?'<span style="color:var(--primary);font-size:0.85em;"><i class="fas fa-volume-up"></i></span>':'<span style="color:var(--text2);font-size:0.78em;"><i class="fab fa-soundcloud" style="color:#ff5500;"></i></span>'}</div>`;
+    return `<div onclick="playTrack(${i})" style="display:flex;align-items:center;gap:12px;padding:10px 15px;border-radius:10px;cursor:pointer;transition:all 0.2s;background:${isActive?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'};border:1px solid ${isActive?'rgba(108,99,255,0.5)':'rgba(108,99,255,0.1)'};" onmouseover="this.style.background='rgba(108,99,255,0.15)'" onmouseout="this.style.background='${isActive?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'}'"><span style="font-size:1.5em;">${t.emoji}</span><div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.name}</div><div style="color:var(--text2);font-size:0.78em;">${t.artist}</div></div>${isActive&&isPlaying?'<span style="color:var(--primary);font-size:0.85em;"><i class="fas fa-volume-up"></i></span>':'<span style="color:var(--text2);font-size:0.78em;"><i class="fas fa-music"></i></span>'}</div>`;
   }).join('');
 }
 
 function playTrack(i){
   curTrack=i;
   const t=tracks[i];
-  if(scWidget){
-    scWidget.load(t.scUrl,{
-      auto_play:true,
-      color:'6c63ff',
-      hide_related:true,
-      show_comments:false,
-      show_user:true,
-      show_reposts:false,
-      show_teaser:false,
-      visual:true,
-      callback:function(){
-        scWidget.bind(SC.Widget.Events.FINISH,function(){
-          nextTrack();
-        });
-      }
-    });
-  }
-  document.getElementById('playerTitle').textContent=t.name;
-  document.getElementById('playerArtist').textContent=t.artist;
+  if(!bgAudio) return;
+  bgAudio.src=t.file;
+  bgAudio.play().catch(()=>{});
+  // Update main player UI
+  const titleEl=document.getElementById('playerTitle');
+  const artistEl=document.getElementById('playerArtist');
+  if(titleEl) titleEl.textContent=t.name;
+  if(artistEl) artistEl.textContent=t.artist;
+  // Update floating bar
+  const fmbTitle=document.getElementById('fmbTitle');
+  const fmbArtist=document.getElementById('fmbArtist');
+  if(fmbTitle) fmbTitle.textContent=t.name;
+  if(fmbArtist) fmbArtist.textContent=t.artist;
   renderTrackList();
 }
 
 function togglePlay(){
-  if(!scWidget) return;
-  scWidget.isPaused(function(paused){
-    if(paused) scWidget.play();
-    else scWidget.pause();
-  });
+  if(!bgAudio) return;
+  if(bgAudio.paused){
+    if(!bgAudio.src || bgAudio.src===''){
+      shuffleTrack(true);
+    } else {
+      bgAudio.play().catch(()=>{});
+    }
+  } else {
+    bgAudio.pause();
+  }
+}
+
+function updatePlayButtons(){
+  const icon=isPlaying?'fa-pause':'fa-play';
+  // Main player button
+  const mainBtn=document.getElementById('playPauseBtn');
+  if(mainBtn) mainBtn.innerHTML=`<i class="fas ${icon}"></i>`;
+  // Floating bar button
+  const fmbBtn=document.getElementById('fmbPlayBtn');
+  if(fmbBtn) fmbBtn.innerHTML=`<i class="fas ${icon}"></i>`;
+  // Album spin
+  const albumSpin=document.getElementById('albumSpin');
+  if(albumSpin){
+    if(isPlaying) albumSpin.classList.add('spinning');
+    else albumSpin.classList.remove('spinning');
+  }
+  // Floating bar album
+  const fmbAlbum=document.getElementById('fmbAlbum');
+  if(fmbAlbum){
+    if(isPlaying) fmbAlbum.classList.add('spinning');
+    else fmbAlbum.classList.remove('spinning');
+  }
+  renderTrackList();
+}
+
+function updateProgress(){
+  if(!bgAudio||!bgAudio.duration) return;
+  const pct=(bgAudio.currentTime/bgAudio.duration)*100;
+  // Main player progress
+  const bar=document.getElementById('playerProgressBar');
+  if(bar) bar.style.width=pct+'%';
+  // Time display
+  const curEl=document.getElementById('playerCurrentTime');
+  const durEl=document.getElementById('playerDuration');
+  if(curEl) curEl.textContent=formatTime(bgAudio.currentTime);
+  if(durEl) durEl.textContent=formatTime(bgAudio.duration);
+  // Floating bar progress
+  const fmbProgress=document.getElementById('fmbProgress');
+  if(fmbProgress) fmbProgress.style.setProperty('--progress',pct+'%');
+}
+
+function formatTime(s){
+  if(isNaN(s)) return '0:00';
+  const m=Math.floor(s/60);
+  const sec=Math.floor(s%60);
+  return m+':'+(sec<10?'0':'')+sec;
+}
+
+function seekMusic(e){
+  if(!bgAudio||!bgAudio.duration) return;
+  const rect=e.currentTarget.getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  bgAudio.currentTime=pct*bgAudio.duration;
+}
+
+function setVolume(val){
+  if(bgAudio) bgAudio.volume=val/100;
 }
 
 function nextTrack(){ playTrack((curTrack+1)%tracks.length); }
 function prevTrack(){ playTrack((curTrack-1+tracks.length)%tracks.length); }
-function shuffleTrack(){
+function shuffleTrack(silent){
   let r; do{ r=Math.floor(Math.random()*tracks.length); }while(r===curTrack && tracks.length>1);
   playTrack(r);
-  showNotif('success','🔀 Ngẫu nhiên','Đã chuyển bài ngẫu nhiên');
+  if(!silent) showNotif('success','🔀 Ngẫu nhiên','Đã chuyển bài ngẫu nhiên');
 }
-function seekMusic(e){}
 
 // ═══════════════════════════════════════════
 //  GAMES
@@ -1274,4 +1354,404 @@ document.addEventListener('DOMContentLoaded',()=>{
   initTeamMatrix();
   spawnTeamSparkles();
   initTeamTilt();
+  spawnGroupPhotoSparkles();
 });
+
+// --- Group Photo Sparkles ---
+function spawnGroupPhotoSparkles(){
+  const container=document.getElementById('teamPhotoSparkles');
+  if(!container) return;
+  const colors=['#6c63ff','#f64f59','#43e97b','#4facfe','#fee140','#fbc2eb','#fff'];
+  setInterval(()=>{
+    if(!document.getElementById('page-team').classList.contains('active'))return;
+    const spark=document.createElement('div');
+    spark.className='team-photo-sparkle';
+    const size=Math.random()*6+3;
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    spark.style.cssText=`
+      width:${size}px;height:${size}px;
+      background:${color};
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      box-shadow:0 0 ${size*2}px ${color};
+    `;
+    container.appendChild(spark);
+    setTimeout(()=>spark.remove(),2000);
+  },300);
+}
+
+// ===========================
+// MINIGAME PAGE
+// ===========================
+
+// --- Game Tab Switcher ---
+function switchGame(gameId, btn) {
+  document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('game-' + gameId);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ==========================================
+// GAME 1: QUIZ - Độ Mixi Knowledge
+// ==========================================
+const quizQuestions = [
+  {
+    q: "Tên thật của Độ Mixi là gì?",
+    opts: ["Phùng Thanh Độ", "Nguyễn Văn Độ", "Trần Minh Độ", "Lê Thanh Độ"],
+    ans: 0
+  },
+  {
+    q: "Độ Mixi sinh năm bao nhiêu?",
+    opts: ["1987", "1989", "1992", "1994"],
+    ans: 1
+  },
+  {
+    q: "Quê quán Độ Mixi ở đâu?",
+    opts: ["Hà Nội", "Cao Bằng", "Bắc Kạn", "Lạng Sơn"],
+    ans: 1
+  },
+  {
+    q: "Biệt danh 'Tộc Trưởng' của Độ Mixi bắt nguồn từ game nào?",
+    opts: ["PUBG", "CS:GO", "Free Fire", "Clash of Clans"],
+    ans: 0
+  },
+  {
+    q: "Kênh YouTube MixiGaming đạt mốc bao nhiêu triệu sub (tính đến 2026)?",
+    opts: ["5 triệu", "7 triệu", "8 triệu", "10 triệu"],
+    ans: 2
+  },
+  {
+    q: "Đội tuyển eSports của Độ Mixi có tên là gì?",
+    opts: ["Team Flash", "Refund Gaming", "GAM Esports", "SBTC Esports"],
+    ans: 1
+  },
+  {
+    q: "Bài hát nổi tiếng nào của Độ Mixi có hơn 100 triệu view?",
+    opts: ["Đến Bao Giờ", "Độ Tộc 2", "Nà Na Na Na", "Tìm Em Trong Mơ"],
+    ans: 1
+  },
+  {
+    q: "Giải bóng đá do Độ Mixi tổ chức có tên là gì?",
+    opts: ["Mixi League", "MixiCup", "Tộc Cup", "Bộ Tộc League"],
+    ans: 1
+  },
+  {
+    q: "Độ Mixi tham gia chương trình truyền hình thực tế nào năm 2022?",
+    opts: ["Running Man VN", "Sao Nhập Ngũ", "2 Ngày 1 Đêm", "The Amazing Race"],
+    ans: 1
+  },
+  {
+    q: "Biệt phủ 7 tầng của Độ Mixi nằm ở đường nào tại Hà Nội?",
+    opts: ["Phố Huế", "Yên Lãng", "Giải Phóng", "Láng Hạ"],
+    ans: 1
+  },
+  {
+    q: "Cộng đồng fan của Độ Mixi được gọi là gì?",
+    opts: ["Mixi Army", "Bộ Tộc", "Tộc Mixi", "Mixers"],
+    ans: 1
+  },
+  {
+    q: "Độ Mixi từng đạt giải gì tại PUBG?",
+    opts: ["Top 1 thế giới", "Vô địch Châu Á", "Đại diện VN thi PGI 2018", "Không tham gia thi đấu"],
+    ans: 2
+  }
+];
+
+let quizState = {};
+
+function startQuiz() {
+  const shuffled = [...quizQuestions].sort(() => Math.random() - 0.5).slice(0, 10);
+  quizState = {
+    questions: shuffled,
+    current: 0,
+    score: 0,
+    correct: 0,
+    wrong: 0,
+    startTime: Date.now(),
+    timer: null,
+    timeLeft: 15
+  };
+  document.getElementById('quizStart').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizContent').style.display = 'block';
+  document.querySelector('.quiz-header').style.display = 'block';
+  showQuizQuestion();
+}
+
+function showQuizQuestion() {
+  const qs = quizState;
+  if (qs.current >= qs.questions.length) return endQuiz();
+  const q = qs.questions[qs.current];
+  document.getElementById('quizQuestionNum').textContent = `Câu ${qs.current + 1}/${qs.questions.length}`;
+  document.getElementById('quizScore').textContent = `Điểm: ${qs.score}`;
+  document.getElementById('quizProgressBar').style.width = ((qs.current) / qs.questions.length * 100) + '%';
+
+  document.getElementById('quizQuestion').textContent = q.q;
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optsEl.appendChild(btn);
+  });
+
+  // Timer
+  qs.timeLeft = 15;
+  document.getElementById('quizTime').textContent = qs.timeLeft;
+  clearInterval(qs.timer);
+  qs.timer = setInterval(() => {
+    qs.timeLeft--;
+    document.getElementById('quizTime').textContent = qs.timeLeft;
+    if (qs.timeLeft <= 0) {
+      clearInterval(qs.timer);
+      selectAnswer(-1); // time out
+    }
+  }, 1000);
+}
+
+function selectAnswer(idx) {
+  clearInterval(quizState.timer);
+  const q = quizState.questions[quizState.current];
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+
+  if (idx === q.ans) {
+    opts[idx].classList.add('correct');
+    quizState.score += 10;
+    quizState.correct++;
+  } else {
+    if (idx >= 0) opts[idx].classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    quizState.wrong++;
+  }
+
+  setTimeout(() => {
+    quizState.current++;
+    showQuizQuestion();
+  }, 1200);
+}
+
+function endQuiz() {
+  const qs = quizState;
+  clearInterval(qs.timer);
+  const totalTime = Math.round((Date.now() - qs.startTime) / 1000);
+  document.getElementById('quizContent').style.display = 'none';
+  document.querySelector('.quiz-header').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'block';
+
+  document.getElementById('resultScore').textContent = `${qs.score}/${qs.questions.length * 10}`;
+  document.getElementById('resultCorrect').textContent = qs.correct;
+  document.getElementById('resultWrong').textContent = qs.wrong;
+  document.getElementById('resultTime').textContent = totalTime + 's';
+
+  let icon, title, msg;
+  const pct = qs.correct / qs.questions.length;
+  if (pct >= 0.9) { icon = '🏆'; title = 'Tộc Trưởng Thứ Thiệt!'; msg = 'Bạn là fan cứng của Độ Mixi!'; }
+  else if (pct >= 0.7) { icon = '🥈'; title = 'Khá Lắm!'; msg = 'Bạn khá hiểu về Tộc Trưởng rồi đó!'; }
+  else if (pct >= 0.5) { icon = '😊'; title = 'Tạm Được!'; msg = 'Cần xem thêm video Độ Mixi nhé!'; }
+  else { icon = '📚'; title = 'Cần Học Thêm!'; msg = 'Hãy theo dõi MixiGaming nhiều hơn nha!'; }
+
+  document.getElementById('resultIcon').textContent = icon;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMessage').textContent = msg;
+
+  // Save best
+  const best = localStorage.getItem('mixiQuizBest');
+  if (!best || qs.score > parseInt(best)) localStorage.setItem('mixiQuizBest', qs.score);
+  updateLeaderboard();
+}
+
+// ==========================================
+// GAME 2: MEMORY CARDS
+// ==========================================
+// Các icon liên quan đến Độ Mixi: PUBG, headshot, Refund Gaming, MixiCup, stream, Cao Bằng, Bộ Tộc, music
+const memoryItems = [
+  { emoji: '🔫', label: 'PUBG' },
+  { emoji: '🎯', label: 'Headshot' },
+  { emoji: '🏆', label: 'Refund Gaming' },
+  { emoji: '⚽', label: 'MixiCup' },
+  { emoji: '📺', label: 'Stream' },
+  { emoji: '🏔️', label: 'Cao Bằng' },
+  { emoji: '👨‍👩‍👦‍👦', label: 'Bộ Tộc' },
+  { emoji: '🎤', label: 'Độ Tộc 2' },
+];
+const memoryEmojis = memoryItems.map(m => m.emoji);
+let memState = {};
+
+function startMemory() {
+  const pairs = [...memoryEmojis, ...memoryEmojis].sort(() => Math.random() - 0.5);
+  memState = {
+    cards: pairs,
+    flipped: [],
+    matched: 0,
+    moves: 0,
+    startTime: Date.now(),
+    timer: null,
+    locked: false
+  };
+
+  document.getElementById('memoryStart').style.display = 'none';
+  document.getElementById('memoryResult').style.display = 'none';
+  document.getElementById('memoryGrid').style.display = 'grid';
+
+  const grid = document.getElementById('memoryGrid');
+  grid.innerHTML = '';
+  pairs.forEach((emoji, i) => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.dataset.index = i;
+    const item = memoryItems.find(m => m.emoji === emoji);
+    card.innerHTML = `
+      <div class="memory-card-front"><span class="mem-logo">MG</span></div>
+      <div class="memory-card-back"><span class="mem-emoji">${emoji}</span><span class="mem-label">${item ? item.label : ''}</span></div>
+    `;
+    card.onclick = () => flipCard(card, i);
+    grid.appendChild(card);
+  });
+
+  updateMemoryUI();
+  clearInterval(memState.timer);
+  memState.timer = setInterval(() => {
+    document.getElementById('memoryTime').textContent = Math.round((Date.now() - memState.startTime) / 1000);
+  }, 1000);
+}
+
+function flipCard(card, idx) {
+  if (memState.locked) return;
+  if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  if (memState.flipped.length >= 2) return;
+
+  card.classList.add('flipped');
+  memState.flipped.push({ card, idx, emoji: memState.cards[idx] });
+
+  if (memState.flipped.length === 2) {
+    memState.moves++;
+    memState.locked = true;
+    const [a, b] = memState.flipped;
+
+    if (a.emoji === b.emoji) {
+      setTimeout(() => {
+        a.card.classList.add('matched');
+        b.card.classList.add('matched');
+        memState.matched++;
+        memState.flipped = [];
+        memState.locked = false;
+        updateMemoryUI();
+        if (memState.matched === memoryEmojis.length) endMemory();
+      }, 500);
+    } else {
+      setTimeout(() => {
+        a.card.classList.remove('flipped');
+        b.card.classList.remove('flipped');
+        memState.flipped = [];
+        memState.locked = false;
+      }, 800);
+    }
+    updateMemoryUI();
+  }
+}
+
+function updateMemoryUI() {
+  document.getElementById('memoryMoves').textContent = `Lượt: ${memState.moves}`;
+  document.getElementById('memoryPairs').textContent = `Cặp: ${memState.matched}/${memoryEmojis.length}`;
+}
+
+function endMemory() {
+  clearInterval(memState.timer);
+  const totalTime = Math.round((Date.now() - memState.startTime) / 1000);
+  document.getElementById('memoryGrid').style.display = 'none';
+  document.getElementById('memoryResult').style.display = 'block';
+  document.getElementById('memResultMoves').textContent = memState.moves;
+  document.getElementById('memResultTime').textContent = totalTime + 's';
+
+  const best = localStorage.getItem('mixiMemoryBest');
+  if (!best || memState.moves < parseInt(best)) localStorage.setItem('mixiMemoryBest', memState.moves);
+  updateLeaderboard();
+}
+
+// ==========================================
+// GAME 3: REACTION TIME TEST
+// ==========================================
+let reactionState = { phase: 'idle', timeout: null, startTime: 0, times: [], best: Infinity };
+
+function startReaction() {
+  const box = document.getElementById('reactionBox');
+  hideAllReactionScreens();
+  document.getElementById('reactionWait').style.display = 'block';
+  box.className = 'reaction-box waiting';
+  reactionState.phase = 'waiting';
+
+  const delay = 1500 + Math.random() * 3500; // 1.5s - 5s random
+  clearTimeout(reactionState.timeout);
+  reactionState.timeout = setTimeout(() => {
+    hideAllReactionScreens();
+    document.getElementById('reactionGo').style.display = 'block';
+    box.className = 'reaction-box go';
+    reactionState.phase = 'go';
+    reactionState.startTime = Date.now();
+  }, delay);
+}
+
+function handleReactionClick() {
+  if (reactionState.phase === 'waiting') {
+    // Clicked too early
+    clearTimeout(reactionState.timeout);
+    hideAllReactionScreens();
+    document.getElementById('reactionTooSoon').style.display = 'block';
+    document.getElementById('reactionBox').className = 'reaction-box';
+    reactionState.phase = 'idle';
+  } else if (reactionState.phase === 'go') {
+    const time = Date.now() - reactionState.startTime;
+    reactionState.times.push(time);
+    if (time < reactionState.best) reactionState.best = time;
+
+    hideAllReactionScreens();
+    document.getElementById('reactionResult').style.display = 'block';
+    document.getElementById('reactionBox').className = 'reaction-box';
+    reactionState.phase = 'idle';
+
+    document.getElementById('reactionTimeResult').textContent = time + 'ms';
+    document.getElementById('reactionAttempts').textContent = reactionState.times.length;
+    document.getElementById('reactionBest').textContent = reactionState.best + 'ms';
+
+    const avg = Math.round(reactionState.times.reduce((a, b) => a + b, 0) / reactionState.times.length);
+    document.getElementById('reactionAvg').textContent = avg + 'ms';
+
+    let emoji, msg;
+    if (time < 200) { emoji = '🏆'; msg = 'HEADSHOT! Phản xạ ngang Độ Mixi thời PGI 2018!'; }
+    else if (time < 300) { emoji = '🔫'; msg = 'Bắn tỉa chuẩn! Xứng đáng vào Refund Gaming!'; }
+    else if (time < 400) { emoji = '🎯'; msg = 'Tạm được! Cần luyện thêm PUBG với Tộc Trưởng!'; }
+    else { emoji = '💀'; msg = 'Bạn đã bị tiêu diệt! Tộc Trưởng thất vọng lắm...'; }
+
+    document.getElementById('reactionEmoji').textContent = emoji;
+    document.getElementById('reactionMsg').textContent = msg;
+
+    // Save best
+    const saved = localStorage.getItem('mixiReactionBest');
+    if (!saved || reactionState.best < parseInt(saved)) localStorage.setItem('mixiReactionBest', reactionState.best);
+    updateLeaderboard();
+  }
+}
+
+function hideAllReactionScreens() {
+  ['reactionContent', 'reactionWait', 'reactionGo', 'reactionResult', 'reactionTooSoon']
+    .forEach(id => document.getElementById(id).style.display = 'none');
+}
+
+// --- Leaderboard ---
+function updateLeaderboard() {
+  const quizBest = localStorage.getItem('mixiQuizBest');
+  const memBest = localStorage.getItem('mixiMemoryBest');
+  const reactBest = localStorage.getItem('mixiReactionBest');
+
+  if (quizBest) document.getElementById('lbQuiz').textContent = quizBest + ' điểm';
+  if (memBest) document.getElementById('lbMemory').textContent = memBest + ' lượt';
+  if (reactBest) document.getElementById('lbReaction').textContent = reactBest + 'ms';
+}
+
+// Load leaderboard on page load
+document.addEventListener('DOMContentLoaded', updateLeaderboard);
