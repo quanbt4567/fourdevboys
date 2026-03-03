@@ -30,6 +30,12 @@
 <!-- PARTICLES -->
 <canvas id="particles-canvas"></canvas>
 
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-progress"></div>
+
+<!-- SPARKLE TRAIL -->
+<canvas id="sparkle-canvas"></canvas>
+
 <!-- BACK TO TOP -->
 <button id="back-top" title="Lên đầu trang"><i class="fas fa-chevron-up"></i></button>
 
@@ -57,8 +63,8 @@
     </button>
     <nav id="mainNav">
       <a href="#" class="active" onclick="showPage('home',this)">🏠 Trang Chủ</a>
-      <a href="#" onclick="showPage('about',this)">👤 Về Độ Mixi</a>
-      <a href="#" onclick="showPage('gallery',this)">🖼️ Gallery</a>
+      <a href="#" onclick="showPage('about',this)">👤 Giới Thiệu</a>
+      <a href="#" onclick="showPage('gallery',this)">🖼️ Thư Viện Ảnh</a>
       <a href="#" onclick="showPage('video',this)">🎬 Video</a>
       <a href="#" onclick="showPage('docs',this)">📄 Tài Liệu</a>
       <a href="#" onclick="showPage('map',this)">🗺️ Bản Đồ</a>
@@ -66,8 +72,6 @@
       <a href="#" onclick="showPage('faq',this)">❓ FAQ</a>
       <a href="#" onclick="showPage('blog',this)">✍️ Blog</a>
       <a href="#" onclick="showPage('team',this)">🌟 Đội Nhóm</a>
-      <a href="#" onclick="showPage('timeline',this)">📅 Timeline</a>
-      <a href="#" onclick="showPage('games',this)">🎮 Games</a>
       <a href="#" onclick="showPage('contact',this)">📬 Liên Hệ</a>
     </nav>
   </div>
@@ -77,40 +81,72 @@
 <div id="page-home" class="page active">
   <div class="hero" style="position:relative;">
     <canvas id="three-canvas"></canvas>
+    <!-- Hero Background Image -->
+    <div class="hero-img-bg" style="background-image:url('https://img.youtube.com/vi/jk7LbXUpmz0/maxresdefault.jpg');"></div>
     <div class="floating-shape" style="width:400px;height:400px;background:var(--primary);top:-100px;right:-100px;animation-delay:0s;"></div>
     <div class="floating-shape" style="width:300px;height:300px;background:var(--secondary);bottom:-80px;left:-80px;animation-delay:3s;"></div>
     <div class="floating-shape" style="width:200px;height:200px;background:var(--accent);top:50%;left:10%;animation-delay:6s;"></div>
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <div class="hero-badge"><i class="fas fa-circle" style="font-size:0.5em;color:var(--accent);"></i> Fan Page Chính Thức Độ Mixi</div>
-      <h1>
+      <div class="hero-badge animate-float"><i class="fas fa-circle" style="font-size:0.5em;color:var(--accent);"></i> Fan Page Chính Thức Độ Mixi</div>
+      <h1 class="glitch-wrap">
         Khám phá thế giới<br/>
-        <span class="gradient-text" id="heroTitle">Tương Lai Số</span>
+        <span class="gradient-text glitch" id="heroTitle" data-text="Tương Lai Số">Tương Lai Số</span>
       </h1>
-      <p>Tìm hiểu về <strong>Phùng Thanh Độ</strong> — Streamer/YouTuber số 1 Việt Nam, người sáng lập Refund Gaming và Bộ Tộc MixiGaming với hơn 8 triệu subscribers.</p>
+      <p class="hero-desc-anim">Tìm hiểu về <strong>Phùng Thanh Độ</strong> — Streamer/YouTuber số 1 Việt Nam, người sáng lập Refund Gaming và Bộ Tộc MixiGaming với hơn 8 triệu subscribers.</p>
       <div class="hero-btns">
-        <button class="btn-primary" onclick="showPage('video',null)"><span>🎮 Xem Video</span></button>
-        <button class="btn-outline" onclick="showPage('about',null)">👤 Về Độ Mixi</button>
+        <button class="btn-primary btn-ripple" onclick="showPage('video',null)"><span>🎮 Xem Video</span></button>
+        <button class="btn-outline btn-ripple" onclick="showPage('about',null)">👤 Về Độ Mixi</button>
+      </div>
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator">
+        <div class="mouse"><div class="wheel"></div></div>
+        <span>Cuộn xuống</span>
       </div>
     </div>
   </div>
 
   <div class="glow-line"></div>
-  <div class="stats-section">
+
+  <!-- Image Strip Divider -->
+  <div class="img-strip">
+    <div class="img-strip-inner">
+      <img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/7hd7W6KF4so/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/XQ9QzfUeW6A/hqdefault.jpg" alt="Độ Mixi">
+      <!-- Duplicate for seamless loop -->
+      <img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/7hd7W6KF4so/hqdefault.jpg" alt="Độ Mixi">
+      <img src="https://img.youtube.com/vi/XQ9QzfUeW6A/hqdefault.jpg" alt="Độ Mixi">
+    </div>
+  </div>
+
+  <div class="stats-section" style="background-image:url('https://img.youtube.com/vi/nR_IHR6oF8w/maxresdefault.jpg');background-size:cover;background-position:center;background-attachment:fixed;position:relative;">
+    <div class="stats-overlay"></div>
     <div class="stats-grid">
-      <div class="stat-item" data-aos="fade-up">
+      <div class="stat-item" data-aos="fade-up" style="position:relative;z-index:1;">
         <span class="stat-number" data-count="8">0</span>
         <div class="stat-label">Triệu Sub YouTube</div>
       </div>
-      <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="100" style="position:relative;z-index:1;">
         <span class="stat-number" data-count="3700">0</span>
         <div class="stat-label">Triệu Lượt Xem</div>
       </div>
-      <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="200" style="position:relative;z-index:1;">
         <span class="stat-number" data-count="242">0</span>
         <div class="stat-label">K Viewers Kỷ Lục</div>
       </div>
-      <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="300" style="position:relative;z-index:1;">
         <span class="stat-number" data-count="5">0</span>
         <div class="stat-label">Triệu Bộ Tộc</div>
       </div>
@@ -118,48 +154,39 @@
   </div>
   <div class="glow-line"></div>
 
+  <!-- Parallax Image Section -->
+  <div class="parallax-img-section" style="background-image:url('https://img.youtube.com/vi/Jk38OqdAQxc/maxresdefault.jpg');">
+    <div class="parallax-overlay"></div>
+    <div class="parallax-content">
+      <h2>🎵 "Độ Tộc 2" — From Mixi With Love</h2>
+      <p>MV viral nhất của Bộ Tộc MixiGaming với hàng trăm triệu lượt xem</p>
+    </div>
+  </div>
+
   <div class="section">
     <div class="section-header" data-aos="fade-up">
       <div class="section-tag">✨ Nội Dung Nổi Bật</div>
       <h2 class="section-title">Thế Giới Độ Mixi</h2>
       <p class="section-subtitle">Khám phá mọi khía cạnh cuộc sống của Tộc trưởng</p>
     </div>
-    <div class="cards-grid">
+    <div class="cards-grid" style="grid-template-columns:repeat(3,1fr);">
       <div class="glass-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="card-icon">�</div>
-        <div class="card-title">Gaming & Streaming</div>
-        <div class="card-text">Từ CS:GO, PUBG đến GTA V, ARK - Độ Mixi stream đa thể loại cùng anh em Refund Gaming.</div>
-        <span class="card-tag">Gaming</span>
+        <div class="card-icon" style="padding:0;overflow:hidden;"><img src="https://img.youtube.com/vi/jk7LbXUpmz0/mqdefault.jpg" alt="Video Nổi Bật" style="width:100%;height:100%;object-fit:cover;border-radius:12px;"></div>
+        <div class="card-title">🎬 Video Nổi Bật</div>
+        <div class="card-text">Các MV hit, stream highlights và video viral nhất từ kênh MixiGaming với hơn 3.7 tỷ lượt xem.</div>
+        <button class="btn-primary" onclick="showPage('video',null)" style="margin-top:15px;padding:10px 20px;font-size:0.85em;"><span>Xem thêm →</span></button>
       </div>
       <div class="glass-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="card-icon">🎵</div>
-        <div class="card-title">Âm Nhạc & MV</div>
-        <div class="card-text">Các MV hit: "Stream đến bao giờ", "Độ Tộc 2", "Cô đơn không muốn về nhà" và nhiều bản thu khác.</div>
-        <span class="card-tag">Music</span>
+        <div class="card-icon" style="padding:0;overflow:hidden;"><img src="https://img.youtube.com/vi/Jk38OqdAQxc/mqdefault.jpg" alt="Thư Viện Ảnh" style="width:100%;height:100%;object-fit:cover;border-radius:12px;"></div>
+        <div class="card-title">🖼️ Thư Viện Ảnh</div>
+        <div class="card-text">Khoảnh khắc đáng nhớ từ PGI Berlin, Mixi Cup, MV quay, từ thiện và gia đình Tộc trưởng.</div>
+        <button class="btn-primary" onclick="showPage('gallery',null)" style="margin-top:15px;padding:10px 20px;font-size:0.85em;"><span>Xem thêm →</span></button>
       </div>
       <div class="glass-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="card-icon">⚽</div>
-        <div class="card-title">Mixi Cup</div>
-        <div class="card-text">Giải bóng đá do Độ Mixi tổ chức năm 2024, thu hút lượng xem gấp 8 lần sức chứa sân Mỹ Đình.</div>
-        <span class="card-tag">Sports</span>
-      </div>
-      <div class="glass-card" data-aos="fade-up" data-aos-delay="300">
-        <div class="card-icon">�️</div>
-        <div class="card-title">Talkshow & Reaction</div>
-        <div class="card-text">Những buổi talkshow tâm sự, reaction vlog anh em và các khoảnh khắc hài hước trên stream.</div>
-        <span class="card-tag">Entertainment</span>
-      </div>
-      <div class="glass-card" data-aos="fade-up" data-aos-delay="400">
-        <div class="card-icon">❤️</div>
-        <div class="card-title">Từ Thiện</div>
-        <div class="card-text">Quyên góp 1.2 tỷ ủng hộ miền Trung, xây cầu ở Cao Bằng, xây trường cho trẻ em vùng cao.</div>
-        <span class="card-tag">Charity</span>
-      </div>
-      <div class="glass-card" data-aos="fade-up" data-aos-delay="500">
-        <div class="card-icon">👥</div>
-        <div class="card-title">Refund Gaming</div>
-        <div class="card-text">Đội tuyển eSports huyền thoại do Độ Mixi sáng lập, từng tham gia PUBG Global Invitational 2018 tại Berlin.</div>
-        <span class="card-tag">eSports</span>
+        <div class="card-icon" style="padding:0;overflow:hidden;"><img src="https://img.youtube.com/vi/2aGByfV0k6Y/mqdefault.jpg" alt="Bài Viết" style="width:100%;height:100%;object-fit:cover;border-radius:12px;"></div>
+        <div class="card-title">✍️ Bài Viết Blog</div>
+        <div class="card-text">Đọc các bài viết chuyên sâu về sự nghiệp, từ thiện, eSports và âm nhạc của Độ Mixi.</div>
+        <button class="btn-primary" onclick="showPage('blog',null)" style="margin-top:15px;padding:10px 20px;font-size:0.85em;"><span>Xem thêm →</span></button>
       </div>
     </div>
   </div>
@@ -167,12 +194,16 @@
 
 <!-- ██████████ PAGE 2: ABOUT ██████████ -->
 <div id="page-about" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/jk7LbXUpmz0/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">👤 Về Độ Mixi</div>
-      <h2 class="section-title">Tiểu Sử Độ Mixi</h2>
-      <p class="section-subtitle">Phùng Thanh Độ — Streamer, YouTuber, Ca sĩ, Rapper</p>
+      <h1>Tiểu Sử Độ Mixi</h1>
+      <p>Phùng Thanh Độ — Streamer, YouTuber, Ca sĩ, Rapper</p>
     </div>
+  </div>
+  <div class="section">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1000px;margin:0 auto 80px;" data-aos="fade-up">
       <div>
         <div class="section-tag" style="margin-bottom:20px;">Tiểu Sử</div>
@@ -186,25 +217,33 @@
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
-        <div class="glass-card" style="text-align:center;padding:25px 20px;">
-          <div style="font-size:2.5em;margin-bottom:12px;">�</div>
-          <div style="font-weight:700;margin-bottom:8px;">Streamer #1 VN</div>
-          <div style="color:var(--text2);font-size:0.85em;">Top 1 streamer yêu thích nhất thế giới</div>
+        <div class="glass-card" style="text-align:center;padding:0;overflow:hidden;">
+          <img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Stream đến bao giờ MV" style="width:100%;height:140px;object-fit:cover;">
+          <div style="padding:15px 20px;">
+            <div style="font-weight:700;margin-bottom:8px;">Streamer #1 VN</div>
+            <div style="color:var(--text2);font-size:0.85em;">MV "Stream đến bao giờ" — Top 1 Trending</div>
+          </div>
         </div>
-        <div class="glass-card" style="text-align:center;padding:25px 20px;margin-top:20px;">
-          <div style="font-size:2.5em;margin-bottom:12px;">🏆</div>
-          <div style="font-weight:700;margin-bottom:8px;">Nhiều giải thưởng</div>
-          <div style="color:var(--text2);font-size:0.85em;">Streamer of the Year NimoTV</div>
+        <div class="glass-card" style="text-align:center;padding:0;overflow:hidden;margin-top:20px;">
+          <img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Tộc 2 MV" style="width:100%;height:140px;object-fit:cover;">
+          <div style="padding:15px 20px;">
+            <div style="font-weight:700;margin-bottom:8px;">Ca sĩ & Rapper</div>
+            <div style="color:var(--text2);font-size:0.85em;">MV "Độ Tộc 2" — From Mixi With Love</div>
+          </div>
         </div>
-        <div class="glass-card" style="text-align:center;padding:25px 20px;margin-top:-20px;">
-          <div style="font-size:2.5em;margin-bottom:12px;">🎵</div>
-          <div style="font-weight:700;margin-bottom:8px;">Ca sĩ & Rapper</div>
-          <div style="color:var(--text2);font-size:0.85em;">MV Top 1 Trending YouTube</div>
+        <div class="glass-card" style="text-align:center;padding:0;overflow:hidden;margin-top:-20px;">
+          <img src="https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg" alt="PGI 2018" style="width:100%;height:140px;object-fit:cover;">
+          <div style="padding:15px 20px;">
+            <div style="font-weight:700;margin-bottom:8px;">Refund Gaming PGI 2018</div>
+            <div style="color:var(--text2);font-size:0.85em;">Top 1 FPP tại PUBG Global Invitational Berlin</div>
+          </div>
         </div>
-        <div class="glass-card" style="text-align:center;padding:25px 20px;">
-          <div style="font-size:2.5em;margin-bottom:12px;">❤️</div>
-          <div style="font-weight:700;margin-bottom:8px;">Từ thiện</div>
-          <div style="color:var(--text2);font-size:0.85em;">Xây cầu, xây trường vùng cao</div>
+        <div class="glass-card" style="text-align:center;padding:0;overflow:hidden;">
+          <img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="MixiCharity" style="width:100%;height:140px;object-fit:cover;">
+          <div style="padding:15px 20px;">
+            <div style="font-weight:700;margin-bottom:8px;">Từ thiện</div>
+            <div style="color:var(--text2);font-size:0.85em;">MixiCharity — Xây trường vùng cao</div>
+          </div>
         </div>
       </div>
     </div>
@@ -228,7 +267,17 @@
       </div>
     </div>
 
-    <div class="section-header" style="margin-top:80px;" data-aos="fade-up">
+    <!-- Quote Parallax Break -->
+    <div class="parallax-img-section" style="background-image:url('https://img.youtube.com/vi/VWm_cV1Aoz4/maxresdefault.jpg');margin:80px -40px 40px;" data-aos="fade-up">
+      <div class="parallax-overlay" style="background:linear-gradient(135deg,rgba(10,10,26,0.8),rgba(108,99,255,0.2),rgba(246,79,89,0.15));"></div>
+      <div class="parallax-content">
+        <div style="font-size:4em;margin-bottom:15px;">💬</div>
+        <h2 style="font-style:italic;">"Anh em cứ cố gắng, rồi sẽ có lúc may mắn mỉm cười"</h2>
+        <p style="margin-top:10px;">— Phùng Thanh Độ (Độ Mixi)</p>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:40px;" data-aos="fade-up">
       <div class="section-tag">🔗 Kết Nối Với Độ Mixi</div>
       <h2 class="section-title">Mạng Xã Hội Chính Thức</h2>
     </div>
@@ -245,22 +294,26 @@
 
 <!-- ███���██████ PAGE 3: GALLERY ██████████ -->
 <div id="page-gallery" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/Jk38OqdAQxc/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">📸 Khoảnh Khắc Độ Mixi</div>
-      <h2 class="section-title">Khoảnh Khắc Đáng Nhớ</h2>
-      <p class="section-subtitle">Những hình ảnh tiêu biểu trong sự nghiệp Độ Mixi</p>
+      <h1>Khoảnh Khắc Đáng Nhớ</h1>
+      <p>Những hình ảnh tiêu biểu trong sự nghiệp Độ Mixi</p>
     </div>
+  </div>
+  <div class="section">
     <div class="carousel-wrap" data-aos="fade-up">
       <div class="carousel-3d" id="carousel3d">
         <div class="carousel-3d-inner" id="c3dInner">
-          <div class="carousel-3d-slide slide-0" id="slide-0" onclick="openLightbox(0,'🎮 Gaming Setup','Setup gaming đỉnh cao tại nhà Độ Mixi với dàn máy khủng.')"><div class="slide-content">🎮<br/>Gaming Setup</div></div>
-          <div class="carousel-3d-slide slide-1" id="slide-1" onclick="openLightbox(1,'🏆 PGI 2018','Refund Gaming tại PUBG Global Invitational 2018, Berlin, Đức.')"><div class="slide-content">🏆<br/>PGI 2018</div></div>
-          <div class="carousel-3d-slide slide-2" id="slide-2" onclick="openLightbox(2,'🎵 Stream Đến Bao Giờ','MV đạt Top 1 Trending YouTube VN tháng 9/2020.')"><div class="slide-content">🎵<br/>MV Hit</div></div>
-          <div class="carousel-3d-slide slide-3" id="slide-3" onclick="openLightbox(3,'⚽ Mixi Cup','Giải bóng đá Mixi Cup 2024 tại sân Bà Rịa.')"><div class="slide-content">⚽<br/>Mixi Cup</div></div>
-          <div class="carousel-3d-slide slide-4" id="slide-4" onclick="openLightbox(4,'🎖️ Sao Nhập Ngũ','Độ Mixi tham gia chương trình Sao nhập ngũ 2022.')"><div class="slide-content">🎖️<br/>Sao Nhập Ngũ</div></div>
-          <div class="carousel-3d-slide slide-5" id="slide-5" onclick="openLightbox(5,'❤️ Từ Thiện','Xây trường cho trẻ em vùng cao, xây cầu quê Cao Bằng.')"><div class="slide-content">❤️<br/>Từ Thiện</div></div>
-          <div class="carousel-3d-slide slide-6" id="slide-6" onclick="openLightbox(6,'👨‍👩‍👦 Gia Đình','Gia đình hạnh phúc của Tộc trưởng Phùng Thanh Độ.')"><div class="slide-content">👨‍👩‍👦<br/>Gia Đình</div></div>
+          <div class="carousel-3d-slide slide-0" id="slide-0" onclick="openLightbox(0,'� Stream Đến Bao Giờ','MV \"Stream đến bao giờ\" — Top 1 Trending YouTube VN 2020.')"><img src="https://img.youtube.com/vi/jk7LbXUpmz0/maxresdefault.jpg" alt="Stream Đến Bao Giờ MV" class="slide-real-img"><div class="slide-content"><span class="slide-label">🎵 Stream Đến Bao Giờ</span></div></div>
+          <div class="carousel-3d-slide slide-1" id="slide-1" onclick="openLightbox(1,'🏆 PGI 2018','Refund Gaming Top 1 FPP tại PUBG Global Invitational 2018, Berlin.')"><img src="https://img.youtube.com/vi/nR_IHR6oF8w/maxresdefault.jpg" alt="PGI 2018" class="slide-real-img"><div class="slide-content"><span class="slide-label">🏆 PGI 2018</span></div></div>
+          <div class="carousel-3d-slide slide-2" id="slide-2" onclick="openLightbox(2,'🎵 Độ Tộc 2','MV \"Độ Tộc 2\" — From Mixi With Love, viral cả nước.')"><img src="https://img.youtube.com/vi/Jk38OqdAQxc/maxresdefault.jpg" alt="Độ Tộc 2 MV" class="slide-real-img"><div class="slide-content"><span class="slide-label">🎵 Độ Tộc 2</span></div></div>
+          <div class="carousel-3d-slide slide-3" id="slide-3" onclick="openLightbox(3,'⚽ Mixi Cup','Highlight bàn thắng tại giải bóng đá Mixi Cup 2024.')"><img src="https://img.youtube.com/vi/VWm_cV1Aoz4/maxresdefault.jpg" alt="Mixi Cup 2024" class="slide-real-img"><div class="slide-content"><span class="slide-label">⚽ Mixi Cup 2024</span></div></div>
+          <div class="carousel-3d-slide slide-4" id="slide-4" onclick="openLightbox(4,'🎖️ Sao Nhập Ngũ','Độ Mixi tham gia Sao Nhập Ngũ 2025 cùng các nghệ sĩ.')"><img src="https://img.youtube.com/vi/rBDinocbnbc/maxresdefault.jpg" alt="Sao Nhập Ngũ" class="slide-real-img"><div class="slide-content"><span class="slide-label">🎖️ Sao Nhập Ngũ</span></div></div>
+          <div class="carousel-3d-slide slide-5" id="slide-5" onclick="openLightbox(5,'❤️ Từ Thiện','MixiCharity — Khánh thành trường mầm non vùng cao.')"><img src="https://img.youtube.com/vi/2aGByfV0k6Y/maxresdefault.jpg" alt="Từ Thiện" class="slide-real-img"><div class="slide-content"><span class="slide-label">❤️ Từ Thiện</span></div></div>
+          <div class="carousel-3d-slide slide-6" id="slide-6" onclick="openLightbox(6,'🎵 MixiMusic','MixiMusic #1 — Tổng hợp nhạc tự làm của Bộ Tộc.')"><img src="https://img.youtube.com/vi/7hd7W6KF4so/maxresdefault.jpg" alt="MixiMusic" class="slide-real-img"><div class="slide-content"><span class="slide-label">🎵 MixiMusic</span></div></div>
         </div>
       </div>
       <div class="carousel-nav">
@@ -269,22 +322,32 @@
         <button onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
-    <div style="margin-top:70px;">
+
+    <!-- Parallax Image Break -->
+    <div class="parallax-img-section" style="background-image:url('https://img.youtube.com/vi/SPDE0ntfGSM/maxresdefault.jpg');margin:40px -40px 40px;" data-aos="fade-up">
+      <div class="parallax-overlay"></div>
+      <div class="parallax-content">
+        <h2>🎮 PUBG Highlights</h2>
+        <p>Những pha xử lý đẳng cấp của Refund Gaming trên đấu trường quốc tế</p>
+      </div>
+    </div>
+
+    <div>
       <div class="section-header" data-aos="fade-up">
         <div class="section-tag">🖼️ Ảnh Độ Mixi & Refund</div>
         <h2 class="section-title">Bộ Sưu Tập Ảnh</h2>
         <p class="section-subtitle">Nhấp để xem khoảnh khắc đáng nhớ</p>
       </div>
       <div class="gallery-grid" data-aos="fade-up">
-        <div class="gallery-item" onclick="openLightbox(0,'🎮 Gaming Setup','Dàn setup gaming khủng của Mixi.')"><div class="gallery-img" style="background:linear-gradient(135deg,#667eea,#764ba2);">🎮</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(1,'🏆 PGI Berlin','Refund Gaming tại giải PUBG thế giới.')"><div class="gallery-img" style="background:linear-gradient(135deg,#f093fb,#f5576c);">🏆</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(2,'🎵 MV Hit','MV Stream đến bao giờ Top 1 Trending.')"><div class="gallery-img" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">🎵</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(3,'⚽ Mixi Cup','Giải bóng đá Mixi Cup 2024.')"><div class="gallery-img" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">⚽</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(4,'🎖️ Sao Nhập Ngũ','Tham gia chương trình truyền hình.')"><div class="gallery-img" style="background:linear-gradient(135deg,#fa709a,#fee140);">🎖️</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(5,'❤️ Từ Thiện','Hoạt động thiện nguyện.')"><div class="gallery-img" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);">❤️</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(6,'👨‍👩‍👦 Gia Đình','Gia đình Phùng Thanh Độ.')"><div class="gallery-img" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">👨‍👩‍👦</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(0,'🐕 Thú Cưng','Dàn thú cưng của anh em Bộ Tộc.')"><div class="gallery-img" style="background:linear-gradient(135deg,#84fab0,#8fd3f4);">🐕</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
-        <div class="gallery-item" onclick="openLightbox(1,'🎤 Ma Sói','Những ván Ma Sói huyền thoại.')"><div class="gallery-img" style="background:linear-gradient(135deg,#30cfd0,#330867);">🎤</div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(0,'� Stream Đến Bao Giờ','MV Top 1 Trending YouTube 2020.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Stream Đến Bao Giờ" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(1,'🏆 PGI Berlin','Refund Gaming Top 1 FPP tại giải PUBG thế giới.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg" alt="PGI 2018" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(2,'🎵 Độ Tộc 2','MV \"Độ Tộc 2\" — From Mixi With Love.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Tộc 2" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(3,'⚽ Mixi Cup 2024','Highlight giải bóng đá Mixi Cup.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Mixi Cup" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(4,'🎖️ Sao Nhập Ngũ','Độ Mixi tham gia chương trình Sao Nhập Ngũ 2025.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Sao Nhập Ngũ" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(5,'❤️ Từ Thiện','MixiCharity — Xây trường vùng cao.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="Từ Thiện" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(6,'🎵 MixiMusic','Tổng hợp nhạc tự làm Bộ Tộc MixiGaming.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/7hd7W6KF4so/hqdefault.jpg" alt="MixiMusic" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(7,'🎮 Ma Sói','Những ván Ma Sói huyền thoại.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/XQ9QzfUeW6A/hqdefault.jpg" alt="Ma Sói" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        <div class="gallery-item" onclick="openLightbox(8,'🎮 PUBG Highlight','PUBG highlight Độ Mixi cùng Refund Gaming.')"><div class="gallery-img"><img src="https://img.youtube.com/vi/SPDE0ntfGSM/hqdefault.jpg" alt="PUBG Highlight" loading="lazy"></div><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
       </div>
     </div>
   </div>
@@ -292,18 +355,22 @@
 
 <!-- ██████████ PAGE 4: VIDEO ██████████ -->
 <div id="page-video" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/nR_IHR6oF8w/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">🎬 Video Độ Mixi</div>
-      <h2 class="section-title">Video Nổi Bật</h2>
-      <p class="section-subtitle">Các video hay nhất từ kênh MixiGaming</p>
+      <h1>Video Nổi Bật</h1>
+      <p>Các video hay nhất từ kênh MixiGaming</p>
     </div>
+  </div>
+  <div class="section">
     <div class="video-grid" data-aos="fade-up">
       <div class="video-card">
-        <div class="video-frame"><iframe src="https://www.youtube.com/embed/lr0jKWHrhx0" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/jk7LbXUpmz0" allowfullscreen loading="lazy"></iframe></div>
         <div class="video-info">
-          <div class="video-title">📺 Câu Chuyện Bị Hack Kênh YouTube</div>
-          <div class="video-meta"><span><i class="fas fa-eye"></i> 5M+ lượt xem</span><span><i class="fas fa-thumbs-up"></i> 200K+</span><span><i class="fas fa-clock"></i> Restream</span></div>
+          <div class="video-title">🎵 "STREAM ĐẾN BAO GIỜ" — MV Official</div>
+          <div class="video-meta"><span><i class="fas fa-eye"></i> Top 1 Trending</span><span><i class="fas fa-music"></i> MV</span><span><i class="fas fa-fire"></i> Hit</span></div>
         </div>
       </div>
       <div class="video-card">
@@ -314,6 +381,27 @@
         </div>
       </div>
       <div class="video-card">
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/Jk38OqdAQxc" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-info">
+          <div class="video-title">🎵 "ĐỘ TỘC 2" — From Mixi With Love</div>
+          <div class="video-meta"><span><i class="fas fa-eye"></i> 100M+ views</span><span><i class="fas fa-music"></i> MV Official</span></div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/nR_IHR6oF8w" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-info">
+          <div class="video-title">🏆 Refund Gaming — Top 1 FPP PGI 2018</div>
+          <div class="video-meta"><span><i class="fas fa-trophy"></i> PGI Berlin</span><span><i class="fas fa-gamepad"></i> PUBG</span></div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame"><iframe src="https://www.youtube.com/embed/VWm_cV1Aoz4" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-info">
+          <div class="video-title">⚽ Highlight Mixi Cup 2024</div>
+          <div class="video-meta"><span><i class="fas fa-futbol"></i> Bóng đá</span><span><i class="fas fa-fire"></i> Hot</span></div>
+        </div>
+      </div>
+      <div class="video-card">
         <div class="video-frame"><iframe src="https://www.youtube.com/embed/videoseries?list=UUA_23dkEYToAc37hjSsCnXA" allowfullscreen loading="lazy"></iframe></div>
         <div class="video-info">
           <div class="video-title">🎮 Playlist MixiGaming</div>
@@ -321,22 +409,30 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:60px;" data-aos="fade-up">
+
+    <!-- Parallax Image Break -->
+    <div class="parallax-img-section" style="background-image:url('https://img.youtube.com/vi/7hd7W6KF4so/maxresdefault.jpg');margin:60px -40px;" data-aos="fade-up">
+      <div class="parallax-overlay"></div>
+      <div class="parallax-content">
+        <h2>🎵 MixiMusic Collection</h2>
+        <p>Tổng hợp tất cả sản phẩm âm nhạc của Bộ Tộc MixiGaming — Từ "Độ Tộc 1" đến những bản Hit triệu view</p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;" data-aos="fade-up">
       <div class="section-header">
         <div class="section-tag">🎧 Music Player</div>
         <h2 class="section-title">Trình Phát Nhạc</h2>
       </div>
       <div class="player-card">
-        <div class="player-cover" id="playerCover">🎵</div>
-        <div class="player-title" id="playerTitle">Chưa có bài nhạc</div>
-        <div class="player-artist" id="playerArtist">-- Chọn bài để phát --</div>
-        <div class="player-progress" id="playerProgress" onclick="seekMusic(event)">
-          <div class="player-bar" id="playerBar"></div>
+        <!-- SoundCloud Player Embed -->
+        <div id="sc-embed-wrap" style="width:100%;border-radius:16px;overflow:hidden;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.4);">
+          <iframe id="scPlayer" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/onlylanh/stream-den-bao-gio-do-mixi-ft-huyr&color=%236c63ff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true" style="width:100%;height:166px;border:none;"></iframe>
         </div>
-        <div class="player-time"><span id="currentTime">0:00</span><span id="totalTime">0:00</span></div>
-        <div class="player-controls">
+        <div class="player-title" id="playerTitle">Stream Đến Bao Giờ</div>
+        <div class="player-artist" id="playerArtist">Độ Mixi ft. HuyR</div>
+        <div class="player-controls" style="margin-top:15px;">
           <button class="ctrl-btn" onclick="prevTrack()" title="Trước"><i class="fas fa-step-backward"></i></button>
-          <button class="ctrl-btn main" id="playBtn" onclick="togglePlay()"><i class="fas fa-play"></i></button>
           <button class="ctrl-btn" onclick="nextTrack()" title="Tiếp theo"><i class="fas fa-step-forward"></i></button>
           <button class="ctrl-btn" onclick="shuffleTrack()" title="Ngẫu nhiên"><i class="fas fa-random"></i></button>
         </div>
@@ -351,12 +447,16 @@
 
 <!-- ██████████ PAGE 5: DOCS ██████████ -->
 <div id="page-docs" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/2aGByfV0k6Y/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">📄 Tài Liệu Tham Khảo</div>
-      <h2 class="section-title">Tài Liệu Về Độ Mixi</h2>
-      <p class="section-subtitle">Bài viết và tài liệu từ Google Docs & Drive</p>
+      <h1>Tài Liệu Về Độ Mixi</h1>
+      <p>Bài viết và tài liệu từ Google Docs & Drive</p>
     </div>
+  </div>
+  <div class="section">
     <div style="max-width:900px;margin:0 auto;" data-aos="fade-up">
       <div class="map-wrapper" style="margin-bottom:40px;">
         <iframe src="https://docs.google.com/document/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms/pub?embedded=true" style="width:100%;height:600px;" title="Google Docs"></iframe>
@@ -374,6 +474,15 @@
       <div class="doc-card"><div class="doc-type-icon" style="background:rgba(108,99,255,0.2);">📓</div><div class="doc-info"><h4>Discography Độ Mixi</h4><p>Danh sách MV, nhạc và collab từ 2019 đến nay</p><div class="doc-meta"><span class="doc-badge">PDF</span><span class="doc-badge">8.7 MB</span></div></div></div>
       <div class="doc-card"><div class="doc-type-icon" style="background:rgba(246,79,89,0.2);">📒</div><div class="doc-info"><h4>Hoạt động từ thiện</h4><p>Các dự án từ thiện: xây cầu, xây trường, ủng hộ miền Trung</p><div class="doc-meta"><span class="doc-badge">Google Sheets</span></div></div></div>
     </div>
+    <!-- Parallax Image Break -->
+    <div class="parallax-img-section" style="background-image:url('https://img.youtube.com/vi/rBDinocbnbc/maxresdefault.jpg');margin:60px -40px;">
+      <div class="parallax-overlay"></div>
+      <div class="parallax-content">
+        <h2>🎖️ Sao Nhập Ngũ 2025</h2>
+        <p>Độ Mixi tham gia chương trình truyền hình thực tế cùng các nghệ sĩ nổi tiếng</p>
+      </div>
+    </div>
+
     <div style="margin-top:50px;" data-aos="fade-up">
       <table class="fancy-table">
         <thead><tr><th>Tên tài liệu</th><th>Loại</th><th>Cập nhật</th><th>Kích thước</th><th>Tải về</th></tr></thead>
@@ -390,12 +499,16 @@
 
 <!-- ██████████ PAGE 6: MAP ██████████ -->
 <div id="page-map" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/VWm_cV1Aoz4/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">🗺️ Địa Điểm Liên Quan</div>
-      <h2 class="section-title">Hà Nội - Quê Hương Thứ Hai</h2>
-      <p class="section-subtitle">Bản đồ Hà Nội nơi Độ Mixi sinh sống và làm việc</p>
+      <h1>Hà Nội - Quê Hương Thứ Hai</h1>
+      <p>Bản đồ Hà Nội nơi Độ Mixi sinh sống và làm việc</p>
     </div>
+  </div>
+  <div class="section">
     <div class="map-wrapper" data-aos="fade-up" style="margin-bottom:50px;">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59587.97128521701!2d105.79543773643927!3d21.02282438968928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab9bd9861ca1%3A0xe7887f7b72ca17a9!2zSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2svn!4v1704067200000!5m2!1svi!2svn" style="width:100%;height:500px;" allowfullscreen loading="lazy" title="Google Maps"></iframe>
     </div>
@@ -404,21 +517,46 @@
       <h2 class="section-title">Địa Điểm Gắn Liền Với Tộc Trưởng</h2>
     </div>
     <div class="cards-grid" data-aos="fade-up">
-      <div class="glass-card"><div class="card-icon">🏠</div><div class="card-title">Nhà Độ Mixi</div><div class="card-text">Biệt phủ 7 tầng tại Yên Lãng, Đống Đa, Hà Nội<br/><br/><i class="fas fa-info-circle"></i> Nơi stream huyền thoại</div><a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a></div>
-      <div class="glass-card"><div class="card-icon">🏔️</div><div class="card-title">Quê Hương Cao Bằng</div><div class="card-text">Thành phố Cao Bằng, tỉnh Cao Bằng — nơi sinh Phùng Thanh Độ<br/><br/><i class="fas fa-heart"></i> Nơi xây cầu từ thiện</div><a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a></div>
-      <div class="glass-card"><div class="card-icon">🏟️</div><div class="card-title">Sân Bà Rịa</div><div class="card-text">Sân vận động Bà Rịa, Bà Rịa - Vũng Tàu — nơi tổ chức Mixi Cup 2024<br/><br/><i class="fas fa-users"></i> Viewership gấp 8 lần sân Mỹ Đình</div><a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a></div>
+      <div class="glass-card" style="padding:0;overflow:hidden;">
+        <img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Nhà Độ Mixi" style="width:100%;height:160px;object-fit:cover;">
+        <div style="padding:25px;">
+          <div class="card-title">🏠 Nhà Độ Mixi</div>
+          <div class="card-text">Biệt phủ 7 tầng tại Yên Lãng, Đống Đa, Hà Nội<br/><br/><i class="fas fa-info-circle"></i> Nơi stream huyền thoại</div>
+          <a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a>
+        </div>
+      </div>
+      <div class="glass-card" style="padding:0;overflow:hidden;">
+        <img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="Cao Bằng" style="width:100%;height:160px;object-fit:cover;">
+        <div style="padding:25px;">
+          <div class="card-title">🏔️ Quê Hương Cao Bằng</div>
+          <div class="card-text">Thành phố Cao Bằng, tỉnh Cao Bằng — nơi sinh Phùng Thanh Độ<br/><br/><i class="fas fa-heart"></i> Nơi xây cầu từ thiện</div>
+          <a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a>
+        </div>
+      </div>
+      <div class="glass-card" style="padding:0;overflow:hidden;">
+        <img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Sân Bà Rịa" style="width:100%;height:160px;object-fit:cover;">
+        <div style="padding:25px;">
+          <div class="card-title">🏟️ Sân Bà Rịa</div>
+          <div class="card-text">Sân vận động Bà Rịa, Bà Rịa - Vũng Tàu — nơi tổ chức Mixi Cup 2024<br/><br/><i class="fas fa-users"></i> Viewership gấp 8 lần sân Mỹ Đình</div>
+          <a href="https://maps.google.com" target="_blank" style="color:var(--primary);text-decoration:none;font-size:0.9em;font-weight:600;margin-top:15px;display:block;">📍 Xem trên Maps →</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ██████████ PAGE 7: TOOLS ████████��█ -->
+<!-- ██████████ PAGE 7: TOOLS ██████████ -->
 <div id="page-tools" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/XQ9QzfUeW6A/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">⚙️ HTML/JS Embed</div>
-      <h2 class="section-title">Góc Tiện Ích</h2>
-      <p class="section-subtitle">Các công cụ được tích hợp bằng HTML/CSS/JavaScript</p>
+      <h1>Góc Tiện Ích</h1>
+      <p>Các công cụ được tích hợp bằng HTML/CSS/JavaScript</p>
     </div>
+  </div>
+  <div class="section">
     <div class="tools-grid" data-aos="fade-up">
       <div class="tool-card" onclick="switchTool('clock')"><span class="tool-icon-big">🕐</span><div class="tool-name">Đồng Hồ Số</div><div class="tool-desc">Đồng hồ digital real-time với hiệu ứng đẹp</div></div>
       <div class="tool-card" onclick="switchTool('calculator')"><span class="tool-icon-big">🔢</span><div class="tool-name">Máy Tính</div><div class="tool-desc">Máy tính khoa học với giao diện hiện đại</div></div>
@@ -433,12 +571,16 @@
 
 <!-- ██████████ PAGE 8: FAQ ██████████ -->
 <div id="page-faq" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/SPDE0ntfGSM/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">❓ Hỏi Đáp Về Độ Mixi</div>
-      <h2 class="section-title">FAQ Về Độ Mixi & MixiGaming</h2>
-      <p class="section-subtitle">Nhấp vào câu hỏi để biết thêm về Tộc trưởng</p>
+      <h1>FAQ Về Độ Mixi & MixiGaming</h1>
+      <p>Nhấp vào câu hỏi để biết thêm về Tộc trưởng</p>
     </div>
+  </div>
+  <div class="section">
     <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:40px;" data-aos="fade-up">
       <button onclick="filterFAQ('all',this)" class="btn-primary" style="padding:10px 22px;font-size:0.85em;"><span>Tất cả</span></button>
       <button onclick="filterFAQ('tech',this)" class="btn-outline" style="padding:10px 22px;font-size:0.85em;">Sự Nghiệp</button>
@@ -462,19 +604,23 @@
 
 <!-- ██████████ PAGE 9: BLOG ██████████ -->
 <div id="page-blog" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/7hd7W6KF4so/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">✍️ Bài Viết Về Độ Mixi</div>
-      <h2 class="section-title">Chuyên Mục Bài Viết</h2>
-      <p class="section-subtitle">Cập nhật tin tức và câu chuyện về Tộc trưởng</p>
+      <h1>Chuyên Mục Bài Viết</h1>
+      <p>Cập nhật tin tức và câu chuyện về Tộc trưởng</p>
     </div>
+  </div>
+  <div class="section">
     <div class="blog-grid" data-aos="fade-up">
-      <div class="blog-card" onclick="openBlogPost(0)"><div class="blog-thumb" style="background:linear-gradient(135deg,#667eea,#764ba2);">🚀</div><div class="blog-body"><div class="blog-tag">Sự Nghiệp</div><div class="blog-title">Hành trình từ nhân viên văn phòng đến Streamer #1 Việt Nam</div><div class="blog-excerpt">Câu chuyện Phùng Thanh Độ từ bỏ công việc văn phòng để theo đuổi đam mê gaming...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 01/03/2026</span><span><i class="fas fa-eye"></i> 15K</span></div></div></div>
-      <div class="blog-card" onclick="openBlogPost(1)"><div class="blog-thumb" style="background:linear-gradient(135deg,#f093fb,#f5576c);">🎨</div><div class="blog-body"><div class="blog-tag">eSports</div><div class="blog-title">Refund Gaming và chiến tích PGI 2018 tại Berlin</div><div class="blog-excerpt">Nhìn lại hành trình huyền thoại của Refund Gaming tại giải PUBG thế giới ở Berlin, Đức...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 25/02/2026</span><span><i class="fas fa-eye"></i> 12K</span></div></div></div>
-      <div class="blog-card" onclick="openBlogPost(2)"><div class="blog-thumb" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">💻</div><div class="blog-body"><div class="blog-tag">Âm Nhạc</div><div class="blog-title">Discography Độ Mixi: Từ "Độ Tộc 1" đến "Nóng! Hông Làm Quá"</div><div class="blog-excerpt">Tổng hợp tất cả sản phẩm âm nhạc của anh chàng streamer đa tài Phùng Thanh Độ...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 20/02/2026</span><span><i class="fas fa-eye"></i> 8K</span></div></div></div>
-      <div class="blog-card" onclick="openBlogPost(3)"><div class="blog-thumb" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">🤖</div><div class="blog-body"><div class="blog-tag">Từ Thiện</div><div class="blog-title">Những dự án từ thiện ý nghĩa của Bộ Tộc MixiGaming</div><div class="blog-excerpt">Từ 1.2 tỷ ủng hộ miền Trung đến xây cầu Cao Bằng và trường học vùng cao...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 15/02/2026</span><span><i class="fas fa-eye"></i> 20K</span></div></div></div>
-      <div class="blog-card" onclick="openBlogPost(4)"><div class="blog-thumb" style="background:linear-gradient(135deg,#fa709a,#fee140);">📚</div><div class="blog-body"><div class="blog-tag">Events</div><div class="blog-title">Mixi Cup 2024: Giải bóng đá viral nhất Việt Nam</div><div class="blog-excerpt">Giải đấu quy tụ Refund Gaming, SBTC, 500BROS, AllStar F.C. với view gấp 8 lần sân Mỹ Đình...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 10/02/2026</span><span><i class="fas fa-eye"></i> 18K</span></div></div></div>
-      <div class="blog-card" onclick="openBlogPost(5)"><div class="blog-thumb" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);">🌐</div><div class="blog-body"><div class="blog-tag">TV Show</div><div class="blog-title">Độ Mixi tham gia Sao Nhập Ngũ 2022 và hành trình quân ngũ</div><div class="blog-excerpt">Những khoảnh khắc đáng nhớ của Tộc trưởng khi nhập ngũ cùng Hòa Minzy, Minh Tú, Anh Tú...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 05/02/2026</span><span><i class="fas fa-eye"></i> 25K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(0)"><div class="blog-thumb" style="background-image:url('https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="blog-body"><div class="blog-tag">Sự Nghiệp</div><div class="blog-title">Hành trình từ nhân viên văn phòng đến Streamer #1 Việt Nam</div><div class="blog-excerpt">Câu chuyện Phùng Thanh Độ từ bỏ công việc văn phòng để theo đuổi đam mê gaming...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 01/03/2026</span><span><i class="fas fa-eye"></i> 15K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(1)"><div class="blog-thumb" style="background-image:url('https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="blog-body"><div class="blog-tag">eSports</div><div class="blog-title">Refund Gaming và chiến tích PGI 2018 tại Berlin</div><div class="blog-excerpt">Nhìn lại hành trình huyền thoại của Refund Gaming tại giải PUBG thế giới ở Berlin, Đức...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 25/02/2026</span><span><i class="fas fa-eye"></i> 12K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(2)"><div class="blog-thumb" style="background-image:url('https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="blog-body"><div class="blog-tag">Âm Nhạc</div><div class="blog-title">Discography Độ Mixi: Từ "Độ Tộc 1" đến "Nóng! Hông Làm Quá"</div><div class="blog-excerpt">Tổng hợp tất cả sản phẩm âm nhạc của anh chàng streamer đa tài Phùng Thanh Độ...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 20/02/2026</span><span><i class="fas fa-eye"></i> 8K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(3)"><div class="blog-thumb" style="background-image:url('https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="blog-body"><div class="blog-tag">Từ Thiện</div><div class="blog-title">Những dự án từ thiện ý nghĩa của Bộ Tộc MixiGaming</div><div class="blog-excerpt">Từ 1.2 tỷ ủng hộ miền Trung đến xây cầu Cao Bằng và trường học vùng cao...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 15/02/2026</span><span><i class="fas fa-eye"></i> 20K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(4)"><div class="blog-thumb" style="background-image:url('https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="blog-body"><div class="blog-tag">Events</div><div class="blog-title">Mixi Cup 2024: Giải bóng đá viral nhất Việt Nam</div><div class="blog-excerpt">Giải đấu quy tụ Refund Gaming, SBTC, 500BROS, AllStar F.C. với view gấp 8 lần sân Mỹ Đình...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 10/02/2026</span><span><i class="fas fa-eye"></i> 18K</span></div></div></div>
+      <div class="blog-card" onclick="openBlogPost(5)"><div class="blog-thumb" style="background-image:url('https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="blog-body"><div class="blog-tag">TV Show</div><div class="blog-title">Độ Mixi tham gia Sao Nhập Ngũ 2022 và hành trình quân ngũ</div><div class="blog-excerpt">Những khoảnh khắc đáng nhớ của Tộc trưởng khi nhập ngũ cùng Hòa Minzy, Minh Tú, Anh Tú...</div><div class="blog-meta"><span><i class="fas fa-user"></i> Fan Page</span><span><i class="fas fa-calendar"></i> 05/02/2026</span><span><i class="fas fa-eye"></i> 25K</span></div></div></div>
     </div>
     <div id="blogPostModal" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,0.9);overflow-y:auto;backdrop-filter:blur(20px);">
       <div style="max-width:800px;margin:80px auto;padding:20px;">
@@ -486,176 +632,278 @@
 </div>
 
 <!-- ██████████ PAGE 10: TEAM ██████████ -->
-<div id="page-team" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
-      <div class="section-tag">🌟 Đội Nhóm</div>
-      <h2 class="section-title">Thành Viên Nhóm</h2>
-      <p class="section-subtitle">Nhóm thực hiện Fan Page Độ Mixi</p>
+<div id="page-team" class="page" style="position:relative;overflow:hidden;">
+  <!-- ===== TEAM HERO REVEAL OVERLAY ===== -->
+  <div id="teamRevealOverlay" class="team-reveal-overlay">
+    <div class="team-reveal-bg"></div>
+    <!-- Spotlight beams -->
+    <div class="reveal-spotlight reveal-spot-1"></div>
+    <div class="reveal-spotlight reveal-spot-2"></div>
+    <div class="reveal-spotlight reveal-spot-3"></div>
+    <div class="reveal-spotlight reveal-spot-4"></div>
+    <!-- Title -->
+    <div class="reveal-title" id="revealTitle">
+      <span class="reveal-tag">🌟 INTRODUCING</span>
+      <h1 class="reveal-heading">FOURDEVBOYS</h1>
+      <div class="reveal-line"></div>
     </div>
-    <div class="team-grid" data-aos="fade-up">
-      <div class="team-card">
-        <div class="team-avatar" style="padding:0;overflow:hidden;">
-          <!-- Thay src bằng ảnh thật của thành viên -->
-          <img src="images/quan.jpg" alt="Nguyễn Trần Minh Quân" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.parentElement.innerHTML='👨‍💻';">
+    <!-- 4 Member Photo Frames -->
+    <div class="reveal-members">
+      <div class="reveal-member reveal-m1" id="revealM1">
+        <div class="reveal-photo-frame">
+          <div class="reveal-photo-glow" style="background:rgba(108,99,255,0.5);"></div>
+          <div class="reveal-photo-border" style="background:linear-gradient(135deg,#6c63ff,#a78bfa);"></div>
+          <div class="reveal-photo-inner">
+            <img src="images/quan.jpg" alt="Quân" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:4em>👨‍💻</span>';">
+          </div>
         </div>
-        <div class="team-name">Nguyễn Trần Minh Quân</div>
-        <div class="team-role">Trưởng Nhóm / Frontend Dev</div>
-        <div class="team-bio">Phụ trách phát triển giao diện, xây dựng bố cục website và điều phối công việc nhóm.</div>
-        <div class="team-socials">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-github"></i></a>
-          <a href="#"><i class="fas fa-envelope"></i></a>
+        <div class="reveal-member-name">Nguyễn Trần Minh Quân</div>
+        <div class="reveal-member-role">🚀 Trưởng Nhóm</div>
+      </div>
+      <div class="reveal-member reveal-m2" id="revealM2">
+        <div class="reveal-photo-frame">
+          <div class="reveal-photo-glow" style="background:rgba(246,79,89,0.5);"></div>
+          <div class="reveal-photo-border" style="background:linear-gradient(135deg,#f64f59,#f5576c);"></div>
+          <div class="reveal-photo-inner">
+            <img src="images/vinh.jpg" alt="Vinh" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:4em>👨‍🎨</span>';">
+          </div>
+        </div>
+        <div class="reveal-member-name">Bùi Phú Vinh</div>
+        <div class="reveal-member-role">✍️ Content Creator</div>
+      </div>
+      <div class="reveal-member reveal-m3" id="revealM3">
+        <div class="reveal-photo-frame">
+          <div class="reveal-photo-glow" style="background:rgba(67,233,123,0.5);"></div>
+          <div class="reveal-photo-border" style="background:linear-gradient(135deg,#43e97b,#38f9d7);"></div>
+          <div class="reveal-photo-inner">
+            <img src="images/hung.jpg" alt="Hưng" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:4em>👨‍💼</span>';">
+          </div>
+        </div>
+        <div class="reveal-member-name">Võ Thế Hưng</div>
+        <div class="reveal-member-role">🎨 UI/UX Designer</div>
+      </div>
+      <div class="reveal-member reveal-m4" id="revealM4">
+        <div class="reveal-photo-frame">
+          <div class="reveal-photo-glow" style="background:rgba(250,112,154,0.5);"></div>
+          <div class="reveal-photo-border" style="background:linear-gradient(135deg,#fa709a,#fee140);"></div>
+          <div class="reveal-photo-inner">
+            <img src="images/phat.jpg" alt="Phát" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:4em>👨‍🔬</span>';">
+          </div>
+        </div>
+        <div class="reveal-member-name">Đoàn Minh Phát</div>
+        <div class="reveal-member-role">🎬 Multimedia / Tester</div>
+      </div>
+    </div>
+    <!-- Skip Button -->
+    <button class="reveal-skip" onclick="closeTeamReveal()">Bỏ qua ▶</button>
+  </div>
+  <!-- Particle Canvas BG -->
+  <canvas id="teamParticleCanvas"></canvas>
+  <!-- Matrix Rain Canvas -->
+  <canvas id="teamMatrixCanvas"></canvas>
+  <!-- Floating Orbs -->
+  <div class="team-orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(108,99,255,0.3),transparent);top:10%;left:-5%;animation-delay:0s;"></div>
+  <div class="team-orb" style="width:250px;height:250px;background:radial-gradient(circle,rgba(246,79,89,0.3),transparent);top:40%;right:-5%;animation-delay:2s;"></div>
+  <div class="team-orb" style="width:200px;height:200px;background:radial-gradient(circle,rgba(67,233,123,0.3),transparent);bottom:10%;left:30%;animation-delay:4s;"></div>
+  <div class="team-orb" style="width:180px;height:180px;background:radial-gradient(circle,rgba(79,172,254,0.3),transparent);top:60%;left:10%;animation-delay:6s;"></div>
+  <!-- Laser Beams -->
+  <div class="team-laser" style="top:20%;animation-delay:0s;"></div>
+  <div class="team-laser" style="top:50%;animation-delay:1.5s;"></div>
+  <div class="team-laser" style="top:75%;animation-delay:3s;"></div>
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/rBDinocbnbc/maxresdefault.jpg');position:relative;z-index:1;">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
+      <div class="section-tag" style="animation:badgePulse 2s infinite;">🌟 Đội Nhóm FourDevBoys</div>
+      <h1 style="text-shadow:0 0 30px rgba(108,99,255,0.5),0 0 60px rgba(246,79,89,0.3);">Thành Viên Nhóm</h1>
+      <p>Những người thực hiện Fan Page Độ Mixi — Dự án học tập môn Tin học</p>
+    </div>
+  </div>
+  <div class="section">
+
+    <!-- Team Intro Explosive -->
+    <div data-aos="zoom-in" data-aos-duration="1000" style="max-width:800px;margin:0 auto 50px;">
+      <div class="team-intro-explosive">
+        <div class="intro-bg-text">TEAM</div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:3.5em;margin-bottom:15px;animation:float 3s ease-in-out infinite;" id="teamEmojis">👨‍💻👨‍🎨👨‍💼👨‍🔬</div>
+          <h2 style="font-size:1.8em;font-weight:900;margin-bottom:15px;background:linear-gradient(135deg,var(--primary),var(--secondary),var(--accent));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:neonBorderSpin 3s linear infinite;">FourDevBoys</h2>
+          <p style="line-height:1.9;color:var(--text2);font-size:0.95em;" id="teamIntroText">Chúng mình là nhóm 4 học sinh đam mê công nghệ, cùng nhau xây dựng Fan Page Độ Mixi như một dự án học tập. Mỗi thành viên đảm nhận một vai trò riêng, từ lập trình giao diện, thiết kế UI/UX, viết nội dung đến quản lý đa phương tiện.</p>
         </div>
       </div>
-      <div class="team-card">
-        <div class="team-avatar" style="padding:0;overflow:hidden;">
-          <!-- Thay src bằng ảnh thật của thành viên -->
-          <img src="images/vinh.jpg" alt="Bùi Phú Vinh" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.parentElement.innerHTML='👨‍🎨';">
+    </div>
+
+    <!-- Team Stats Row -->
+    <div class="team-stats-row" data-aos="fade-up" data-aos-duration="800">
+      <div class="team-stat-item">
+        <div class="team-stat-number" data-count="4">0</div>
+        <div class="team-stat-label">Thành Viên</div>
+      </div>
+      <div class="team-stat-item">
+        <div class="team-stat-number" data-count="10">0</div>
+        <div class="team-stat-label">Trang Web</div>
+      </div>
+      <div class="team-stat-item">
+        <div class="team-stat-number" data-count="2000">0</div>
+        <div class="team-stat-label">Dòng Code</div>
+      </div>
+      <div class="team-stat-item">
+        <div class="team-stat-number" data-count="100">0</div>
+        <div class="team-stat-label">% Đam Mê</div>
+      </div>
+    </div>
+
+    <!-- Team Cards Explosive -->
+    <div class="team-grid" data-aos="fade-up" data-aos-duration="1000" id="teamGrid">
+      <!-- Nguyễn Trần Minh Quân -->
+      <div class="team-card-explosive" style="animation-delay:0.1s;" onclick="teamCardRipple(event,this)">
+        <div class="spotlight"></div>
+        <div class="team-avatar-explosive">
+          <div class="avatar-ring-pulse"></div>
+          <div class="avatar-ring-outer"></div>
+          <div class="avatar-ring"></div>
+          <div class="avatar-img-wrap" style="background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;">
+            <img src="images/quan.jpg" alt="Nguyễn Trần Minh Quân" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:3em>👨‍💻</span>';">
+          </div>
         </div>
-        <div class="team-name">Bùi Phú Vinh</div>
-        <div class="team-role">UI/UX Designer</div>
-        <div class="team-bio">Thiết kế giao diện, tạo hiệu ứng và đảm bảo trải nghiệm người dùng tốt nhất.</div>
-        <div class="team-socials">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fas fa-envelope"></i></a>
+        <div class="team-name-glitch">Nguyễn Trần Minh Quân</div>
+        <div class="team-role-badge">🚀 Trưởng Nhóm / Frontend Dev</div>
+        <div class="team-bio" style="margin-bottom:12px;">Phụ trách phát triển giao diện, xây dựng bố cục website và điều phối công việc nhóm.</div>
+        <div style="text-align:left;padding:0 10px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin-bottom:2px;"><span>HTML/CSS</span><span>95%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="95"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>JavaScript</span><span>90%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="90"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>Leadership</span><span>100%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="100"></div></div>
+        </div>
+        <div class="team-socials-explosive">
+          <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
       </div>
-      <div class="team-card">
-        <div class="team-avatar" style="padding:0;overflow:hidden;">
-          <!-- Thay src bằng ảnh thật của thành viên -->
-          <img src="images/hung.jpg" alt="Võ Thế Hưng" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.parentElement.innerHTML='👨‍💼';">
+      <!-- Bùi Phú Vinh -->
+      <div class="team-card-explosive" style="animation-delay:0.3s;" onclick="teamCardRipple(event,this)">
+        <div class="spotlight"></div>
+        <div class="team-avatar-explosive">
+          <div class="avatar-ring-pulse"></div>
+          <div class="avatar-ring-outer"></div>
+          <div class="avatar-ring"></div>
+          <div class="avatar-img-wrap" style="background:linear-gradient(135deg,var(--secondary),#f5576c);display:flex;align-items:center;justify-content:center;">
+            <img src="images/vinh.jpg" alt="Bùi Phú Vinh" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:3em>👨‍🎨</span>';">
+          </div>
         </div>
-        <div class="team-name">Võ Thế Hưng</div>
-        <div class="team-role">Content Creator</div>
-        <div class="team-bio">Viết nội dung, tạo bài blog và quản lý các tài liệu cho dự án website.</div>
-        <div class="team-socials">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-          <a href="#"><i class="fas fa-envelope"></i></a>
+        <div class="team-name-glitch">Bùi Phú Vinh</div>
+        <div class="team-role-badge">✍️ Content Creator</div>
+        <div class="team-bio" style="margin-bottom:12px;">Viết nội dung, tạo bài blog và quản lý các tài liệu cho dự án website.</div>
+        <div style="text-align:left;padding:0 10px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin-bottom:2px;"><span>Content Writing</span><span>95%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="95"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>SEO</span><span>80%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="80"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>Creativity</span><span>92%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="92"></div></div>
+        </div>
+        <div class="team-socials-explosive">
+          <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
       </div>
-      <div class="team-card">
-        <div class="team-avatar" style="padding:0;overflow:hidden;">
-          <!-- Thay src bằng ảnh thật của thành viên -->
-          <img src="images/phat.jpg" alt="Đoàn Minh Phát" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.parentElement.innerHTML='👨‍🔬';">
+      <!-- Võ Thế Hưng -->
+      <div class="team-card-explosive" style="animation-delay:0.5s;" onclick="teamCardRipple(event,this)">
+        <div class="spotlight"></div>
+        <div class="team-avatar-explosive">
+          <div class="avatar-ring-pulse"></div>
+          <div class="avatar-ring-outer"></div>
+          <div class="avatar-ring"></div>
+          <div class="avatar-img-wrap" style="background:linear-gradient(135deg,var(--accent),#38f9d7);display:flex;align-items:center;justify-content:center;">
+            <img src="images/hung.jpg" alt="Võ Thế Hưng" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:3em>👨‍💼</span>';">
+          </div>
         </div>
-        <div class="team-name">Đoàn Minh Phát</div>
-        <div class="team-role">Multimedia / Tester</div>
-        <div class="team-bio">Phụ trách video, hình ảnh đa phương tiện và kiểm tra chất lượng website.</div>
-        <div class="team-socials">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-tiktok"></i></a>
-          <a href="#"><i class="fas fa-envelope"></i></a>
+        <div class="team-name-glitch">Võ Thế Hưng</div>
+        <div class="team-role-badge">🎨 UI/UX Designer</div>
+        <div class="team-bio" style="margin-bottom:12px;">Thiết kế giao diện, tạo hiệu ứng và đảm bảo trải nghiệm người dùng tốt nhất.</div>
+        <div style="text-align:left;padding:0 10px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin-bottom:2px;"><span>UI Design</span><span>93%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="93"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>Animation</span><span>88%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="88"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>Figma</span><span>85%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="85"></div></div>
+        </div>
+        <div class="team-socials-explosive">
+          <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
       </div>
+      <!-- Đoàn Minh Phát -->
+      <div class="team-card-explosive" style="animation-delay:0.7s;" onclick="teamCardRipple(event,this)">
+        <div class="spotlight"></div>
+        <div class="team-avatar-explosive">
+          <div class="avatar-ring-pulse"></div>
+          <div class="avatar-ring-outer"></div>
+          <div class="avatar-ring"></div>
+          <div class="avatar-img-wrap" style="background:linear-gradient(135deg,#fa709a,#fee140);display:flex;align-items:center;justify-content:center;">
+            <img src="images/phat.jpg" alt="Đoàn Minh Phát" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:3em>👨‍🔬</span>';">
+          </div>
+        </div>
+        <div class="team-name-glitch">Đoàn Minh Phát</div>
+        <div class="team-role-badge">🎬 Multimedia / Tester</div>
+        <div class="team-bio" style="margin-bottom:12px;">Phụ trách video, hình ảnh đa phương tiện và kiểm tra chất lượng website.</div>
+        <div style="text-align:left;padding:0 10px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin-bottom:2px;"><span>Video Edit</span><span>90%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="90"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>Testing</span><span>85%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="85"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75em;color:var(--text2);margin:6px 0 2px;"><span>Photoshop</span><span>88%</span></div>
+          <div class="team-skill-bar"><div class="team-skill-fill" data-width="88"></div></div>
+        </div>
+        <div class="team-socials-explosive">
+          <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parallax Image Break -->
+    <div class="parallax-img-section" style="background-image:url('https://img.youtube.com/vi/VWm_cV1Aoz4/maxresdefault.jpg');margin:60px -40px;">
+      <div class="parallax-overlay"></div>
+      <div class="parallax-content">
+        <h2>⚽ Mixi Cup 2024</h2>
+        <p>Giải bóng đá có lượng người xem cao nhất lịch sử live stream Việt Nam</p>
+      </div>
+    </div>
+
+    <!-- Skills & Tools -->
+    <div class="section-header" data-aos="fade-up" style="margin-top:60px;">
+      <div class="section-tag">🛠️ Công Nghệ Sử Dụng</div>
+      <h2 class="section-title">Tech Stack</h2>
+    </div>
+    <div class="cards-grid" data-aos="fade-up">
+      <div class="glass-card" style="text-align:center;"><div class="card-icon"><i class="fab fa-html5" style="font-size:2em;color:#e34f26;"></i></div><div class="card-title">HTML5</div><div class="card-text">Cấu trúc và nội dung trang web</div></div>
+      <div class="glass-card" style="text-align:center;"><div class="card-icon"><i class="fab fa-css3-alt" style="font-size:2em;color:#1572b6;"></i></div><div class="card-title">CSS3</div><div class="card-text">Thiết kế giao diện và hiệu ứng</div></div>
+      <div class="glass-card" style="text-align:center;"><div class="card-icon"><i class="fab fa-js-square" style="font-size:2em;color:#f7df1e;"></i></div><div class="card-title">JavaScript</div><div class="card-text">Tương tác và logic xử lý</div></div>
+      <div class="glass-card" style="text-align:center;"><div class="card-icon"><i class="fab fa-google" style="font-size:2em;color:#4285f4;"></i></div><div class="card-title">Google APIs</div><div class="card-text">Maps, Docs, Forms, YouTube</div></div>
     </div>
   </div>
 </div>
 
-<!-- ██████████ PAGE 11: TIMELINE ██████████ -->
-<div id="page-timeline" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
-      <div class="section-tag">📅 Hành Trình Độ Mixi</div>
-      <h2 class="section-title">Cột Mốc Sự Nghiệp</h2>
-      <p class="section-subtitle">Hành trình từ game thủ đến Streamer #1 Việt Nam</p>
-    </div>
-    <div class="timeline">
-      <div class="tl-item" data-aos="fade-right">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2016</div>
-          <div class="tl-title">🎮 Bắt đầu stream CS:GO</div>
-          <div class="tl-text">Phùng Thanh Độ bắt đầu stream CS:GO trên YouTube với đam mê game, thu hút dưới 100 người xem mỗi buổi. Được PewPew mời bình luận giải The Last Pewnoy và bắt đầu nổi tiếng.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-left">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2018</div>
-          <div class="tl-title">🏆 PGI Berlin & Refund Gaming</div>
-          <div class="tl-text">Sáng lập Refund Gaming, đội tuyển PUBG eSports. Giành vé tham dự PUBG Global Invitational 2018 tại Berlin, Đức — đạt Top 1 chế độ FPP trước các đội mạnh thế giới.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-right">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2019</div>
-          <div class="tl-title">🎵 MV Độ Tộc 1</div>
-          <div class="tl-text">Phát hành MV đầu tay "Độ Tộc 1" hợp tác cùng Phúc Du và SONBEAT, đánh dấu bước chân vào lĩnh vực âm nhạc của Tộc trưởng.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-left">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2020</div>
-          <div class="tl-title">📺 Năm đỉnh cao — 242K Viewers</div>
-          <div class="tl-text">Lập kỷ lục 242,000 viewers đồng thời. MV "Stream đến bao giờ" Top 1 Trending. Quyên góp 1.2 tỷ ủng hộ miền Trung. Top 10 YouTube Creators Việt Nam 2020.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-right">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2021</div>
-          <div class="tl-title">🎵 Độ Tộc 2 & Streamer of the Year</div>
-          <div class="tl-text">MV "Độ Tộc 2" viral cả nước. Nhận giải Streamer of the Year tại NimoTV Gala. Xây cầu từ thiện Cao Bằng. Gây quỹ 1.3 tỷ xây trường vùng cao.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-left">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2022</div>
-          <div class="tl-title">🎖️ Sao Nhập Ngũ</div>
-          <div class="tl-text">Tham gia chương trình truyền hình thực tế "Sao nhập ngũ" cùng Hòa Minzy, Minh Tú, Anh Tú. Tiếp tục khánh thành điểm trường tại Sơn La.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-right">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">2024</div>
-          <div class="tl-title">⚽ Mixi Cup & MixiCorp</div>
-          <div class="tl-text">Tổ chức Mixi Cup — giải bóng đá viral nhất VN với view gấp 8 lần sân Mỹ Đình. Thành lập MixiCorp, giữ vị trí Chủ tịch HĐQT. Nhận giải Most Popular Game Streamer.</div>
-        </div>
-      </div>
-      <div class="tl-item" data-aos="fade-left">
-        <div class="tl-dot"></div>
-        <div class="tl-content">
-          <div class="tl-date">HIỆN TẠI & TƯƠNG LAI</div>
-          <div class="tl-title">🌟 Tương Lai MixiGaming</div>
-          <div class="tl-text">Tiếp tục stream, sáng tạo nội dung và phát triển MixiCorp. Mở rộng các dự án từ thiện và đưa thương hiệu MixiGaming vươn tầm quốc tế.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ██████████ PAGE 12: GAMES ██████████ -->
-<div id="page-games" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
-      <div class="section-tag">🎮 Giải Trí MixiGaming</div>
-      <h2 class="section-title">Mini Games & Quiz</h2>
-      <p class="section-subtitle">Giải trí và học tập qua các trò chơi tương tác</p>
-    </div>
-    <div class="tools-grid" style="margin-bottom:40px;" data-aos="fade-up">
-      <div class="tool-card" onclick="switchGame('snake')"><span class="tool-icon-big">🐍</span><div class="tool-name">Snake Game</div><div class="tool-desc">Trò chơi rắn săn mồi huyền thoại</div></div>
-      <div class="tool-card" onclick="switchGame('quiz')"><span class="tool-icon-big">🧠</span><div class="tool-name">Quiz Challenge</div><div class="tool-desc">Trắc nghiệm kiến thức công nghệ</div></div>
-      <div class="tool-card" onclick="switchGame('memory')"><span class="tool-icon-big">🃏</span><div class="tool-name">Memory Cards</div><div class="tool-desc">Lật thẻ tìm cặp giống nhau</div></div>
-    </div>
-    <div id="gameContent" data-aos="fade-up"></div>
-  </div>
-</div>
-
-<!-- ██████████ PAGE 13: CONTACT ██████████ -->
+<!-- ██████████ PAGE 11: CONTACT ██████████ -->
 <div id="page-contact" class="page">
-  <div class="section">
-    <div class="section-header" data-aos="fade-up">
+  <!-- Page Banner -->
+  <div class="page-banner" style="background-image:url('https://img.youtube.com/vi/Jk38OqdAQxc/maxresdefault.jpg');">
+    <div class="page-banner-overlay"></div>
+    <div class="page-banner-content">
       <div class="section-tag">📬 Liên Hệ Fan Page</div>
-      <h2 class="section-title">Liên Hệ & Góp Ý</h2>
-      <p class="section-subtitle">Gửi tin nhắn đến nhóm thực hiện Fan Page</p>
+      <h1>Liên Hệ & Góp Ý</h1>
+      <p>Gửi tin nhắn đến nhóm thực hiện Fan Page</p>
     </div>
+  </div>
+  <div class="section">
     <div class="contact-grid" data-aos="fade-up">
       <div class="contact-info">
         <div class="contact-item">
@@ -742,12 +990,39 @@
   </div>
 </div>
 
+<!-- Image Strip Before Footer -->
+<div class="img-strip img-strip-footer">
+  <div class="img-strip-inner" style="animation-direction:reverse;">
+    <img src="https://img.youtube.com/vi/SPDE0ntfGSM/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/XQ9QzfUeW6A/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/7hd7W6KF4so/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Độ Mixi">
+    <!-- Duplicate for seamless loop -->
+    <img src="https://img.youtube.com/vi/SPDE0ntfGSM/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/XQ9QzfUeW6A/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/7hd7W6KF4so/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="Độ Mixi">
+    <img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Độ Mixi">
+  </div>
+</div>
+
 <!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
+<footer style="background-image:url('https://img.youtube.com/vi/nR_IHR6oF8w/maxresdefault.jpg');background-size:cover;background-position:center;position:relative;">
+  <div class="footer-img-overlay"></div>
+  <div class="footer-grid" style="position:relative;z-index:1;">
     <div class="footer-brand">
       <span class="logo">🎮 MixiGaming</span>
       <p>Fan Page Độ Mixi — Streamer/YouTuber #1 Việt Nam. Website được xây dựng vì mục đích học tập bởi nhóm FourDevBoys.</p>
+      <div style="margin-top:10px;color:var(--text2);font-size:0.85em;">
+        <strong>Thành viên nhóm:</strong> Nguyễn Trần Minh Quân, Bùi Phú Vinh, Võ Thế Hưng, Đoàn Minh Phát
+      </div>
       <div class="footer-social">
         <a href="https://www.facebook.com/MixiGaming/" target="_blank"><i class="fab fa-facebook"></i></a>
         <a href="https://www.youtube.com/channel/UCA_23dkEYToAc37hjSsCnXA" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -770,24 +1045,26 @@
       <a href="#" onclick="showPage('tools',null)">Tiện Ích</a>
       <a href="#" onclick="showPage('faq',null)">FAQ</a>
       <a href="#" onclick="showPage('blog',null)">Blog</a>
-      <a href="#" onclick="showPage('games',null)">Games</a>
+      <a href="#" onclick="showPage('team',null)">Đội Nhóm</a>
+      <a href="#" onclick="showPage('contact',null)">Liên Hệ</a>
     </div>
     <div class="footer-col">
       <h4>📬 Liên Hệ</h4>
-      <a href="#" onclick="showPage('team',null)">Đội Nhóm</a>
-      <a href="#" onclick="showPage('timeline',null)">Timeline</a>
-      <a href="#" onclick="showPage('contact',null)">Liên Hệ</a>
       <a href="mailto:contact@mixigaming.com">Email Trực Tiếp</a>
+      <a href="https://www.facebook.com/MixiGaming/" target="_blank">Facebook</a>
+      <a href="https://www.youtube.com/channel/UCA_23dkEYToAc37hjSsCnXA" target="_blank">YouTube</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 <strong style="color:var(--primary);">🎮 MixiGaming</strong>. All rights reserved.</span>
-    <span>Made with <span style="color:var(--secondary);">❤️</span> by FourDevBoys | Fan Page mục đích học tập</span>
+    <span>Made with <span style="color:var(--secondary);">❤️</span> by Nguyễn Trần Minh Quân, Bùi Phú Vinh, Võ Thế Hưng, Đoàn Minh Phát | Fan Page mục đích học tập</span>
   </div>
 </footer>
 
 <!-- AOS JS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- SoundCloud Widget API -->
+<script src="https://w.soundcloud.com/player/api.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

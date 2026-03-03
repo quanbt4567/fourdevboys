@@ -194,8 +194,6 @@ function showPage(id, el) {
   setTimeout(()=>AOS.refresh(),100);
   // Trigger skill bars if about page
   if(id==='about'&&skillSec){ skillSec.querySelectorAll('.skill-fill').forEach(b=>{ b.style.width='0'; setTimeout(()=>b.style.width=b.dataset.width+'%',300); }); }
-  // Start game if games page
-  if(id==='games'&&document.getElementById('gameContent').innerHTML==='') switchGame('quiz');
   // Start tools if tools page
   if(id==='tools'&&document.getElementById('toolContent').innerHTML==='') switchTool('clock');
 }
@@ -266,9 +264,30 @@ function resetCarouselTimer(){ clearInterval(cAutoTimer); cAutoTimer=setInterval
 // ═══════════════════════════════════════════
 const emojis=['🎮','🏆','🎵','⚽','🎖️','❤️','👨‍👩‍👦','🐕','🎤'];
 const grads=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#a18cd1,#fbc2eb)','linear-gradient(135deg,#ffecd2,#fcb69f)','linear-gradient(135deg,#84fab0,#8fd3f4)','linear-gradient(135deg,#30cfd0,#330867)'];
+const galleryImages=[
+  'https://img.youtube.com/vi/jk7LbXUpmz0/maxresdefault.jpg',
+  'https://img.youtube.com/vi/nR_IHR6oF8w/maxresdefault.jpg',
+  'https://img.youtube.com/vi/Jk38OqdAQxc/maxresdefault.jpg',
+  'https://img.youtube.com/vi/VWm_cV1Aoz4/maxresdefault.jpg',
+  'https://img.youtube.com/vi/rBDinocbnbc/maxresdefault.jpg',
+  'https://img.youtube.com/vi/2aGByfV0k6Y/maxresdefault.jpg',
+  'https://img.youtube.com/vi/7hd7W6KF4so/maxresdefault.jpg',
+  'https://img.youtube.com/vi/XQ9QzfUeW6A/maxresdefault.jpg',
+  'https://img.youtube.com/vi/SPDE0ntfGSM/maxresdefault.jpg'
+];
 function openLightbox(idx,title,desc){
-  document.getElementById('lightboxImg').style.background=grads[idx%grads.length];
-  document.getElementById('lightboxImg').innerHTML=`<span style="font-size:5em">${emojis[idx%emojis.length]}</span>`;
+  const imgUrl = galleryImages[idx % galleryImages.length];
+  const emoji = emojis[idx % emojis.length];
+  const grad = grads[idx % grads.length];
+  const lbImg = document.getElementById('lightboxImg');
+  lbImg.style.background = `url('${imgUrl}') center/cover no-repeat, ${grad}`;
+  const img = document.createElement('img');
+  img.src = imgUrl;
+  img.alt = title;
+  img.style.cssText = 'max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.5);';
+  img.onerror = function(){ this.style.display='none'; lbImg.innerHTML='<span style="font-size:5em">'+emoji+'</span>'; };
+  lbImg.innerHTML = '';
+  lbImg.appendChild(img);
   document.getElementById('lightboxTitle').textContent=title;
   document.getElementById('lightboxDesc').textContent=desc;
   document.getElementById('lightbox').classList.add('open');
@@ -303,12 +322,12 @@ function filterFAQ(cat,btn){
 //  BLOG POST MODAL
 // ═══════════════════════════════════════════
 const blogPosts=[
-  {title:'Hành trình từ nhân viên văn phòng đến Streamer #1 VN',emoji:'🎮',cat:'Sự Nghiệp',grad:'linear-gradient(135deg,#667eea,#764ba2)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Hành trình Độ Mixi</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;"><span>📅 01/03/2026</span> | <span>✍️ Fan Page</span></div><p style="line-height:1.9;margin-bottom:20px;">Phùng Thanh Độ (sinh 12/09/1989 tại Cao Bằng) từng là nhân viên văn phòng trước khi trở thành streamer. Năm 2016, anh bắt đầu stream CS:GO với niềm đam mê game.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Bước ngoặt sự nghiệp</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Được PewPew mời bình luận giải đấu, Độ Mixi nhanh chóng thu hút lượng fan lớn. Anh sáng lập Refund Gaming và tham dự PGI 2018 tại Berlin.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Kỷ lục 242K viewers</h2><p style="line-height:1.9;color:var(--text2);">Năm 2020, anh lập kỷ lục 242,000 người xem đồng thời — gấp 6 lần sức chứa sân Mỹ Đình. MV "Stream đến bao giờ" đạt Top 1 Trending YouTube VN.</p>`},
-  {title:'Refund Gaming — Chiến tích PGI 2018 Berlin',emoji:'🏆',cat:'eSports',grad:'linear-gradient(135deg,#f093fb,#f5576c)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#f093fb,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Refund Gaming tại PGI 2018</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 25/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:20px;">Refund Gaming là đội PUBG do Độ Mixi sáng lập. Năm 2018, đội giành vé tham dự PUBG Global Invitational tại Berlin — giải PUBG lớn nhất thế giới.</p><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Top 1 FPP</h2><p style="line-height:1.9;color:var(--text2);">Refund Gaming đạt Top 1 ở chế độ Góc nhìn thứ nhất (FPP), tạo nên chiến tích lịch sử cho eSports Việt Nam.</p>`},
-  {title:'Discography: Từ Độ Tộc 1 đến Nóng! Hông Làm Quá',emoji:'🎵',cat:'Âm Nhạc',grad:'linear-gradient(135deg,#4facfe,#00f2fe)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Âm nhạc Độ Mixi</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 20/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;">Các sản phẩm: "Độ Tộc 1" (2019), "Stream đến bao giờ" (2020 - Top 1 Trending), "Cô đơn không muốn về nhà" (2020), "Độ Tộc 2" (2021), "Nóng! Hông làm quá" (2023), "Noel Không Cô Đơn" (2023).</p>`},
-  {title:'Hoạt động từ thiện: Xây cầu, xây trường vùng cao',emoji:'❤️',cat:'Từ Thiện',grad:'linear-gradient(135deg,#43e97b,#38f9d7)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#43e97b,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Từ thiện MixiGaming</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 15/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:20px;">Lũ lụt miền Trung 2020: quyên góp 1.2 tỷ đồng (gia đình đóng 460 triệu).</p><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Tháng 1/2021: Xây cầu từ thiện ở quê Cao Bằng.</p><p style="line-height:1.9;color:var(--text2);">Cuối 2021: Gây quỹ 1.3 tỷ xây trường tại Nghệ An và khánh thành điểm trường tại Sơn La.</p>`},
-  {title:'Mixi Cup 2024: Giải bóng đá viral nhất VN',emoji:'⚽',cat:'Events',grad:'linear-gradient(135deg,#fa709a,#fee140)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#fa709a,#fee140);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Mixi Cup 2024</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 10/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;">Giải quy tụ 4 đội: Refund Gaming, SBTC, 500BROS và AllStar F.C. tại sân Bà Rịa ngày 23-24/11/2024. Lượt xem trực tiếp gấp 8 lần sức chứa sân Mỹ Đình. Mixi ghi bàn đẹp trong trận mở màn.</p>`},
-  {title:'Sao Nhập Ngũ: Hành trình quân ngũ của Tộc trưởng',emoji:'🎖️',cat:'TV Show',grad:'linear-gradient(135deg,#a18cd1,#fbc2eb)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#a18cd1,#fbc2eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sao Nhập Ngũ 2022</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 05/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;">Năm 2022, Độ Mixi tham gia chương trình truyền hình "Sao nhập ngũ" cùng Hòa Minzy, Minh Tú, Anh Tú, Cara Phương, S.T Sơn Thạch. Chương trình mang đến nhiều khoảnh khắc hài hước và cảm động.</p>`}
+  {title:'Hành trình từ nhân viên văn phòng đến Streamer #1 VN',emoji:'🎮',cat:'Sự Nghiệp',grad:'linear-gradient(135deg,#667eea,#764ba2)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Hành trình Độ Mixi</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;"><span>📅 01/03/2026</span> | <span>✍️ Fan Page</span></div><p style="line-height:1.9;margin-bottom:20px;">Phùng Thanh Độ (sinh 12/09/1989 tại Cao Bằng) từng là nhân viên văn phòng trước khi trở thành streamer. Năm 2016, anh bắt đầu stream CS:GO với niềm đam mê game.</p><img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Stream Đến Bao Giờ" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Bước ngoặt sự nghiệp</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Được PewPew mời bình luận giải đấu, Độ Mixi nhanh chóng thu hút lượng fan lớn. Anh sáng lập Refund Gaming và tham dự PGI 2018 tại Berlin.</p><img src="https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg" alt="PGI 2018" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Kỷ lục 242K viewers</h2><p style="line-height:1.9;color:var(--text2);">Năm 2020, anh lập kỷ lục 242,000 người xem đồng thời — gấp 6 lần sức chứa sân Mỹ Đình. MV "Stream đến bao giờ" đạt Top 1 Trending YouTube VN.</p>`},
+  {title:'Refund Gaming — Chiến tích PGI 2018 Berlin',emoji:'🏆',cat:'eSports',grad:'linear-gradient(135deg,#f093fb,#f5576c)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#f093fb,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Refund Gaming tại PGI 2018</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 25/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:20px;">Refund Gaming là đội PUBG do Độ Mixi sáng lập. Năm 2018, đội giành vé tham dự PUBG Global Invitational tại Berlin — giải PUBG lớn nhất thế giới.</p><img src="https://img.youtube.com/vi/nR_IHR6oF8w/hqdefault.jpg" alt="Refund Gaming PGI" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Top 1 FPP</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Refund Gaming đạt Top 1 ở chế độ Góc nhìn thứ nhất (FPP), tạo nên chiến tích lịch sử cho eSports Việt Nam.</p><img src="https://img.youtube.com/vi/SPDE0ntfGSM/hqdefault.jpg" alt="PUBG Highlight" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Di sản Refund Gaming</h2><p style="line-height:1.9;color:var(--text2);">Sau PGI, Refund Gaming trở thành biểu tượng của PUBG Việt Nam và là nền tảng cho sự phát triển của eSports nước nhà.</p>`},
+  {title:'Discography: Từ Độ Tộc 1 đến Nóng! Hông Làm Quá',emoji:'🎵',cat:'Âm Nhạc',grad:'linear-gradient(135deg,#4facfe,#00f2fe)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Âm nhạc Độ Mixi</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 20/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:15px;">Độ Mixi không chỉ là streamer mà còn là ca sĩ với nhiều MV triệu views.</p><img src="https://img.youtube.com/vi/Jk38OqdAQxc/hqdefault.jpg" alt="Độ Tộc 2 MV" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Các MV nổi bật</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">"Độ Tộc 1" (2019), "Stream đến bao giờ" (2020 - Top 1 Trending), "Cô đơn không muốn về nhà" (2020), "Độ Tộc 2" (2021 - 100M+ views), "Nóng! Hông làm quá" (2023), "Noel Không Cô Đơn" (2023).</p><img src="https://img.youtube.com/vi/7hd7W6KF4so/hqdefault.jpg" alt="MixiMusic" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">MixiMusic</h2><p style="line-height:1.9;color:var(--text2);">Ngoài MV chính thức, Độ Mixi còn có series MixiMusic tổng hợp nhạc tự sáng tác cùng anh em Bộ Tộc.</p>`},
+  {title:'Hoạt động từ thiện: Xây cầu, xây trường vùng cao',emoji:'❤️',cat:'Từ Thiện',grad:'linear-gradient(135deg,#43e97b,#38f9d7)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#43e97b,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Từ thiện MixiGaming</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 15/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:20px;">Lũ lụt miền Trung 2020: quyên góp 1.2 tỷ đồng (gia đình đóng 460 triệu).</p><img src="https://img.youtube.com/vi/2aGByfV0k6Y/hqdefault.jpg" alt="MixiCharity" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Xây cầu & xây trường</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Tháng 1/2021: Xây cầu từ thiện ở quê Cao Bằng. Cuối 2021: Gây quỹ 1.3 tỷ xây trường tại Nghệ An và khánh thành điểm trường tại Sơn La.</p><img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Sao Nhập Ngũ" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Ảnh hưởng cộng đồng</h2><p style="line-height:1.9;color:var(--text2);">Các hoạt động từ thiện của Độ Mixi truyền cảm hứng cho hàng triệu fan và khẳng định vai trò của streamer trong xã hội.</p>`},
+  {title:'Mixi Cup 2024: Giải bóng đá viral nhất VN',emoji:'⚽',cat:'Events',grad:'linear-gradient(135deg,#fa709a,#fee140)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#fa709a,#fee140);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Mixi Cup 2024</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 10/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:15px;">Giải quy tụ 4 đội: Refund Gaming, SBTC, 500BROS và AllStar F.C. tại sân Bà Rịa ngày 23-24/11/2024.</p><img src="https://img.youtube.com/vi/VWm_cV1Aoz4/hqdefault.jpg" alt="Mixi Cup 2024" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Kỷ lục lượt xem</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Lượt xem trực tiếp gấp 8 lần sức chứa sân Mỹ Đình. Mixi ghi bàn đẹp trong trận mở màn.</p><img src="https://img.youtube.com/vi/jk7LbXUpmz0/hqdefault.jpg" alt="Mixi" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Tầm ảnh hưởng</h2><p style="line-height:1.9;color:var(--text2);">Mixi Cup chứng minh sức mạnh cộng đồng MixiGaming và tạo tiền đề cho các giải đấu tiếp theo.</p>`},
+  {title:'Sao Nhập Ngũ: Hành trình quân ngũ của Tộc trưởng',emoji:'🎖️',cat:'TV Show',grad:'linear-gradient(135deg,#a18cd1,#fbc2eb)',content:`<h1 style="font-size:1.8em;font-weight:800;margin-bottom:15px;background:linear-gradient(135deg,#a18cd1,#fbc2eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sao Nhập Ngũ 2022</h1><div style="color:var(--text2);font-size:0.85em;margin-bottom:25px;">📅 05/02/2026 | ✍️ Fan Page</div><p style="line-height:1.9;margin-bottom:15px;">Năm 2022, Độ Mixi tham gia chương trình truyền hình "Sao nhập ngũ" cùng Hòa Minzy, Minh Tú, Anh Tú, Cara Phương, S.T Sơn Thạch.</p><img src="https://img.youtube.com/vi/rBDinocbnbc/hqdefault.jpg" alt="Sao Nhập Ngũ" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Khoảnh khắc đáng nhớ</h2><p style="line-height:1.9;color:var(--text2);margin-bottom:15px;">Chương trình mang đến nhiều khoảnh khắc hài hước và cảm động, giúp khán giả hiểu thêm về con người Phùng Thanh Độ ngoài đời thực.</p><img src="https://img.youtube.com/vi/XQ9QzfUeW6A/hqdefault.jpg" alt="Ma Sói Độ Mixi" style="width:100%;border-radius:12px;margin:15px 0;"><h2 style="font-size:1.3em;font-weight:700;color:var(--primary);margin:25px 0 12px;">Sau Sao Nhập Ngũ</h2><p style="line-height:1.9;color:var(--text2);">Sau chương trình, Độ Mixi tiếp tục được nhiều nhãn hàng và chương trình truyền hình mời hợp tác.</p>`}
 ];
 function openBlogPost(i){
   const p=blogPosts[i];
@@ -514,55 +533,81 @@ function copyColor(){
 }
 
 // ═══════════════════════════════════════════
-//  MUSIC PLAYER
+//  MUSIC PLAYER (SoundCloud Widget API)
 // ═══════════════════════════════════════════
 const tracks=[
-  {name:'Stream đến bao giờ',artist:'Độ Mixi ft. HuyR',emoji:'🎤',dur:248},
-  {name:'Độ Tộc 2',artist:'Masew, Phúc Du, Pháo, Độ Mixi',emoji:'🔥',dur:215},
-  {name:'Cô đơn không muốn về nhà',artist:'Mr. Siro ft. Refund Band',emoji:'🎵',dur:285},
-  {name:'Nóng! Hông làm quá',artist:'Phúc Du, Gill, Pháo, Độ Mixi',emoji:'🎶',dur:230},
+  {name:'Stream Đến Bao Giờ',artist:'Độ Mixi ft. HuyR',emoji:'🎤',scUrl:'https://soundcloud.com/onlylanh/stream-den-bao-gio-do-mixi-ft-huyr'},
+  {name:'Độ Tộc 2',artist:'Masew x Phúc Du x Pháo x Độ Mixi',emoji:'🔥',scUrl:'https://soundcloud.com/metubmusic/do-toc-2-from-mixi-with-love-masew-x-phuc-du-x-phao-x-do-mixi'},
+  {name:'Tìm Em Trong Mơ (Remix)',artist:'Độ Mixi AI Cover x Chi Dân',emoji:'🎵',scUrl:'https://soundcloud.com/nguy-n-th-i-347521652/tim-em-trong-mo-do-mixi-ai-cover-x-chi-dan-hung-thai-rmx'},
+  {name:'Nà Na Na Na Anh Độ Mixi',artist:'Khôi Lê',emoji:'🎶',scUrl:'https://soundcloud.com/khoi-le-630313108/na-na-na-na-anh-mixi'},
 ];
-let curTrack=0, playing=false, progTimer, elapsed=0;
+let curTrack=0;
+let scWidget=null;
+
 function initMusicPlayer(){
   const tl=document.getElementById('trackList');
   if(!tl) return;
-  tl.innerHTML=tracks.map((t,i)=>`<div onclick="playTrack(${i})" style="display:flex;align-items:center;gap:12px;padding:10px 15px;border-radius:10px;cursor:pointer;transition:all 0.2s;background:rgba(108,99,255,0.05);border:1px solid rgba(108,99,255,0.1);" class="tl-item-${i}" onmouseover="this.style.background='rgba(108,99,255,0.15)'" onmouseout="this.style.background='rgba(108,99,255,0.05)'"><span style="font-size:1.5em;">${t.emoji}</span><div style="flex:1"><div style="font-weight:600;font-size:0.9em;">${t.name}</div><div style="color:var(--text2);font-size:0.78em;">${t.artist}</div></div><span style="color:var(--text2);font-size:0.78em;">${Math.floor(t.dur/60)}:${String(t.dur%60).padStart(2,'0')}</span></div>`).join('');
-  playTrack(0);
+  // Initialize SoundCloud Widget
+  const iframe=document.getElementById('scPlayer');
+  if(iframe && typeof SC!=='undefined'){
+    scWidget=SC.Widget(iframe);
+    scWidget.bind(SC.Widget.Events.FINISH,function(){
+      nextTrack();
+    });
+  }
+  renderTrackList();
 }
+
+function renderTrackList(){
+  const tl=document.getElementById('trackList');
+  if(!tl) return;
+  tl.innerHTML=tracks.map((t,i)=>{
+    const isActive=i===curTrack;
+    return `<div onclick="playTrack(${i})" style="display:flex;align-items:center;gap:12px;padding:10px 15px;border-radius:10px;cursor:pointer;transition:all 0.2s;background:${isActive?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'};border:1px solid ${isActive?'rgba(108,99,255,0.5)':'rgba(108,99,255,0.1)'};" onmouseover="this.style.background='rgba(108,99,255,0.15)'" onmouseout="this.style.background='${isActive?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'}'"><span style="font-size:1.5em;">${t.emoji}</span><div style="flex:1"><div style="font-weight:600;font-size:0.9em;">${t.name}</div><div style="color:var(--text2);font-size:0.78em;">${t.artist}</div></div>${isActive?'<span style="color:var(--primary);font-size:0.85em;"><i class="fas fa-volume-up"></i></span>':'<span style="color:var(--text2);font-size:0.78em;"><i class="fab fa-soundcloud" style="color:#ff5500;"></i></span>'}</div>`;
+  }).join('');
+}
+
 function playTrack(i){
-  curTrack=i; elapsed=0; const t=tracks[i];
+  curTrack=i;
+  const t=tracks[i];
+  if(scWidget){
+    scWidget.load(t.scUrl,{
+      auto_play:true,
+      color:'6c63ff',
+      hide_related:true,
+      show_comments:false,
+      show_user:true,
+      show_reposts:false,
+      show_teaser:false,
+      visual:true,
+      callback:function(){
+        scWidget.bind(SC.Widget.Events.FINISH,function(){
+          nextTrack();
+        });
+      }
+    });
+  }
   document.getElementById('playerTitle').textContent=t.name;
   document.getElementById('playerArtist').textContent=t.artist;
-  document.getElementById('playerCover').textContent=t.emoji;
-  document.getElementById('totalTime').textContent=`${Math.floor(t.dur/60)}:${String(t.dur%60).padStart(2,'0')}`;
-  document.querySelectorAll('[class^="tl-item-"]').forEach((el,j)=>{ el.style.borderColor=j===i?'rgba(108,99,255,0.5)':'rgba(108,99,255,0.1)'; el.style.background=j===i?'rgba(108,99,255,0.2)':'rgba(108,99,255,0.05)'; });
-  if(playing) startProgress();
+  renderTrackList();
 }
+
 function togglePlay(){
-  playing=!playing;
-  document.getElementById('playBtn').innerHTML=playing?'<i class="fas fa-pause"></i>':'<i class="fas fa-play"></i>';
-  document.getElementById('playerCover').classList.toggle('spinning',playing);
-  if(playing) startProgress(); else clearInterval(progTimer);
+  if(!scWidget) return;
+  scWidget.isPaused(function(paused){
+    if(paused) scWidget.play();
+    else scWidget.pause();
+  });
 }
-function startProgress(){
-  clearInterval(progTimer);
-  progTimer=setInterval(()=>{
-    elapsed++;
-    const dur=tracks[curTrack].dur;
-    const pct=Math.min((elapsed/dur)*100,100);
-    document.getElementById('playerBar').style.width=pct+'%';
-    document.getElementById('currentTime').textContent=`${Math.floor(elapsed/60)}:${String(elapsed%60).padStart(2,'0')}`;
-    if(elapsed>=dur) nextTrack();
-  },1000);
-}
+
 function nextTrack(){ playTrack((curTrack+1)%tracks.length); }
 function prevTrack(){ playTrack((curTrack-1+tracks.length)%tracks.length); }
-function shuffleTrack(){ playTrack(Math.floor(Math.random()*tracks.length)); showNotif('success','🔀 Ngẫu nhiên','Đã chuyển bài ngẫu nhiên'); }
-function seekMusic(e){
-  const rect=document.getElementById('playerProgress').getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
-  elapsed=Math.floor(pct*tracks[curTrack].dur);
+function shuffleTrack(){
+  let r; do{ r=Math.floor(Math.random()*tracks.length); }while(r===curTrack && tracks.length>1);
+  playTrack(r);
+  showNotif('success','🔀 Ngẫu nhiên','Đã chuyển bài ngẫu nhiên');
 }
+function seekMusic(e){}
 
 // ═══════════════════════════════════════════
 //  GAMES
@@ -770,9 +815,463 @@ document.addEventListener('keydown',e=>{
 });
 
 // ═══════════════════════════════════════════
-//  HEADER SCROLL GLOW
+//  HEADER SCROLL GLOW + SCROLL PROGRESS
 // ═══════════════════════════════════════════
 window.addEventListener('scroll',()=>{
   const pct=Math.min(window.scrollY/300,1);
   document.getElementById('mainHeader').style.background=`rgba(10,10,26,${0.85+pct*0.14})`;
+  // Scroll progress bar
+  const scrollTop=window.scrollY;
+  const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+  const scrollPct=docHeight>0?(scrollTop/docHeight)*100:0;
+  const sp=document.getElementById('scroll-progress');
+  if(sp) sp.style.width=scrollPct+'%';
+});
+
+// ═══════════════════════════════════════════
+//  RIPPLE EFFECT ON BUTTONS
+// ═══════════════════════════════════════════
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.btn-ripple,.btn-primary,.btn-outline');
+  if(!btn) return;
+  const rect=btn.getBoundingClientRect();
+  const ripple=document.createElement('span');
+  ripple.className='ripple-effect';
+  const size=Math.max(rect.width,rect.height);
+  ripple.style.width=ripple.style.height=size+'px';
+  ripple.style.left=(e.clientX-rect.left-size/2)+'px';
+  ripple.style.top=(e.clientY-rect.top-size/2)+'px';
+  btn.style.position='relative';
+  btn.style.overflow='hidden';
+  btn.appendChild(ripple);
+  setTimeout(()=>ripple.remove(),600);
+});
+
+// ═══════════════════════════════════════════
+//  SPARKLE MOUSE TRAIL
+// ═══════════════════════════════════════════
+(function initSparkle(){
+  const canvas=document.getElementById('sparkle-canvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+  const sparkles=[];
+  let lastX=0,lastY=0,frame=0;
+  document.addEventListener('mousemove',e=>{lastX=e.clientX;lastY=e.clientY;});
+  function addSparkle(){
+    if(frame%3===0){
+      sparkles.push({
+        x:lastX+(Math.random()-0.5)*20,
+        y:lastY+(Math.random()-0.5)*20,
+        size:Math.random()*3+1,
+        life:1,
+        vx:(Math.random()-0.5)*1,
+        vy:(Math.random()-0.5)*1-0.5,
+        color:['#6c63ff','#f64f59','#43e97b','#4facfe','#fff'][Math.floor(Math.random()*5)]
+      });
+    }
+    if(sparkles.length>60) sparkles.splice(0,sparkles.length-60);
+  }
+  function drawSparkles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    frame++;
+    addSparkle();
+    for(let i=sparkles.length-1;i>=0;i--){
+      const s=sparkles[i];
+      s.x+=s.vx;
+      s.y+=s.vy;
+      s.life-=0.02;
+      s.size*=0.98;
+      if(s.life<=0){sparkles.splice(i,1);continue;}
+      ctx.save();
+      ctx.globalAlpha=s.life*0.6;
+      ctx.fillStyle=s.color;
+      // Draw star shape
+      ctx.beginPath();
+      for(let j=0;j<5;j++){
+        const angle=(j*Math.PI*2/5)-Math.PI/2;
+        const x=s.x+Math.cos(angle)*s.size;
+        const y=s.y+Math.sin(angle)*s.size;
+        j===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        const innerAngle=angle+Math.PI/5;
+        ctx.lineTo(s.x+Math.cos(innerAngle)*s.size*0.4,s.y+Math.sin(innerAngle)*s.size*0.4);
+      }
+      ctx.closePath();
+      ctx.fill();
+      // Add glow
+      ctx.shadowBlur=10;
+      ctx.shadowColor=s.color;
+      ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(drawSparkles);
+  }
+  drawSparkles();
+})();
+
+// ═══════════════════════════════════════════
+//  3D TILT ON CARDS
+// ═══════════════════════════════════════════
+document.querySelectorAll('.glass-card,.team-card,.video-card,.blog-card').forEach(card=>{
+  card.addEventListener('mousemove',function(e){
+    const rect=this.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const centerX=rect.width/2;
+    const centerY=rect.height/2;
+    const rotateX=(y-centerY)/centerY*-5;
+    const rotateY=(x-centerX)/centerX*5;
+    this.style.transform=`perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+    // Move glow
+    let glow=this.querySelector('.card-glow');
+    if(!glow){glow=document.createElement('div');glow.className='card-glow';this.appendChild(glow);}
+    glow.style.left=x+'px';
+    glow.style.top=y+'px';
+    glow.style.opacity='1';
+  });
+  card.addEventListener('mouseleave',function(){
+    this.style.transform='';
+    const glow=this.querySelector('.card-glow');
+    if(glow) glow.style.opacity='0';
+  });
+});
+
+// ═══════════════════════════════════════════
+//  PARALLAX ON SCROLL
+// ═══════════════════════════════════════════
+window.addEventListener('scroll',function(){
+  const shapes=document.querySelectorAll('.floating-shape');
+  const scrollY=window.scrollY;
+  shapes.forEach((s,i)=>{
+    const speed=(i+1)*0.03;
+    s.style.transform=`translateY(${scrollY*speed}px)`;
+  });
+});
+
+// ═══════════════════════════════════════════
+//  CONFETTI ON PAGE LOAD
+// ═══════════════════════════════════════════
+function launchConfetti(){
+  const colors=['#6c63ff','#f64f59','#43e97b','#4facfe','#fee140','#fbc2eb','#fff'];
+  for(let i=0;i<50;i++){
+    const conf=document.createElement('div');
+    conf.style.cssText=`
+      position:fixed;z-index:99999;pointer-events:none;
+      width:${Math.random()*8+4}px;height:${Math.random()*8+4}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      left:${Math.random()*100}vw;top:-10px;
+      opacity:1;
+    `;
+    document.body.appendChild(conf);
+    const duration=Math.random()*2000+1500;
+    const drift=(Math.random()-0.5)*200;
+    conf.animate([
+      {transform:'translateY(0) rotate(0deg)',opacity:1},
+      {transform:`translateY(100vh) translateX(${drift}px) rotate(${Math.random()*720}deg)`,opacity:0}
+    ],{duration,easing:'cubic-bezier(0.25,0.46,0.45,0.94)'});
+    setTimeout(()=>conf.remove(),duration);
+  }
+}
+// Launch confetti after loading screen
+setTimeout(launchConfetti,2000);
+
+// ═══════════════════════════════════════════
+//  TEAM PAGE EXPLOSIVE EFFECTS
+// ═══════════════════════════════════════════
+
+// --- Particle Background ---
+function initTeamParticles(){
+  const canvas=document.getElementById('teamParticleCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  let w,h;
+  function resize(){w=canvas.width=canvas.parentElement.offsetWidth;h=canvas.height=canvas.parentElement.offsetHeight;}
+  resize(); window.addEventListener('resize',resize);
+  const particles=[];
+  const colors=['#6c63ff','#f64f59','#43e97b','#4facfe','#fee140','#fbc2eb'];
+  for(let i=0;i<80;i++){
+    particles.push({
+      x:Math.random()*w,y:Math.random()*h,
+      vx:(Math.random()-0.5)*0.8,vy:(Math.random()-0.5)*0.8,
+      r:Math.random()*3+1,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      alpha:Math.random()*0.5+0.2,
+      pulse:Math.random()*Math.PI*2
+    });
+  }
+  function drawParticles(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach((p,i)=>{
+      p.pulse+=0.02;
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=w; if(p.x>w)p.x=0;
+      if(p.y<0)p.y=h; if(p.y>h)p.y=0;
+      const a=p.alpha*(0.6+0.4*Math.sin(p.pulse));
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color;ctx.globalAlpha=a;ctx.fill();
+      // Draw connections
+      for(let j=i+1;j<particles.length;j++){
+        const p2=particles[j];
+        const dx=p.x-p2.x,dy=p.y-p2.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);
+          ctx.strokeStyle=p.color;ctx.globalAlpha=(1-dist/120)*0.15;
+          ctx.lineWidth=0.5;ctx.stroke();
+        }
+      }
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+}
+
+// --- Matrix Rain ---
+function initTeamMatrix(){
+  const canvas=document.getElementById('teamMatrixCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  let w,h;
+  function resize(){w=canvas.width=canvas.parentElement.offsetWidth;h=canvas.height=canvas.parentElement.offsetHeight;}
+  resize(); window.addEventListener('resize',resize);
+  const chars='FOURDEVBOYSMIXIGAMING01<>{}[]#@!$%^&*HTMLCSSJS'.split('');
+  const cols=Math.floor(w/18);
+  const drops=Array(cols).fill(1);
+  function drawMatrix(){
+    ctx.fillStyle='rgba(10,10,26,0.05)';
+    ctx.fillRect(0,0,w,h);
+    ctx.font='14px monospace';
+    drops.forEach((y,i)=>{
+      const c=chars[Math.floor(Math.random()*chars.length)];
+      const x=i*18;
+      const hue=(i/cols)*360;
+      ctx.fillStyle=`hsla(${hue},80%,60%,0.8)`;
+      ctx.fillText(c,x,y*18);
+      if(y*18>h && Math.random()>0.975) drops[i]=0;
+      drops[i]++;
+    });
+  }
+  setInterval(drawMatrix,60);
+}
+
+// --- Firework Burst ---
+function launchTeamFireworks(){
+  const colors=['#6c63ff','#f64f59','#43e97b','#4facfe','#fee140','#ff6b6b','#fbc2eb','#a8edea'];
+  for(let f=0;f<8;f++){
+    setTimeout(()=>{
+      const cx=Math.random()*window.innerWidth;
+      const cy=Math.random()*window.innerHeight*0.5+50;
+      for(let i=0;i<30;i++){
+        const p=document.createElement('div');
+        p.className='firework-particle';
+        const angle=(i/30)*Math.PI*2;
+        const speed=Math.random()*150+80;
+        const color=colors[Math.floor(Math.random()*colors.length)];
+        const size=Math.random()*5+2;
+        p.style.cssText=`
+          position:fixed;left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;
+          background:${color};border-radius:50%;z-index:99999;pointer-events:none;
+          box-shadow:0 0 6px ${color},0 0 12px ${color};
+        `;
+        document.body.appendChild(p);
+        const tx=Math.cos(angle)*speed;
+        const ty=Math.sin(angle)*speed;
+        p.animate([
+          {transform:'translate(0,0) scale(1)',opacity:1},
+          {transform:`translate(${tx}px,${ty+50}px) scale(0)`,opacity:0}
+        ],{duration:Math.random()*800+600,easing:'cubic-bezier(0.25,0.46,0.45,0.94)'});
+        setTimeout(()=>p.remove(),1500);
+      }
+    },f*300);
+  }
+}
+
+// --- Lightning Flash ---
+function teamLightningFlash(){
+  for(let i=0;i<3;i++){
+    setTimeout(()=>{
+      const flash=document.createElement('div');
+      flash.className='lightning-flash';
+      document.body.appendChild(flash);
+      setTimeout(()=>flash.remove(),200);
+    },i*200);
+  }
+}
+
+// --- Emoji Rain ---
+function teamEmojiRain(){
+  const emojis=['🎮','🎬','💻','🎧','⭐','🔥','💜','🎵','🚀','✨','🏆','👑','💎','🎯','⚡'];
+  for(let i=0;i<40;i++){
+    setTimeout(()=>{
+      const em=document.createElement('div');
+      em.className='emoji-rain';
+      em.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      em.style.left=Math.random()*100+'vw';
+      em.style.animationDuration=(Math.random()*2+2)+'s';
+      document.body.appendChild(em);
+      setTimeout(()=>em.remove(),4500);
+    },i*120);
+  }
+}
+
+// --- Card Ripple Effect ---
+function teamCardRipple(e,card){
+  const rect=card.getBoundingClientRect();
+  const rip=document.createElement('div');
+  rip.className='ripple';
+  rip.style.left=(e.clientX-rect.left)+'px';
+  rip.style.top=(e.clientY-rect.top)+'px';
+  rip.style.width='100px';rip.style.height='100px';
+  rip.style.marginLeft='-50px';rip.style.marginTop='-50px';
+  card.appendChild(rip);
+  setTimeout(()=>rip.remove(),800);
+}
+
+// --- Sparkles around avatars ---
+function spawnTeamSparkles(){
+  const avatars=document.querySelectorAll('.team-avatar-explosive');
+  avatars.forEach(av=>{
+    setInterval(()=>{
+      if(!document.getElementById('page-team').classList.contains('active'))return;
+      const spark=document.createElement('div');
+      spark.className='sparkle';
+      const colors=['#6c63ff','#f64f59','#43e97b','#4facfe','#fee140'];
+      spark.style.background=colors[Math.floor(Math.random()*colors.length)];
+      spark.style.left=(Math.random()*140)+'px';
+      spark.style.top=(Math.random()*140)+'px';
+      spark.style.boxShadow=`0 0 6px ${spark.style.background}`;
+      av.appendChild(spark);
+      setTimeout(()=>spark.remove(),1500);
+    },500);
+  });
+}
+
+// --- Team Stats Counter Animation ---
+function animateTeamStats(){
+  document.querySelectorAll('.team-stat-number[data-count]').forEach(el=>{
+    const target=parseInt(el.getAttribute('data-count'));
+    let current=0;
+    const increment=target/60;
+    const timer=setInterval(()=>{
+      current+=increment;
+      if(current>=target){current=target;clearInterval(timer);}
+      el.textContent=Math.floor(current)+(target===100?'%':'+').replace('+','');
+      if(target===100)el.textContent=Math.floor(current)+'%';
+      else if(target>=100)el.textContent=Math.floor(current)+'+';
+      else el.textContent=Math.floor(current);
+    },30);
+  });
+}
+
+// --- Team Skill Bars Animation ---
+function animateTeamSkills(){
+  document.querySelectorAll('.team-skill-fill[data-width]').forEach(bar=>{
+    setTimeout(()=>{
+      bar.style.width=bar.getAttribute('data-width')+'%';
+    },500);
+  });
+}
+
+// --- 3D Tilt Effect on Team Cards ---
+function initTeamTilt(){
+  document.querySelectorAll('.team-card-explosive').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const rect=card.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width-0.5;
+      const y=(e.clientY-rect.top)/rect.height-0.5;
+      card.style.transform=`perspective(1000px) rotateY(${x*15}deg) rotateX(${-y*15}deg) translateY(-10px) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform='perspective(1000px) rotateY(0) rotateX(0) translateY(0) scale(1)';
+      card.style.transition='transform 0.6s cubic-bezier(0.23,1,0.32,1)';
+    });
+    card.addEventListener('mouseenter',()=>{
+      card.style.transition='transform 0.1s ease-out';
+    });
+  });
+}
+
+// --- Hook into showPage ---
+const origShowPage=showPage;
+window.showPage=function(id,el){
+  origShowPage(id,el);
+  if(id==='team'){
+    // Show team reveal overlay first
+    showTeamReveal();
+    // Big entrance effects after reveal
+    setTimeout(()=>{
+      teamLightningFlash();
+    },200);
+    setTimeout(()=>launchTeamFireworks(),400);
+    setTimeout(()=>teamEmojiRain(),1000);
+    setTimeout(()=>{
+      animateTeamStats();
+      animateTeamSkills();
+    },600);
+  }
+};
+
+// --- Team Reveal Overlay ---
+function showTeamReveal(){
+  const overlay=document.getElementById('teamRevealOverlay');
+  if(!overlay) return;
+  // Reset: remove closing class, reset member animations
+  overlay.classList.remove('closing');
+  overlay.querySelectorAll('.reveal-member').forEach(m=>{
+    m.style.animation='none';
+    m.offsetHeight; // force reflow
+  });
+  overlay.querySelector('.reveal-title').style.animation='none';
+  overlay.querySelector('.reveal-line').style.animation='none';
+  overlay.querySelectorAll('.reveal-spotlight').forEach(s=>{s.style.animation='none';});
+  overlay.querySelector('.reveal-skip').style.animation='none';
+  overlay.querySelectorAll('.reveal-photo-glow').forEach(g=>{g.style.animation='none';});
+  // Force reflow
+  void overlay.offsetHeight;
+  // Re-apply animations
+  overlay.querySelector('.reveal-title').style.animation='revealTitleIn 0.8s 0.2s ease-out forwards';
+  overlay.querySelector('.reveal-line').style.animation='lineExpand 1s 0.6s ease-out forwards';
+  const spots=overlay.querySelectorAll('.reveal-spotlight');
+  spots[0].style.animation='spotReveal 0.6s 0.3s ease-out forwards';
+  spots[1].style.animation='spotReveal 0.6s 0.5s ease-out forwards';
+  spots[2].style.animation='spotReveal 0.6s 0.7s ease-out forwards';
+  spots[3].style.animation='spotReveal 0.6s 0.9s ease-out forwards';
+  const members=overlay.querySelectorAll('.reveal-member');
+  members[0].style.animation='memberRevealIn 0.9s 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards';
+  members[1].style.animation='memberRevealIn 0.9s 1.1s cubic-bezier(0.34,1.56,0.64,1) forwards';
+  members[2].style.animation='memberRevealIn 0.9s 1.4s cubic-bezier(0.34,1.56,0.64,1) forwards';
+  members[3].style.animation='memberRevealIn 0.9s 1.7s cubic-bezier(0.34,1.56,0.64,1) forwards';
+  overlay.querySelectorAll('.reveal-photo-glow').forEach(g=>{
+    g.style.animation='photoGlowIn 1s 1.5s ease-out forwards';
+  });
+  overlay.querySelector('.reveal-skip').style.animation='skipFadeIn 0.5s 2.5s ease-out forwards';
+  // Show overlay
+  overlay.classList.add('active');
+  // Auto close after 4.5s
+  clearTimeout(window._teamRevealTimer);
+  window._teamRevealTimer=setTimeout(()=>closeTeamReveal(),4500);
+}
+
+function closeTeamReveal(){
+  clearTimeout(window._teamRevealTimer);
+  const overlay=document.getElementById('teamRevealOverlay');
+  if(!overlay||!overlay.classList.contains('active')) return;
+  overlay.classList.add('closing');
+  // Launch extra fireworks on close for impact
+  launchTeamFireworks();
+  setTimeout(()=>{
+    overlay.classList.remove('active','closing');
+  },800);
+}
+
+// --- Initialize team effects on DOM ready ---
+document.addEventListener('DOMContentLoaded',()=>{
+  initTeamParticles();
+  initTeamMatrix();
+  spawnTeamSparkles();
+  initTeamTilt();
 });
